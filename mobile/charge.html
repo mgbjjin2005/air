@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Air-WIFI账户充值</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<meta http-equiv="keywords" content="air-wifi" />
+<meta http-equiv="description" content="air-wifi, hd moive" />
+
+<link href="css/style.css"rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="top_menu">
+	欢迎您,&nbsp;<a href="user_info.html">haodanuser</a>&nbsp;<a href="logout.html">退出</a>
+</div>
+<div class="logo"><h1><a href="index.html">Air-WIFI</a><span class="nav">></span><a href="register.html">用户注册</a></h1></div>
+<div class="body_split"></div>  
+<div class="content">
+	<form>
+        <input type="hidden" name="ListID" value="27917287443">
+
+        <label>充值账号: (<span class="warning">请写登陆账户</span>)
+            <input type="text" data-required="true" name="charge_name" maxlength="16" id="charge_name">
+        </label>
+
+        <label>充值数量: (<span class="warning">wifi币</span>)
+            <input type="text" data-required="true" name="charge_num" maxlength="16" id="charge_num">
+        </label>
+		<label>应付金额: 
+			<div id="charge_real" style="color:red;">50元</div>
+		</label>
+		<label>充值方式:
+			</br>
+			<input type="radio" name="chargeMethod" id="chargeMethod0" value="0" checked="">
+		支付宝
+		</label>	
+		<div id="zhifubao">
+			<label>支付宝账号: 
+            <input type="text" data-required="true" name="zhifubao_name"  id="zhifubao_name">
+			</label>
+			
+		</div>
+        
+
+        
+		<div class="button"><a  onclick="javascript:RegisterAction();">提交</a></div>
+    </form>
+
+</div><!--end of the content-->
+<div class="footer">
+    <p>Design By <a href="http://www.air-wifi.cn">Air-WIFI</a></p>
+</div>
+</body>
+<script>
+	function RegisterAction()
+	{
+		document.location.href="user_info.html";
+	}
+</script>
+</html>

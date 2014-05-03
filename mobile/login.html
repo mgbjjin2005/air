@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Air-WIFI登录</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<meta http-equiv="keywords" content="air-wifi" />
+<meta http-equiv="description" content="air-wifi, hd moive" />
+
+<link href="css/style.css"rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="logo">
+	<h1>
+		<a href="index.html">Air-WIFI</a>
+		<span class="nav">></span>
+		<a href="login.html">登录</a>
+	</h1>
+</div>
+<div class="body_split"></div> 
+<div class="content">
+	<form name="loginForm">
+        <input type="hidden" name="ListID" value="27917287443">
+
+        <label>用户名: (<span class="warning">字母或数字组成;最少6个字符</span>)
+            <input type="text" data-required="true" name="user_name" maxlength="16" id="user_name">
+        </label>
+
+        <label>密码: (<span class="warning">6到18个字符</span>)
+            <input type="password" data-required="true" name="password" maxlength="16" id="password">
+        </label>
+
+       <div class="button"><a  onclick="javascript:LoginAction();">登录</a></div>
+    </form>
+
+</div><!--end of the content-->
+<div class="footer">
+    <p>Design By <a href="http://www.air-wifi.cn">Air-WIFI</a></p>
+</div>
+</body>
+<script>
+	function LoginAction()
+	{
+		document.location.href="index.html";
+	}
+</script>
+</html>

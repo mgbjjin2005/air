@@ -1,3 +1,10 @@
+
+提交方法
+git add mysql/schema.sql 
+git add readme.md 
+git add sql/wifi.sql 
+git commit -m "修改测试"
+
 git clone ssh://git@github.com/mgbjjin2005/air.git
 git commit -m "删除一些不用的文件"
 git push origin master

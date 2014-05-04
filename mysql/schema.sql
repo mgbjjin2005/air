@@ -49,7 +49,8 @@ CREATE TABLE radacct (
   KEY acctuniqueid (acctuniqueid),
   KEY acctstarttime (acctstarttime),
   KEY acctstoptime (acctstoptime),
-  KEY nasipaddress (nasipaddress)
+  KEY nasipaddress (nasipaddress),
+  INDEX framedipaddress (userip)
 ) ;
 
 #

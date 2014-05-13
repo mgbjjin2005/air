@@ -1,18 +1,18 @@
 -- data dump from console billstat output
 
-CREATE database IF NOT EXISTS panda default charset=utf8;
-GRANT CREATE,SELECT,INSERT,UPDATE,DELETE ON panda.* TO wifi@localhost IDENTIFIED BY '***King1985***';
+CREATE database IF NOT EXISTS air default charset=utf8;
+GRANT CREATE,SELECT,INSERT,UPDATE,DELETE ON air.* TO wifi@localhost IDENTIFIED BY '***King1985***';
 flush privileges;
 
-use panda;
+use air;
 
 
 
 -- -----------------------------------------------------
--- Table `panda`
+-- Table `air`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `panda`.`media` (
+CREATE TABLE IF NOT EXISTS `air`.`media` (
    `m_id`            bigint(20)     NOT NULL AUTO_INCREMENT,
    `m_chs_name`      varchar(64)    NOT NULL,                       /*中文名（007之皇家赌场，爱情公寓3）*/
    `m_original_name` varchar(128)   NOT NULL,                       /*母语名*/
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `panda`.`media` (
 
 
 /*用户信息表*/
-CREATE TABLE IF NOT EXISTS `panda`.`user_info` (
+CREATE TABLE IF NOT EXISTS `air`.`user_info` (
    `user_name`    varchar(64)     NOT NULL,                       /*用户名*/
    `password`     varchar(64)     NOT NULL,                       /*明文密码*/
    `password_md5` varchar(64)     NOT NULL,                       /*密文密码*/
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `panda`.`user_info` (
     4、使用新的手机B重新登录该账号，登录后系统会提示要求绑定，按照操作进行绑定后即可完成账号绑定
 
 /*账号设备绑定表*/
-CREATE TABLE IF NOT EXISTS `panda`.`binding_info` (
+CREATE TABLE IF NOT EXISTS `air`.`binding_info` (
    `b_id`         bigint(20)      NOT NULL AUTO_INCREMENT,
    `user_name`    varchar(64)     NOT NULL,                       /*用户名*/
    `mac`          varchar(64)     NOT NULL,                       /*设备mac*/
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `panda`.`binding_info` (
 
 
 /*电影购买记录(目前只能支持单集购买，不知道打包购买)*/
-CREATE TABLE IF NOT EXISTS `panda`.`moive_deal_info` (
+CREATE TABLE IF NOT EXISTS `air`.`moive_deal_info` (
    `deal_id`      varchar(64)     NOT NULL,                       /*订单编号*/
    `m_id`         bigint(20)      NOT NULL,                       /*视频ID*/
    `user_name`    varchar(64)     NOT NULL,                       /*用户名*/
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `panda`.`moive_deal_info` (
 
 
 /*流量包*/
-CREATE TABLE IF NOT EXISTS `panda`.`traffic_packet` (
+CREATE TABLE IF NOT EXISTS `air`.`traffic_packet` (
    `t_id`         bigint(20)      NOT NULL AUTO_INCREMENT,        /*套餐ID*/
    `t_desc`       varchar(256)    NOT NULL,                       /*套餐描述*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*套餐流量*/
@@ -122,31 +122,72 @@ CREATE TABLE IF NOT EXISTS `panda`.`traffic_packet` (
    `price`        DECIMAL(14,2)   DEFAULT '0.0',                  /*价格*/
    `create_date`  TIMESTAMP       NULL DEFAULT CURRENT_TIMESTAMP  /*套餐创建时间*/
 
-   INDEX(`user_name`,`mac`),
-   INDEX(`m_id`,`user_name`,`mac`)
+   PRIMARY KEY (`t_id`),
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*流量套餐表, 购买新的套餐时，如果老的套餐没有用完，会优先使用老的套餐，使用完后新的套餐流量自动启用*/
-CREATE TABLE IF NOT EXISTS `panda`.`traffic_deal_info` (
-   `t_id`         int             NOT NULL,                       /*套餐ID*/
-   `t_desc`       varchar(256)    NOT NULL,                       /*套餐描述*/
-   `expires`      int             NOT NULL,                       /*套餐有效期，默认30天*/
-   `price`        DECIMAL(14,2)   DEFAULT '0.0',                  /*购买价格*/
-   `user_name`    varchar(64)     NOT NULL,                       /*用户名*/
-   `mac`          varchar(64)     DEFAULT 'NULL',                 /*购买该套餐的设备*/
-   `state`        varchar(16)     NOT NULL,                       /*(unenable：还未启用/enable:正在使用/expire:过期)*/
-   `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*套餐总流量*/
-   `traffic_used` DECIMAL(14,2)   DEFAULT  '0.0',                 /*累积使用流量*/
-   `create_date`  TIMESTAMP       NULL DEFAULT CURRENT_TIMESTAMP, /*用户创建时间*/
-   `expire_date`  TIMESTAMP       NULL DEFAULT NULL,              /*资源有效期截止时间*/
+/*用户月流量信息汇总表*/
+CREATE TABLE IF NOT EXISTS `air`.`raffic_mon` (
+   `t_id`              bigint(20)      NOT NULL AUTO_INCREMENT,
+   `user_name`         varchar(64)     NOT NULL,                       /*用户名*/
+   `mac`               varchar(64)     NOT NULL,                       /*mac地址*/
+   `traffic_last`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*上个月剩余流量*/
+   `traffic_idle`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*已使用的空闲流量*/
+   `traffic_busy`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*已使用的忙时流量*/
+   `traffic_internal`  DECIMAL(14,2)   DEFAULT  '0.0',                 /*已使用的内网流量*/
+   `traffic_bill`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*计费流量*/
+   `traffic_remain`    DECIMAL(14,2)   DEFAULT  '0.0',                 /*剩余流量*/
+   `date_mon`          varchar(64)     NOT NULL,                       /*月份(201405)*/
+   `create_date`       TIMESTAMP       NULL DEFAULT CURRENT_TIMESTAMP  /*套餐创建时间*/
 
-   INDEX(`user_name`,`state`)
+   PRIMARY KEY (`t_id`),
+   INDEX(`user_name`,`mac`,`date_mon`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+/*用户实时流量 
+此表是跟freeradius.radacct的关联表，每5/10分钟汇总一次流量。具体流程为
+1、取radacct表的所有记录A，按照用户名、mac两个维度做流量统计
+2、对每组（user_name、mac、traffic_A)
+   A、查找user_traffic_realtime表是否有对应(user_name，mac的记录).
+   B、如果有,记录对应的流量traffic_B，并使traffic_C=trafficA-traffic_B。
+   C、如果没有，则tarffic_C=traffic_A-traffic_B
+   D、计算当前时间点为闲时还是忙时，设置闲时因子 factor=1或1/3
+   E、对该用户的radacct的原始记录做过滤，已经下线的记录对应的（id，流量和traffic_A1）
+   F、根据traffic_C和factor的值更新user_mon_traffic表
+
+   G、把所有已经下线的数据记录到traffic_history，并删除radacct对应的记录。
+   H、traffic_A2=traffic_A-trafficA1。计为当前时刻用户在radacct的流量，计入user_traffic_realtime
+*/
+CREATE TABLE IF NOT EXISTS `air`.`traffic_realtime` (
+   `user_name`         varchar(64)     NOT NULL,                       /*用户名*/
+   `mac`               varchar(64)     NOT NULL,                       /*mac地址*/
+   `traffic`           DECIMAL(14,2)   DEFAULT  '0.0',                 /*流量*/
+   `update_date`       varchar(64)     NOT NULL,                       /*更新时间*/
+
+   INDEX(`user_name`,`mac`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+/*用户获得的流量明细*/
+CREATE TABLE IF NOT EXISTS `air`.`traffic_deal` (
+   `t_id`              bigint(20)      NOT NULL AUTO_INCREMENT,
+   `user_name`         varchar(64)     NOT NULL,                       /*用户名*/
+   `mac`               varchar(64)     NOT NULL,                       /*mac地址*/
+   `traffic`           DECIMAL(14,2)   DEFAULT  '0.0',                 /*流量*/
+   `price`             DECIMAL(14,2)   DEFAULT  '0.0',                 /*价格*/
+   `traffic_type`      int             NOT NULL,                       /*流量的类型(固定套餐/加油包/赠送的流量/上期结余)*/
+   `desc`              varchar(256)    NOT NULL,                       /*描述*/
+   `date_mon`          varchar(64)     NOT NULL,                       /*月份(201405)*/
+   `create_date`       TIMESTAMP       NULL DEFAULT CURRENT_TIMESTAMP  /*创建时间*/
+
+   PRIMARY KEY (`t_id`),
+   INDEX(`user_name`,`mac`,`date_mon`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
 /*电影购物车*/
-CREATE TABLE IF NOT EXISTS `panda`.`cart` (
+CREATE TABLE IF NOT EXISTS `air`.`cart` (
    `user_name`    varchar(64)     NOT NULL,                       /*用户名*/
    `m_id`         bigint(20)      NOT NULL,                       /*视频ID*/
    `m_desc`       varchar(128)    NOT NULL,                       /*视频信息描述（蜘蛛侠系列之超凡蜘蛛侠、爱情公寓四第18集）*/
@@ -159,12 +200,12 @@ CREATE TABLE IF NOT EXISTS `panda`.`cart` (
 
 
 /*全局配置项*/
-CREATE TABLE IF NOT EXISTS `panda`.`global_conf` (
+CREATE TABLE IF NOT EXISTS `air`.`global_conf` (
    `station_name` varchar(64)     NOT NULL,                       /*节点名称*/
    `moive_expire` int             DEFAULT   3,                    /*购买后视频的有效期*/
    `m_charge_off` int             DEFAULT   100,                  /*电影是否打折*/
    `t_charge_off` int             DEFAULT   100,                  /*流量是否打折*/
-
+   `i_b_ratio`    DECIMAL(14,2)   DEFAULT   '0.0',                /*闲时流量的计费比*/
    INDEX(`station_name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

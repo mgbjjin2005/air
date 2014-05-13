@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `panda`.`traffic_packet` (
    `t_id`         bigint(20)      NOT NULL AUTO_INCREMENT,        /*套餐ID*/
    `t_desc`       varchar(256)    NOT NULL,                       /*套餐描述*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*套餐流量*/
-   `expires`      int             DEFAULT  30,                    /*套餐有效期，默认30天*/
+   `expires`      int             DEFAULT  30,                    /*套餐有效期，默认30天, 流量可以累积到下个月*/
    `price`        DECIMAL(14,2)   DEFAULT '0.0',                  /*价格*/
    `create_date`  TIMESTAMP       NULL DEFAULT CURRENT_TIMESTAMP  /*套餐创建时间*/
 

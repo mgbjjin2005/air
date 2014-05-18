@@ -123,10 +123,12 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_packet` (
 
 
 /*用户月流量信息汇总表*/
-CREATE TABLE IF NOT EXISTS `air`.`raffic_mon` (
+CREATE TABLE IF NOT EXISTS `air`.`traffic_mon` (
    `t_id`              bigint(20)      NOT NULL AUTO_INCREMENT,
    `user_name`         varchar(64)     NOT NULL,                  /*用户名*/
-   `mac`               varchar(64)     NOT NULL,                  /*mac地址*/
+   `traffic_packet`    DECIMAL(14,2)   DEFAULT  '0.0',            /*本月套餐流量*/
+   `traffic_addition`  DECIMAL(14,2)   DEFAULT  '0.0',            /*本月获得赠送的总流量*/
+   `traffic_recharge`  DECIMAL(14,2)   DEFAULT  '0.0',            /*本月购买的加油包总流量*/
    `traffic_last`      DECIMAL(14,2)   DEFAULT  '0.0',            /*上个月剩余流量*/
    `traffic_idle`      DECIMAL(14,2)   DEFAULT  '0.0',            /*已使用的空闲流量*/
    `traffic_busy`      DECIMAL(14,2)   DEFAULT  '0.0',            /*已使用的忙时流量*/
@@ -137,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `air`.`raffic_mon` (
    `create_date`       TIMESTAMP,                                 /*套餐创建时间*/
 
    PRIMARY KEY (`t_id`),
-   INDEX(`user_name`,`mac`,`date_mon`)
+   INDEX(`user_name`,`date_mon`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

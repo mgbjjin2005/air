@@ -36,6 +36,56 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+    public function actionTransanction()
+    {
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $this->render('transanction');
+    }
+
+    /*加油包*/
+    public function actionPacket()
+    {
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $sql = "select t_desc, traffic, price from traffic_packet where category = 'packet' order by price";
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        $count = count($set_t);
+        if ($count < 1) {
+            Yii::app()->session['msg'] = "没有查询到任何可用的流量套餐, 系统维护中...count=$count";
+            $this->render('error_msg');
+            return;
+        }
+
+        $this->render('packet', array('set_t' => $set_t));
+    }
+
+    /*加油包*/
+    public function actionAddition()
+    {
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $sql = "select t_desc, traffic, price from traffic_packet where category = 'addition' order by price";
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        $count = count($set_t);
+        if ($count < 1) {
+            Yii::app()->session['msg'] = "没有查询到任何可用的流量套餐, 系统维护中...count=$count";
+            $this->render('error_msg');
+            return;
+        }
+
+        $this->render('addition', array('set_t' => $set_t));
+    }
+
     public function actionUserinfo()
     {
         if (airAutoLogin() == false) {
@@ -45,7 +95,7 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
-        $sql  = "select traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, ";
+        $sql  = "select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, ";
         $sql .= "traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
         $sql .= "traffic_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
@@ -53,6 +103,7 @@ class SiteController extends Controller
         if($count != 1){
             Yii::app()->session['msg'] = "还没有本月的相关信息。count=$count";
             $this->render('error_msg');
+            return;
         }
 
         $ret = array();

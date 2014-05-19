@@ -115,10 +115,12 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_packet` (
    `t_desc`       varchar(256)    NOT NULL,                 /*套餐描述*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',           /*套餐流量*/
    `expires`      int             DEFAULT  30,              /*暂保留*/
+   `category`     varchar(32)     NOT NULL,                 /*addition(加油包)/packet(固定套餐)*/
    `price`        DECIMAL(14,2)   DEFAULT '0.0',            /*价格*/
    `create_date`  TIMESTAMP,                                /*套餐创建时间*/
 
-   PRIMARY KEY (`t_id`)
+   PRIMARY KEY (`t_id`),
+   INDEX(`category`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

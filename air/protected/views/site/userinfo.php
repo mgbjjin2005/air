@@ -30,12 +30,12 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 
         <tr>
             <td>本月消费</td>
-            <td>35.0 wifi币</td>
+            <td>35.0 元</td>
         </tr>
 
         <tr>
             <td>账户余额</td>
-            <td><?php echo sprintf("%.2f",$balance);?>wifi币 <a href="index.php?r=site/charge">充值</a></td>
+            <td><?php echo sprintf("%.2f",$balance);?> 元 <a href="index.php?r=site/charge">充值</a></td>
         </tr>
 
         <tr>

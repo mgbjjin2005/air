@@ -54,7 +54,7 @@ class SiteController extends Controller
             return;
         }
 
-        $sql = "select t_desc, traffic, price from traffic_packet where category = 'packet' order by price";
+        $sql = "select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
         if ($count < 1) {
@@ -74,7 +74,7 @@ class SiteController extends Controller
             return;
         }
 
-        $sql = "select t_desc, traffic, price from traffic_packet where category = 'addition' order by price";
+        $sql = "select t_id, t_desc, traffic, price from traffic_packet where category = 'addition' order by price";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
         if ($count < 1) {

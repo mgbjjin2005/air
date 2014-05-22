@@ -163,11 +163,10 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_mon` (
 */
 CREATE TABLE IF NOT EXISTS `air`.`traffic_realtime` (
    `user_name`    varchar(64)     NOT NULL,       /*用户名*/
-   `mac`          varchar(64)     NOT NULL,       /*mac地址*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0', /*流量*/
    `update_date`  TIMESTAMP,                      /*创建时间*/
 
-   INDEX(`user_name`,`mac`)
+   INDEX(`user_name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -222,4 +221,20 @@ CREATE TABLE IF NOT EXISTS `air`.`global_conf` (
    `i_b_ratio`    DECIMAL(14,2)   DEFAULT   '0.0', /*闲时流量的计费比(>1)*/
    INDEX(`station_name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*用户使用详情*/
+CREATE TABLE IF NOT EXISTS `air`.`login_history` (
+  username varchar(64) NOT NULL default '',
+  start_time datetime NOT NULL,
+  stop_time datetime NOT NULL,
+  session_time int(12) default NULL,
+  input bigint(20) default NULL,
+  output bigint(20) default NULL,
+  mac varchar(50) NOT NULL default '',
+  terminate_cause varchar(32) default '',
+  clientip varchar(15) NOT NULL default '',
+
+  INDEX username (`username`),
+  INDEX start_time (`start_time`)
+) ;
 

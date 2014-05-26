@@ -19,6 +19,7 @@
 #!/usr/bin/perl -w
 use strict;
 use warnings;
+use Time::Local;
 
 use AirMgr;
 use DBI;
@@ -26,6 +27,7 @@ use Data::Dumper;
 
 use constant ONE_DAY => 86400;
 use constant IDLE_RATIO => 3; #闲时流量的折算比
+use constant STAT_INTERVAL => 300;
 
 my ($db_air, $db_radius);
 my ($v_date, $sql, $sql_update, $sql_sub, $count );
@@ -43,9 +45,13 @@ $v_date="$year-$mon-$day";
 
 my $cur_date_type = &air_get_date_type("$year-$mon-$day $hour:$min:00");
 
+my $stp = timelocal(0, $min, $hour, $day, $mon-1 , $year-1900);
+my ($prev_year, $prev_mon, $prev_day, $prev_hour, $prev_min) =
+    &air_get_normalized_time($stp - STAT_INTERVAL);
+
+
 $db_air    = &air_connect_db("air", "localhost", "air", "***King1985***", "3306");
 $db_radius = &air_connect_db("radius", "localhost", "air", "***King1985***", "3306");
-
 
 #取radacct数据库
 $sql  = "select radacctid id, username, acctstarttime start_time, acctstoptime stop_time, ";
@@ -53,12 +59,14 @@ $sql .= "acctsessiontime session_time, acctinputoctets input, acctoutputoctets o
 $sql .= "callingstationid mac,acctterminatecause terminate_cause, framedipaddress client_ip";
 $sql .= " from radacct";
 
-
 $sql_sub  = "insert into login_history (username, start_time, stop_time, session_time, input,";
 $sql_sub .= "output, mac, terminate_cause, clientip) values ";
 $sql_update = $sql_sub;
 
 $sth = $db_radius->prepare($sql);
+
+
+#1、取radacct记录---------------------
 
 if ($sth->execute()) {
     while (my $ref = $sth->fetchrow_hashref()) {
@@ -69,16 +77,17 @@ if ($sth->execute()) {
 
         $origin_hash{$username}{"total"} += $traffic;
 
-        if (defined($stop_time) && length($stop_time) > 5) {
-            my $t_id = $ref->{"id"};            
+        if (defined($stop_time) and length($stop_time) > 5) {
+            my $t_id = $ref->{"id"};
 
             $terminate_cause = "" if (not defined($terminate_cause));
             $sql_update .= "('$username','$start_time','$stop_time',$session_time,";
             $sql_update .= "$input,$output,'$mac','$terminate_cause','$ip'),";
 
             $delete_hash{$t_id} = "1";
-            $origin_hash{$username}{"not_finish"} += $traffic;
 
+        } else {
+            $origin_hash{$username}{"not_finish"} += $traffic;
         }
 
         if (++$count % 100 == 0) {
@@ -103,10 +112,11 @@ if ($sth->execute()) {
     $sth_insert->finish();
 }
 
+#2、取traffic_realtime表
 
-#取traffic_realtime表
+$sql  = "select user_name, traffic, update_date from traffic_realtime ";
+$sql .= "where update_date = '$prev_year-$prev_mon-$prev_day $prev_hour:$prev_min:00'";
 
-$sql = "select user_name, traffic, update_date from traffic_realtime";
 $sth = $db_air->prepare($sql);
 if ($sth->execute()) {
     while (my $ref = $sth->fetchrow_hashref()) {
@@ -117,14 +127,82 @@ if ($sth->execute()) {
 }
 
 
+#3、把已经完成的session记录从radacct表删除--------
+$count = 0;
+$sql_update = "";
+foreach my $id (keys %delete_hash) {
+    $sql_update .= "delete from radacct where radacctid = $id;";
+    if (++$count % 100 == 0) {
+        print("$sql_update\n");
+        #$sth = $db_radius->prepare($sql_update);
+        #$sth -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
+
+        $count = 0;
+        $sql_update = "";
+    }
+}
+
+if ($count > 0) {
+    print("$sql_update\n");
+    #$sth = $db_air->prepare($sql_update);
+    #$sth -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
+}
+
+
+#4、记录还在线的用户信息-----------------
+
+foreach my $username (keys %origin_hash) {
+    if (exists($origin_hash{$username}{"not_finish"})) {
+        $new_rt_hash{$username}{"traffic"} = $origin_hash{$username}{"not_finish"};
+        $new_rt_hash{$username}{"date"} = "$v_date $hour:$min:00";
+    }
+}
+
+
+#5、更新traffic_realtime-----------------
+
+$count = 0;
+$sql_sub = "replace into traffic_realtime values ";
+$sql_update = $sql_sub;
+foreach my $username (keys %new_rt_hash) {
+    my ($traffic, $date) = ($new_rt_hash{$username}{"traffic"}, $new_rt_hash{$username}{"date"});
+    $sql_update .= "('$username', $traffic, '$date'),";
+
+    if (++$count % 100 == 0) {
+        chop($sql_sub);
+        print("$sql_update\n");
+        $sth_insert = $db_air->prepare($sql_update);
+        $sth_insert -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
+
+        $sql_update = $sql_sub;
+        $count = 0;
+    }
+}
+
+if ($count > 0) {
+    chop($sql_update);
+    print("$sql_update\n");
+    $sth_insert = $db_air->prepare($sql_update);
+    $sth_insert -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
+}
+
+
+#6、清空traffic_realtime------------------
+
+$sql = "delete from traffic_realtime where update_date < '$v_date $hour:$min:00'";
+$sth = $db_air->prepare($sql);
+$sth -> execute() or &air_write_log("ERROR ".$sth->errstr);
+
+
+#7、更新用户带宽数据表-------------------
+
 foreach my $username (keys %origin_hash) {
     my $traffic = 0;
     my $old_date_type = "busy";
     my $busy_flag = 1;
-    my ($total, $not_finish) = (0,0);
+    my $total = 0;
     my ($t_idle, $t_busy, $t_bill, $t_remain) = ();
     $total = $origin_hash{$username}{"total"};
-    $not_finish = $origin_hash{$username}{"not_finish"} if (defined($origin_hash{$username}{"not_finish"}));
 
     #计算使用流量
     if (exists($old_rt_hash{$username})) {
@@ -142,8 +220,6 @@ foreach my $username (keys %origin_hash) {
         #此时记闲时流量
         $busy_flag = 0;
     }
-
-
 
     $sql =  "select traffic_idle, traffic_busy, traffic_bill, traffic_remain from ";
     $sql .= "traffic_mon where user_name = '$username' and date_mon = '$year$mon'";
@@ -168,18 +244,12 @@ foreach my $username (keys %origin_hash) {
             $sql .= " and date_mon = '$year$mon'";
             print("$sql\n");
 
-            #$sth = $db_air->prepare($sql);
-            #if (not $sth->execute()) {
-            #    &air_write_log("ERROR 更新traffic_mon失败".$sth->errstr);
-            #    next;
-            #}
-
-            #更新流量成功,保留还在线的用户信息
-            if (exists($origin_hash{$username}{"not_finish"})) {
-            
-                $new_rt_hash{$username}{"traffic"} = $origin_hash{$username}{"not_finish"};
-                $new_rt_hash{$username}{"date"} = "$year-$mon-$day $hour:$min:00";
-            }           
+            $sth_insert = $db_air->prepare($sql);
+            if (not $sth_insert->execute()) {
+                print("sth_insert failed ".$sth_insert->errstr."\n");
+                #&air_write_log("ERROR 更新traffic_mon失败".$sth_insert->errstr);
+                next;
+            }
         } 
 
     } else {
@@ -187,64 +257,7 @@ foreach my $username (keys %origin_hash) {
     }
 }
 
-
-#清空traffic_realtime---------------------------------------------------
-$sql = "delete from traffic_realtime";
-$sth = $db_air->prepare($sql);
-$sth -> execute() or &air_write_log("ERROR ".$sth->errstr);
-
-#更新traffic_realtime---------------------------------------------------
-$count = 0;
-
-$sql_sub = "insert into traffic_realtime values ";
-$sql_update = $sql_sub;
-foreach my $username (keys %new_rt_hash) {
-    my ($traffic, $date) = ($new_rt_hash{$username}{"traffic"}, $new_rt_hash{$username}{"date"});
-    $sql_update .= "('$username', $traffic, '$date'),";
-
-    if (++$count % 100 == 0) {
-        chop($sql_sub);
-        print("$sql_update\n");
-        #$sth_insert = $db_air->prepare($sql_update);
-        #$sth_insert -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
-
-        $sql_update = $sql_sub;
-        $count = 0;
-    }
-}
-
-if ($count > 0) {
-    chop($sql_update);
-    print("$sql_update\n");
-    #$sth_insert = $db_air->prepare($sql_update);
-    #$sth_insert -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
-}
-
-
-#把已经完成的session记录从radacct表删除--------
-$count = 0;
-$sql_update = "";
-foreach my $id (keys %delete_hash) {
-    $sql_update .= "delete from radacct where radacctid = $id;";
-    if (++$count % 100 == 0) {
-        print("$sql_update\n");
-        #$sth = $db_radius->prepare($sql_update);
-        #$sth -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
-
-        $count = 0;
-        $sql_update = "";
-    }
-}
-
-
-if ($count > 0) {
-    print("$sql_update\n");
-    #$sth = $db_air->prepare($sql_update);
-    #$sth -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
-}
-
 &air_write_log();
-
 
 print("date=$v_date $hour:$min\n");
 

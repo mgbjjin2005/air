@@ -126,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_packet` (
 
 /*用户月流量信息汇总表*/
 CREATE TABLE IF NOT EXISTS `air`.`traffic_mon` (
-   `t_id`              bigint(20)      NOT NULL AUTO_INCREMENT,
    `user_name`         varchar(64)     NOT NULL,                  /*用户名*/
    `traffic_packet`    DECIMAL(14,2)   DEFAULT  '0.0',            /*本月套餐流量*/
    `traffic_addition`  DECIMAL(14,2)   DEFAULT  '0.0',            /*本月获得赠送的总流量*/
@@ -140,8 +139,7 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_mon` (
    `date_mon`          varchar(64)     NOT NULL,                  /*月份(201405)*/
    `create_date`       TIMESTAMP,                                 /*套餐创建时间*/
 
-   PRIMARY KEY (`t_id`),
-   INDEX(`user_name`,`date_mon`)
+   PRIMARY KEY(`user_name`,`date_mon`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
@@ -166,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_realtime` (
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0', /*流量*/
    `update_date`  TIMESTAMP,                      /*创建时间*/
 
-   INDEX(`user_name`)
+    PRIMARY KEY (`user_name`,`update_date`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -178,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_total` (
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*出口流量+入口流量*/
    `create_date`  TIMESTAMP,                                      /*创建时间*/
 
-   INDEX(`day`)
+   PRIMARY KEY(`day`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

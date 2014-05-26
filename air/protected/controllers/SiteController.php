@@ -95,7 +95,7 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
-        $sql  = "select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, ";
+        $sql  = "select traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, ";
         $sql .= "traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
         $sql .= "traffic_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();

@@ -95,9 +95,9 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
-        $sql  = "select traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, ";
-        $sql .= "traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
-        $sql .= "traffic_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
+        $sql  = "select traffic_packet,traffic_addition, traffic_recharge, traffic_idle, ";
+        $sql .= "movie_tickets, traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
+        $sql .= "user_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
         if($count != 1){
@@ -109,10 +109,10 @@ class SiteController extends Controller
         $ret = array();
         $ret['user_name'] = $user_name;
         foreach ($set_t as $tuple) {
+            $ret['movie_tickets']   = $tuple['movie_tickets'];
             $ret['traffic_packet']   = $tuple['traffic_packet'];
             $ret['traffic_addition'] = $tuple['traffic_addition'];
             $ret['traffic_recharge'] = $tuple['traffic_recharge'];
-            $ret['traffic_last']     = $tuple['traffic_last'];
             $ret['traffic_idle']     = $tuple['traffic_idle'];
             $ret['traffic_busy']     = $tuple['traffic_busy'];
             $ret['traffic_internal'] = $tuple['traffic_internal'];
@@ -120,7 +120,7 @@ class SiteController extends Controller
             $ret['traffic_remain']   = $tuple['traffic_remain'];
 
             $ret['total'] = $ret['traffic_addition'] + $ret['traffic_recharge'] + 
-                            $ret['traffic_packet'] + $ret['traffic_last'];
+                            $ret['traffic_packet'];
         }
 
         $sql = " select balance from user_info where user_name = '$user_name'";

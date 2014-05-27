@@ -429,3 +429,41 @@ REQUEST_URI=/index.php?r=site/userinfo
 in /opt/nginx/yii/air/protected/views/site/userinfo.php (67)
 in /opt/nginx/yii/air/protected/controllers/SiteController.php (85)
 in /opt/nginx/yii/air/index.php (15)
+2014/05/26 17:37:25 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'.
+in /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php (101)
+in /home/huiyan.jhf/nginx/yii/air/index.php (15)
+2014/05/26 17:37:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'' in /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php:541
+Stack trace:
+#0 /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php(395): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php(101): CDbCommand->queryAll()
+#2 /home/huiyan.jhf/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
+#3 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(282): CController->run('userinfo')
+#7 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/userinfo')
+#8 /home/huiyan.jhf/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/huiyan.jhf/nginx/yii/air/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=site/userinfo
+HTTP_REFERER=http://10.232.132.185/index.php?r=site/index
+---
+2014/05/26 17:37:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'.
+in /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php (101)
+in /home/huiyan.jhf/nginx/yii/air/index.php (15)
+2014/05/26 17:37:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'' in /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php:541
+Stack trace:
+#0 /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php(395): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php(101): CDbCommand->queryAll()
+#2 /home/huiyan.jhf/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
+#3 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(282): CController->run('userinfo')
+#7 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/userinfo')
+#8 /home/huiyan.jhf/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /home/huiyan.jhf/nginx/yii/air/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=site/userinfo
+HTTP_REFERER=http://www.wifi.com/index-test.php
+---

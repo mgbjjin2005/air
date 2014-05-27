@@ -98,7 +98,7 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
         <tr>
             <td>剩余流量</td>
             <td><?php echo sprintf("%.2f", $traffic_remain);?>MB 
-                <a href="index.php?r=site/trafficdetail">明细</a>
+                <a href="index.php?r=site/trafficdetail">查看有效期</a>
             </td>
         </tr>
 

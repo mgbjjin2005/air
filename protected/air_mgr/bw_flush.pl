@@ -1,5 +1,5 @@
 =pod
-用户实时流量 
+功能：统计用户的实时流量 
 此表是跟freeradius.radacct的关联表，每5/10分钟汇总一次流量。具体流程为
 1、取radacct表的所有记录A，按照用户名、mac两个维度做流量统计
 2、对每组（user_name、mac、traffic_A)

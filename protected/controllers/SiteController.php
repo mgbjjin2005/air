@@ -95,13 +95,22 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
-        $sql  = "select traffic_packet,traffic_addition, traffic_recharge, traffic_idle, ";
+
+        /*每月的0点 到 0点10分为出账期，不允许查账*/
+        $day = Date("d");
+        if ($day == 1) {
+            Yii::app()->session['msg'] =  "正在出账，还没有本月的相关信息。请在10分钟以后再来查询...";
+            $this->render('error_msg');
+            return;
+        }
+
+        $sql  = "select traffic_idle, ";
         $sql .= "movie_tickets, traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
         $sql .= "user_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
         if($count != 1){
-            Yii::app()->session['msg'] = "还没有本月的相关信息。count=$count";
+            Yii::app()->session['msg'] =  "没有查询到您的相关信息，请联系管理员";
             $this->render('error_msg');
             return;
         }
@@ -110,24 +119,22 @@ class SiteController extends Controller
         $ret['user_name'] = $user_name;
         foreach ($set_t as $tuple) {
             $ret['movie_tickets']   = $tuple['movie_tickets'];
-            $ret['traffic_packet']   = $tuple['traffic_packet'];
-            $ret['traffic_addition'] = $tuple['traffic_addition'];
-            $ret['traffic_recharge'] = $tuple['traffic_recharge'];
+            //$ret['traffic_packet']   = $tuple['traffic_packet'];
+            //$ret['traffic_addition'] = $tuple['traffic_addition'];
+            //$ret['traffic_recharge'] = $tuple['traffic_recharge'];
             $ret['traffic_idle']     = $tuple['traffic_idle'];
             $ret['traffic_busy']     = $tuple['traffic_busy'];
             $ret['traffic_internal'] = $tuple['traffic_internal'];
             $ret['traffic_bill']     = $tuple['traffic_bill'];
             $ret['traffic_remain']   = $tuple['traffic_remain'];
 
-            $ret['total'] = $ret['traffic_addition'] + $ret['traffic_recharge'] + 
-                            $ret['traffic_packet'];
         }
 
         $sql = " select balance from user_info where user_name = '$user_name'";
         $set_u = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_u);
         if($count != 1){
-            Yii::app()->session['msg'] = "位查到此用户信息。count=$count";
+            Yii::app()->session['msg'] = "未查到此用户信息。count=$count";
             $this->render('error_msg');
         }
 

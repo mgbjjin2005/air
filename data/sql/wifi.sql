@@ -139,19 +139,21 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_auto` (
 
 
 /*订单（固定套餐、流量包）*/
+/*
+auto_key: 非必填，对于自动扣费的套餐，需要填充此项,格式 "201405_".packet_auto.auto_id，
+用于一致性检查
+state: 主要用于流量包的一致性检查，对于固定套餐的，可以忽略此项
+*/
 CREATE TABLE IF NOT EXISTS `air`.`packet_deal` (
    `auto_id`       bigint(20)      NOT NULL   AUTO_INCREMENT,
-   `deal_id`       varchar(32)     NOT NULL,                    /*交易ID 1405281407690001*/
    `user_name`     varchar(64)     NOT NULL,                    /*用户名*/
    `packet_id`     bigint(20)      NOT NULL,                    /*套餐ID*/
-   `start_date`    TIMESTAMP       NOT NULL,                    /*开始时间*/
-   `stop_date`     TIMESTAMP       NOT NULL,                    /*失效时间*/
    `price`         DECIMAL(14,2)   DEFAULT  '0.0',              /*当时购买价格*/
-   `state`         varchar(16)     NOT NULL,                    /*doing(正在做)/done(已完成)*/
+   `auto_key`      varchar(32),                                 /*非必填，对于自动扣费的套餐，需要填充此项*/
+   `state`         varchar(16)     NOT NULL,                    /*init(正在做)/done(已完成)*/
    `create_date`   TIMESTAMP,                                   /*创建时间*/
 
    PRIMARY KEY (`auto_id`),
-   INDEX(`deal_id`),
    INDEX(`state`),
    INDEX(`user_name`,`state`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

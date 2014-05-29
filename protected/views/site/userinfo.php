@@ -58,37 +58,31 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
     </colgroup>
     <thead>
         <tr>
-            <th colspan="2">流量信息</th>
+            <th colspan="2">本月流量信息</th>
         </tr>
     </thead>
     <tbody>
 
         <tr>
-            <td>套餐流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_packet);?>MB</td>
+            <td>已用忙时流量</td>
+            <td><?php echo sprintf("%.2f", $traffic_busy);?>MB</td>
         </tr>
 
         <tr>
-            <td>加油包</td>
-            <td><?php echo sprintf("%.2f", $traffic_recharge);?>MB
-            </td>
+            <td>已用闲时流量</td>
+            <td><?php echo sprintf("%.2f", $traffic_idle);?>MB</td>
         </tr>
 
         <tr>
-            <td>其它赠送</td>
-                <td><?php echo sprintf("%.2f",$traffic_addition)?>MB
-            </td>
+            <td>已用电影流量</td>
+            <td><?php echo sprintf("%.2f",$traffic_internal)?>MB</td>
         </tr>
-
 
         <tr>
-            <td>已用流量</td>
-            <td> <?php echo sprintf("%.2f", $traffic_idle + $traffic_busy + $traffic_internal);?>MB<br>
-                -<?php echo sprintf("%.2f", $traffic_busy);?>MB忙时<br>
-                -<?php echo sprintf("%.2f", $traffic_idle);?>MB闲时<br>
-                -<?php echo sprintf("%.2f", $traffic_internal);?>MB内网<br>
-            </td>
+            <td>已使用总流量</td>
+            <td> <?php echo sprintf("%.2f", $traffic_idle + $traffic_busy + $traffic_internal);?>MB</td>
         </tr>
+
 
         <tr>
             <td>计费流量</td>

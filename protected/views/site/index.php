@@ -12,7 +12,7 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 
 <div class="menu">
     <a href="index.php?r=site/userinfo">我的账户</a>
-    <a href="index.php?r=site/transanction">业务办理</a>
+    <a href="index.php?r=service/transanction">业务办理</a>
     <a href="tv">影视专区</a>
     <a href="howto">如何使用</a>
     <a href="qa">常见问题</a>

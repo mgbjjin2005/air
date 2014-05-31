@@ -19,38 +19,56 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
 ?>
 
 <div class="content">
+<?php foreach($set_t as $row): ?>
 <table class="table table-bordered table-striped">
-    <colgroup>
-        <col class="span1">
-        <col class="span1">
-        <col class="span1">
-    </colgroup>
     <thead>
         <tr>
-            <th colspan="3">套餐列表</th>
-        </tr>
-        <tr>
-            <th>价格</th>
-            <th>流量</th>
-            <th>办理</th>
+            <th colspan="2">套餐:<?php echo $row['p_desc']; ?></th>
+            
         </tr>
     </thead>
     <tbody>
-
-    <?php foreach($set_t as $row): ?>
         <tr>
+            <td>价格</td>
             <td><?php echo sprintf("%.2f", $row["price"]);?> 元</td>
-            <td><?php echo sprintf("%.2f", $row["traffic"]);?>MB</td>
-            <td>办理</td>
         </tr>
-     <?php endforeach; ?> 
+        <tr>
+            <td>流量</td>
+            <td><?php echo sprintf("%.2f", $row["traffic"]);?>MB</td>
+        </tr>
+        <tr>
+            <td>电影豆</td>
+            <td><?php echo sprintf("%.2f", $row["movie_tickets"]);?>豆</td>
+        </tr>
 
         <tr>
-            <td colspan="2">取消我的套餐</td>
-            <td>办理</td>
+            <td>状态</td>
+            <td>
+            <?php if ($row["user_status"] == true): ?>
+                当前已开通
+            <?php elseif ($row["user_status"] == false): ?>
+                当前可开通
+            <?php endif; ?>
+            </td>
         </tr>
+        <tr>
+            <td></td>
+            <td>
+            <?php if ($row["user_status"] == true): ?>
+                <a href="#">
+                取消此套餐
+                </a>
+            <?php elseif ($row["user_status"] == false): ?>
+                <a href="index.php?r=service/OpenPacket">
+                开通此套餐
+                </a>
+            <?php endif; ?>
+
+            </td>
+        </tr>
+
     </tbody>
 </table>
-
+ <?php endforeach; ?>
 </div>
 

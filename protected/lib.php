@@ -45,13 +45,6 @@ function airAutoLogin()
 }
 
 
-function air_add_packet_auto()
-{
-    $auto_id = 0;
-    return $auto_id;
-}
-
-
 /*
 添加套餐交易。
 start_time 格式：2014-05-29 12:15:36

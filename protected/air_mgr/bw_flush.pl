@@ -1,4 +1,7 @@
 =pod
+流量计费的相关定义：
+时间点： 10:00时脚本统计的流量是来自09:55~10:00的流量，流量计费09:55的流量。 
+
 功能：统计用户的实时流量 
 此表是跟freeradius.radacct的关联表，每5/10分钟汇总一次流量。具体流程为
 1、取radacct表的所有记录A，按照用户名、mac两个维度做流量统计
@@ -30,7 +33,7 @@ use constant IDLE_RATIO => 3; #闲时流量的折算比
 use constant STAT_INTERVAL => 300;
 
 my ($db_air, $db_radius);
-my ($v_date, $sql, $sql_update, $sql_sub, $count );
+my ($v_day, $v_date, $sql, $sql_update, $sql_sub, $count );
 my ($year, $mon, $day, $hour, $min);
 my ($sth, $sth_insert);
 
@@ -41,14 +44,16 @@ my %delete_hash = (); #记录已经完成的记录的t_id，后面会删除
 
 $count = 0;
 ($year, $mon, $day, $hour, $min) = &air_get_normalized_time();
-$v_date="$year-$mon-$day";
+$v_day="$year-$mon-$day";
+$v_date="$year-$mon-$day $hour:$min:00";
 
-my $cur_date_type = &air_get_date_type("$year-$mon-$day $hour:$min:00");
-
-my $stp = timelocal(0, $min, $hour, $day, $mon-1 , $year-1900);
 my ($prev_year, $prev_mon, $prev_day, $prev_hour, $prev_min) =
-    &air_get_normalized_time($stp - STAT_INTERVAL);
+    &air_get_normalized_time(time() - STAT_INTERVAL);
 
+my $v_prev_day = "$prev_year-$prev_mon-$prev_day";
+my $v_prev_date = "$v_prev_day $prev_hour:$prev_min:00";
+
+my $cur_date_type = &air_get_date_type($v_date);
 
 $db_air    = &air_connect_db("air", "localhost", "air", "***King1985***", "3306");
 $db_radius = &air_connect_db("radius", "localhost", "air", "***King1985***", "3306");
@@ -115,7 +120,7 @@ if ($sth->execute()) {
 #2、取traffic_realtime表
 
 $sql  = "select user_name, traffic, update_date from traffic_realtime ";
-$sql .= "where update_date = '$prev_year-$prev_mon-$prev_day $prev_hour:$prev_min:00'";
+$sql .= "where update_date < '$v_date'";
 
 $sth = $db_air->prepare($sql);
 if ($sth->execute()) {
@@ -125,7 +130,6 @@ if ($sth->execute()) {
         $old_rt_hash{$username}{"date_type"} = &air_get_date_type($update_date); #"idle/busy"
     }
 }
-
 
 #3、把已经完成的session记录从radacct表删除--------
 $count = 0;
@@ -148,13 +152,12 @@ if ($count > 0) {
     #$sth -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
 }
 
-
 #4、记录还在线的用户信息-----------------
 
 foreach my $username (keys %origin_hash) {
     if (exists($origin_hash{$username}{"not_finish"})) {
         $new_rt_hash{$username}{"traffic"} = $origin_hash{$username}{"not_finish"};
-        $new_rt_hash{$username}{"date"} = "$v_date $hour:$min:00";
+        $new_rt_hash{$username}{"date"} = "$v_date";
     }
 }
 
@@ -189,12 +192,31 @@ if ($count > 0) {
 
 #6、清空traffic_realtime------------------
 
-$sql = "delete from traffic_realtime where update_date < '$v_date $hour:$min:00'";
+$sql = "delete from traffic_realtime where update_date < '$v_date'";
 $sth = $db_air->prepare($sql);
 $sth -> execute() or &air_write_log("ERROR ".$sth->errstr);
 
 
 #7、更新用户带宽数据表-------------------
+
+$sql  = "select auto_id,user_name,remain, unix_timestamp(stop_date) from user_quota where ";
+$sql .= "category = 'traffic' and  state='enable' and start_date < '$v_date'";
+$sth = $db_air->prepare($sql);
+if ($sth->execute()) {
+    while (my $ref = $sth->fetchrow_hashref()) {
+        my ($auto_id,$stop_stp) = ($ref->{'auto_id'}, $ref->{'stop_date'});
+        my ($user_name,$remain) = ($ref->{'user_name'}, $ref->{'remain'});
+
+        $quota_hash{$user_name}{$auto_id}{"remain"} = $remain;
+        $quota_hash{$user_name}{$auto_id}{"stop_stp"} = $stop_stp;
+        $quota_hash{$user_name}{$auto_id}{"state"} = "enable";
+        $quota_hash{$user_name}{$auto_id}{"state_desc"} = "null";
+        $quota_hash{$user_name}{$auto_id}{"change"} = "no";
+    }
+}
+
+
+# 
 
 foreach my $username (keys %origin_hash) {
     my $traffic = 0;
@@ -238,7 +260,7 @@ foreach my $username (keys %origin_hash) {
                 $t_bill += $traffic/IDLE_RATIO;
                 $t_remain -= $traffic/IDLE_RATIO;
             }
-
+  
             $sql  = "update traffic_mon set traffic_idle = $t_idle, traffic_busy = $t_busy,";
             $sql .= "traffic_bill = $t_bill, traffic_remain = $t_remain where user_name = '$username'";
             $sql .= " and date_mon = '$year$mon'";
@@ -259,7 +281,7 @@ foreach my $username (keys %origin_hash) {
 
 &air_write_log();
 
-print("date=$v_date $hour:$min\n");
+print("date=$v_date\n");
 
 exit 0;
 #-----------------------------------------------

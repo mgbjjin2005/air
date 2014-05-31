@@ -433,8 +433,8 @@ table {
 .table thead th {
   vertical-align: bottom;
 }
-.table colgroup + thead tr:first-child th,
-.table colgroup + thead tr:first-child td,
+/*.table colgroup + thead tr:first-child th,
+.table colgroup + thead tr:first-child td,*/
 .table thead:first-child tr:first-child th,
 .table thead:first-child tr:first-child td {
   border-top: 0;
@@ -490,12 +490,21 @@ table {
 }
 .table-striped tbody tr:nth-child(odd) td,
 .table-striped tbody tr:nth-child(odd) th {
-  background-color: #f9f9f9;
+  /*background-color: #f9f9f9;*/
 }
 .table tbody tr:hover td,
 .table tbody tr:hover th {
   background-color: #f5f5f5;
 }
+/*by haodan*/
+.table-striped thead{
+ background-color: #f9f9f9;
+}
+.table-bordered tbody tr td:first-child {
+    width:100px;
+}
+
+
 table .span1 {
   float: none;
   width: 44px;

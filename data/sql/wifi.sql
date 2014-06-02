@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_auto` (
    `packet_id`     bigint(20)      NOT NULL,
    `enable_state`  varchar(16)     NOT NULL   DEFAULT 'enable', /*状态 enable/disable*/
    `check_date`    TIMESTAMP       NOT NULL,                    /*检查点*/
+   `valid_date`    TIMESTAMP       NOT NULL,                    /*套餐第一次生效的时间*/
    `create_date`   TIMESTAMP,                                   /*创建时间*/
 
    PRIMARY KEY (`auto_id`),
@@ -149,7 +150,8 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_deal` (
    `user_name`     varchar(64)     NOT NULL,                    /*用户名*/
    `packet_id`     bigint(20)      NOT NULL,                    /*套餐ID*/
    `price`         DECIMAL(14,2)   DEFAULT  '0.0',              /*当时购买价格*/
-   `auto_key`      varchar(32),                                 /*非必填，对于自动扣费的套餐，需要填充此项*/
+   `start_date`    TIMESTAMP       NOT NULL,                    /*开始时间*/
+   `stop_date`     TIMESTAMP       NOT NULL,                    /*资源过期时间*/
    `state`         varchar(16)     NOT NULL,                    /*init(正在做)/done(已完成)*/
    `create_date`   TIMESTAMP,                                   /*创建时间*/
 
@@ -178,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_quota` (
 
    PRIMARY KEY (`auto_id`),
    INDEX(`start_date`),
+   INDEX(`stop_date`),
    INDEX(`category`,`state`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

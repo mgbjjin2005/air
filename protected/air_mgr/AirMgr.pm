@@ -5,7 +5,7 @@
 package AirMgr;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(air_get_date_type air_connect_db air_get_normalized_time air_write_log);
+@EXPORT = qw(air_connect_db_tranc air_msg_user air_get_date_type air_connect_db air_get_normalized_time air_write_log);
 use strict;
 use warnings;
 use DBI;
@@ -15,6 +15,18 @@ use constant LOG=>"/temp/air_mgr.log";
 sub air_connect_db(){
     my($name,$host,$user,$passwd,$port) = @_;
     my $DB_DBH = DBI->connect("DBI:mysql:database=$name;host=$host:$port","$user", "$passwd");
+    if (!$DB_DBH){
+        write_log("ERROR ".$DBI::errstr);
+        exit 0;
+    }
+    $DB_DBH->do("SET NAMES 'utf8'");
+    return $DB_DBH;
+}
+
+sub air_connect_db_tranc(){
+    my($name,$host,$user,$passwd,$port) = @_;
+    my $DB_DBH = DBI->connect("DBI:mysql:database=$name;host=$host:$port","$user",
+                "$passwd", {'RaiseError' => 1, 'AutoCommit' => 0});
     if (!$DB_DBH){
         write_log("ERROR ".$DBI::errstr);
         exit 0;
@@ -43,18 +55,28 @@ sub air_get_date_type
     #2014-05-17 20:26:43
     my $time = shift;
 
-    if ($time =~ /\s+(\d+):\d+:\d+/) {
-        if ($1 >= 7 && $1 < 23) {
+    if ($time =~ /\s+(\d+):(\d+):\d+/) {
+        my ($hour, $min) = ($1, $2);
+        if ($hour > 7 && $hour < 23) {
+            return "busy";
+
+        } elsif ($hour == 7 && $min > 0) {
+            return "busy";
+
+        } elsif ($hour == 23 && $min == 0) {
             return "busy";
         }
     }
-
     return "idle";
 }
 
 sub air_write_log()
 {
 
+}
+
+sub air_msg_user()
+{
 }
 
 1;

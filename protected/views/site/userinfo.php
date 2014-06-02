@@ -13,52 +13,53 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 <div class="content">
 
 <table class="table table-bordered table-striped">
-    <colgroup>
-        <col class="span2">
-        <col class="span4">
-    </colgroup>
     <thead>
         <tr>
-            <th colspan="2">账户信息总览</th>
+            <th colspan="3">账户信息总览</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>用户名称</td>
             <td><?php echo $user_name;?></td>
+            <td></td>
         </tr>
-
+        <!--
         <tr>
             <td>本月消费</td>
             <td>35.0 元</td>
         </tr>
-
+        -->
         <tr>
-            <td>电影券</td>
-            <td><?php echo sprintf("%.2f", $movie_tickets);?>元<a href="index.php?r=site/charge"> 查看有效期</a></td>
+            <td>电影豆</td>
+            <td><?php echo sprintf("%.2f", $movie_tickets);?>豆</td>
+            <td><a href="index.php?r=service/movieTicketsDetail"> 详情</a></td>
         </tr>
 
         <tr>
             <td>账户余额</td>
-            <td><?php echo sprintf("%.2f",$balance);?> 元 <a href="index.php?r=site/charge">充值</a></td>
+            <td><?php echo sprintf("%.2f",$balance);?> 元</td>
+            <td>
+                <a href="index.php?r=charge">充值</a>
+                </br>
+                <a href="index.php?r=charge/chargeDetail">历史记录</a>
+            </td>
         </tr>
 
         <tr>
             <td>绑定状态</td>
-            <td>已绑定 <a href="index.php?r=site/bindinfo">了解详情</a></td>
+            <td>已绑定 </td>
+            <td><a href="index.php?r=site/bindinfo">详情</a></td>
         </tr>
 
     </tbody>
 </table>
 
 <table class="table table-bordered table-striped">
-    <colgroup>
-        <col class="span2">
-        <col class="span4">
-    </colgroup>
     <thead>
         <tr>
-            <th colspan="2">本月流量信息</th>
+            <th>本月流量</th>
+            <th><a href="index.php?r=service/userPacketDetail">当前开通详情</a></th>
         </tr>
     </thead>
     <tbody>
@@ -91,8 +92,7 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 
         <tr>
             <td>剩余流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_remain);?>MB 
-                <a href="index.php?r=site/trafficdetail">查看有效期</a>
+            <td><?php echo sprintf("%.2f", $traffic_remain);?>MB</td>
             </td>
         </tr>
 

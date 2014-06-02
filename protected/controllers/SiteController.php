@@ -45,17 +45,19 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
-
+        
         /*每月的0点 到 0点10分为出账期，不允许查账*/
+        /*
         $day = Date("d");
         if ($day == 1) {
             Yii::app()->session['msg'] =  "正在出账，还没有本月的相关信息。请在10分钟以后再来查询...";
             $this->render('error_msg');
             return;
         }
-
+        */
+        //流量相关的
         $sql  = "select traffic_idle, ";
-        $sql .= "movie_tickets, traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
+        $sql .= "traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
         $sql .= "user_mon where user_name = '$user_name' and date_mon = '$cur_mon'";
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
@@ -68,18 +70,14 @@ class SiteController extends Controller
         $ret = array();
         $ret['user_name'] = $user_name;
         foreach ($set_t as $tuple) {
-            $ret['movie_tickets']   = $tuple['movie_tickets'];
-            //$ret['traffic_packet']   = $tuple['traffic_packet'];
-            //$ret['traffic_addition'] = $tuple['traffic_addition'];
-            //$ret['traffic_recharge'] = $tuple['traffic_recharge'];
             $ret['traffic_idle']     = $tuple['traffic_idle'];
-            $ret['traffic_busy']     = $tuple['traffic_busy'];
+             $ret['traffic_busy']     = $tuple['traffic_busy'];
             $ret['traffic_internal'] = $tuple['traffic_internal'];
             $ret['traffic_bill']     = $tuple['traffic_bill'];
             $ret['traffic_remain']   = $tuple['traffic_remain'];
 
         }
-
+        //账户余额
         $sql = " select balance from user_info where user_name = '$user_name'";
         $set_u = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_u);
@@ -91,6 +89,11 @@ class SiteController extends Controller
         foreach ($set_u as $tuple) {
             $ret['balance']   = $tuple['balance'];
         }
+        //电影豆获取
+        $dbDeal=new DbDeal();
+        $ret['movie_tickets']=$dbDeal->getUserServiceCount("beans");
+        //get detail
+        
         $this->render('userinfo', $ret);
         
     }
@@ -111,13 +114,15 @@ class SiteController extends Controller
 	}
     public function actionWarning()
 	{
+        $req =  Yii::app()->request ;
+
         $retData=array();
-        $retData["return_url"]="index.php?r=site/index";
-        $retData["message"]="";
+        $retData["return_url"]=$req->getParam("return_url","index.php?r=site/index");
+        $retData["message"]=$req->getParam("message","");
 
 	    $this->render('warning', $retData);
 	}
-
+    
 
 	/**
 	 * Displays the contact page
@@ -179,5 +184,4 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-
 }

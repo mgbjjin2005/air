@@ -1,686 +1,1686 @@
-2014/05/17 10:43:41 [error] [php] date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'Asia/Chongqing' for 'CST/8.0/no DST' instead (/opt/nginx/yii/air/protected/views/layouts/main.php:51)
+2014/06/01 21:29:38 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:38 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='air'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:40 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=9
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (158)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:42 [info] [sql] stop_date=2014-12-01 21:29:41 stop_stamp=1417440582
+
+in /opt/nginx/yii/air/protected/lib.php (88)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (330)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:42 [info] [sql] insert into user_quota (user_name, category, quota, remain, deal_id, state, state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ('air', 'traffic', 100.00, 100.00, 43, 'enable', '未启用', '5元100MB', 'addition', '2014-06-01 21:29:42', '2014-12-01 21:29:41',now()) ,('air', 'beans',  2.00, 2.00, 43, 'enable', '未启用', '5元100MB', 'addition', '2014-06-01 21:29:42', '2014-12-01 21:29:41',now()) ;
+in /opt/nginx/yii/air/protected/lib.php (129)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (330)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:42 [info] [sql] update packet_deal set state = 'done' where auto_id = 43;
+in /opt/nginx/yii/air/protected/lib.php (132)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (330)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:29:42 [info] [sql] update user_info set balance = balance - 5.00, total_cost = total_cost + 5.00 where user_name = 'air';
+in /opt/nginx/yii/air/protected/lib.php (136)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (330)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:26 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:26 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:29 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:29 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:34 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:39 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:39 [info] [haodan] 2014-06-01  21:40:39 201406  2014 06  2014-07-01  00:00:00 2014-06-01  00:00:00
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (283)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:40:39 [info] [haodan] insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
+                ('acer',2,'2014-06-01  00:00:00','2014-06-01  00:00:00','2014-06-01  21:40:39')
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (286)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:42:15 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:42:20 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:43:03 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:43:03 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:43:05 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:43:06 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (359)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:43:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "charge/chargeDetail".' in /opt/nginx/yii/framework/web/CWebApplication.php:286
 Stack trace:
-#0 /opt/nginx/yii/framework/web/CBaseController.php(95): SiteController->renderInternal()
-#1 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(76): SiteController->renderFile()
-#2 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
-#3 /opt/nginx/yii/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
-#4 /opt/nginx/yii/framework/web/CBaseController.php(206): CContentDecorator->run()
-#5 /opt/nginx/yii/framework/web/CBaseController.php(300): SiteController->endWidget()
-#6 /opt/nginx/yii/air/protected/views/layouts/column1.php(6): SiteController->endContent()
-#7 /opt/nginx/yii/framework/web/CBaseController.php(126): require()
-#8 /opt/nginx/yii/framework/web/CBaseController.php(95): SiteController->renderInternal()
-#9 /opt/nginx/yii/framework/web/CController.php(784): SiteController->renderFile()
-#10 /opt/nginx/yii/air/protected/controllers/SiteController.php(32): SiteController->render()
-#11 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#12 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#13 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#14 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#15 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#16 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#17 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#18 /opt/nginx/yii/air/index.php(13): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/views/layouts/main.php (51)
-in /opt/nginx/yii/air/protected/views/layouts/column1.php (6)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (32)
-2014/05/17 22:37:43 [error] [php] SiteController::actionIndex(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'Asia/Chongqing' for 'CST/8.0/no DST' instead (/opt/nginx/yii/air/protected/controllers/SiteController.php:30)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#5 /opt/nginx/yii/air/index-test.php(15): CWebApplication->run()
-REQUEST_URI=/index-test.php
-2014/05/17 22:39:45 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
-Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(131): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index-test.php(16): CApplication->run()
-#12 {main}
-REQUEST_URI=/index-test.php
+#0 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('charge/chargeDe...')
+#1 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=charge/chargeDetail
+HTTP_REFERER=http://10.0.0.1/index.php?r=site/userinfo
 ---
-2014/05/17 22:41:16 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
+2014/06/01 21:43:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "bindinfo".' in /opt/nginx/yii/framework/web/CController.php:483
 Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(131): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index-test.php(16): CApplication->run()
-#12 {main}
-REQUEST_URI=/index-test.php
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('bindinfo')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('bindinfo')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/bindinfo')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/bindinfo
+HTTP_REFERER=http://10.0.0.1/index.php?r=site/userinfo
 ---
-2014/05/17 22:54:47 [error] [php] Undefined index: mac (/opt/nginx/yii/air/protected/controllers/SiteController.php:140)
+2014/06/01 21:43:24 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (372)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:46:17 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:46:19 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:47:41 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:49:16 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:49:18 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:51:32 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:51:34 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (273)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:52:50 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:52:51 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (273)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:54:12 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:54:13 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:56:15 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:56:18 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:56:31 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:56:31 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3. The SQL statement executed was: select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=.
+in /opt/nginx/yii/air/protected/components/DbDeal.php (23)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:56:31 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3. The SQL statement executed was: select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=' in /opt/nginx/yii/framework/db/CDbCommand.php:543
 Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#1 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#2 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#3 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#4 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#5 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#6 /opt/nginx/yii/air/index.php(13): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (140)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (30)
-in /opt/nginx/yii/air/index.php (13)
-2014/05/17 22:58:16 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection.connectionString cannot be empty.' in /opt/nginx/yii/framework/db/CDbConnection.php:370
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbConnection.php(330): CDbConnection->open()
-#1 /opt/nginx/yii/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
-#2 /opt/nginx/yii/framework/base/CModule.php(387): CDbConnection->init()
-#3 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db')
-#4 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CModule->__get('db')
-#5 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#6 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#7 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#8 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#9 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#10 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#11 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#12 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#13 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#14 {main}
-REQUEST_URI=/
----
-2014/05/17 22:58:38 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
-Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
----
-2014/05/17 23:02:58 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
-Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
----
-2014/05/17 23:03:01 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
-Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
----
-2014/05/17 23:03:09 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
-Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CModule.php(103): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CModule->__get('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index-test.php(16): CApplication->run()
-#12 {main}
-REQUEST_URI=/index-test.php
----
-2014/05/18 03:40:34 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection.connectionString cannot be empty.' in /opt/nginx/yii/framework/db/CDbConnection.php:370
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbConnection.php(330): CDbConnection->open()
-#1 /opt/nginx/yii/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
-#2 /opt/nginx/yii/framework/base/CModule.php(387): CDbConnection->init()
-#3 /opt/nginx/yii/framework/base/CApplication.php(450): CModule->getComponent('db')
-#4 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CApplication->getDb('db_radius')
-#5 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#6 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#7 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#8 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#9 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#10 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#11 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#12 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#13 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#14 {main}
-REQUEST_URI=/
----
-2014/05/18 03:45:35 [error] [exception.CException] exception 'CException' with message 'CWebApplication and its behaviors do not have a method or closure named "getDbBy_name".' in /opt/nginx/yii/framework/base/CComponent.php:266
-Stack trace:
-#0 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CComponent->__call('getDbBy_name', Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CWebApplication->getDbBy_name('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /opt/nginx/yii/air/protected/components/DbDeal.php(23): CDbCommand->queryAll()
+#2 /opt/nginx/yii/air/protected/controllers/ServiceController.php(272): DbDeal->getPacketAutoById('')
+#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionOpenPacket()
 #4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
 #5 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
 #6 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('openPacket')
+#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/openPac...')
 #9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(13): CApplication->run()
+#10 /opt/nginx/yii/air/index.php(15): CApplication->run()
 #11 {main}
-REQUEST_URI=/
+REQUEST_URI=/index.php?r=service/openPacket
 ---
-2014/05/18 03:46:14 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
+2014/06/01 21:57:06 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:57:29 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:58:05 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:58:27 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:58:28 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:59:22 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 21:59:22 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:00:39 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:00:40 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:01:56 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:01:57 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:06:20 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:06:21 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:08:43 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:08:45 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:29 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:29 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:31 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=9
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (158)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:34 [info] [sql] stop_date=2014-12-01 22:09:33 stop_stamp=1417442974
+
+in /opt/nginx/yii/air/protected/lib.php (88)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:34 [info] [sql] insert into user_quota (user_name, category, quota, remain, deal_id, state, state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ('acer', 'traffic', 100.00, 100.00, 45, 'enable', '未启用', '5元100MB', 'addition', '2014-06-01 22:09:34', '2014-12-01 22:09:33',now()) ,('acer', 'beans',  2.00, 2.00, 45, 'enable', '未启用', '5元100MB', 'addition', '2014-06-01 22:09:34', '2014-12-01 22:09:33',now()) ;
+in /opt/nginx/yii/air/protected/lib.php (129)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:34 [info] [sql] update packet_deal set state = 'done' where auto_id = 45;
+in /opt/nginx/yii/air/protected/lib.php (132)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:09:34 [info] [sql] update user_info set balance = balance - 5.00, total_cost = total_cost + 5.00 where user_name = 'acer';
+in /opt/nginx/yii/air/protected/lib.php (136)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:03 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:03 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:09 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:09 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:11 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:11 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:17 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=4
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:19 [info] [sql] stop_date=2014-07-01 22:11:18 stop_stamp=1404223879
+
+in /opt/nginx/yii/air/protected/lib.php (88)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:19 [info] [sql] insert into user_quota (user_name, category, quota, remain, deal_id, state, state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ('acer', 'traffic', 450.00, 450.00, 46, 'enable', '未启用', '20元450MB', 'packet', '2014-06-01 22:11:19', '2014-07-01 22:11:18',now()) ,('acer', 'beans',  10.00, 10.00, 46, 'enable', '未启用', '20元450MB', 'packet', '2014-06-01 22:11:19', '2014-07-01 22:11:18',now()) ;
+in /opt/nginx/yii/air/protected/lib.php (129)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:19 [info] [sql] update packet_deal set state = 'done' where auto_id = 46;
+in /opt/nginx/yii/air/protected/lib.php (132)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:11:19 [info] [sql] update user_info set balance = balance - 20.00, total_cost = total_cost + 20.00 where user_name = 'acer';
+in /opt/nginx/yii/air/protected/lib.php (136)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:14 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:14 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2. The SQL statement executed was: select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=.
+in /opt/nginx/yii/air/protected/components/DbDeal.php (39)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:14 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2. The SQL statement executed was: select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=' in /opt/nginx/yii/framework/db/CDbCommand.php:543
 Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CApplication.php(455): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CApplication->getDbByName('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
+#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /opt/nginx/yii/air/protected/components/DbDeal.php(39): CDbCommand->queryAll()
+#2 /opt/nginx/yii/air/protected/controllers/ServiceController.php(120): DbDeal->getPacketInfoById('')
+#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionConfirmOpenPacket()
+#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('confirmOpenPack...')
+#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/confirm...')
+#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=service/confirmOpenPacket
 ---
-2014/05/18 03:47:44 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
+2014/06/01 22:12:35 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (158)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:46 [info] [sql] stop_date=2014-07-01 22:12:45 stop_stamp=1404223966
+
+in /opt/nginx/yii/air/protected/lib.php (88)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:46 [info] [sql] insert into user_quota (user_name, category, quota, remain, deal_id, state, state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ('acer', 'traffic', 30.00, 30.00, 47, 'enable', '未启用', '0元30MB(免费赠送,无需取消)', 'packet', '2014-06-01 22:12:46', '2014-07-01 22:12:45',now()) 
+in /opt/nginx/yii/air/protected/lib.php (129)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:46 [info] [sql] update packet_deal set state = 'done' where auto_id = 47;
+in /opt/nginx/yii/air/protected/lib.php (132)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:12:46 [info] [sql] update user_info set balance = balance - 0.00, total_cost = total_cost + 0.00 where user_name = 'acer';
+in /opt/nginx/yii/air/protected/lib.php (136)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (342)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:13:03 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:10 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:10 [info] [haodan] 2014-06-01  22:14:10 201406  2014 06  2014-07-01  00:00:00 2014-06-01  00:00:00
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (284)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:10 [info] [haodan] insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
+                ('acer',1,'2014-06-01  00:00:00','2014-06-01  00:00:00','2014-06-01  22:14:10')
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (287)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:17 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:17 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:22 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:22 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:25 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=4
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:28 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=4
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:28 [info] [haodan] 2014-06-01  22:14:28 201406  2014 06  2014-07-01  00:00:00 2014-06-01  00:00:00
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (284)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:28 [info] [haodan] insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
+                ('acer',4,'2014-06-01  00:00:00','2014-06-01  00:00:00','2014-06-01  22:14:28')
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (287)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:31 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:31 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:37 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (190)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:14:39 [info] [haodan] update packet_auto set enable_state='disable' where user_name='acer' and packet_id=1
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (308)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:11 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:11 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:12 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:12 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:15 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (190)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:19:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "deleteAddition".' in /opt/nginx/yii/framework/web/CController.php:483
 Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CApplication.php(455): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CApplication->getDbByName('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('deleteAddition')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('deleteAddition')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/deleteA...')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=service/deleteAddition
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/confirmDeletePacket
 ---
-2014/05/18 03:48:14 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
+2014/06/01 22:20:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "deleteAddition".' in /opt/nginx/yii/framework/web/CController.php:483
 Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CApplication.php(455): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CApplication->getDbByName('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('deleteAddition')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('deleteAddition')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/deleteA...')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=service/deleteAddition
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/confirmDeletePacket
 ---
-2014/05/18 03:48:25 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /opt/nginx/yii/framework/YiiBase.php:193
+2014/06/01 22:20:03 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (190)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:04 [info] [haodan] update packet_auto set enable_state='disable' where user_name='acer' and packet_id=2
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (308)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:08 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:08 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:13 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=3
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (190)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:14 [info] [haodan] update packet_auto set enable_state='disable' where user_name='acer' and packet_id=3
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (308)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:17 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:17 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:20 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:20 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:25 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=3
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:30 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=3
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:30 [info] [haodan] 2014-06-01  22:20:30 201406  2014 06  2014-07-01  00:00:00 2014-06-01  00:00:00
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (284)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/01 22:20:30 [info] [haodan] insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
+                ('acer',3,'2014-06-01  00:00:00','2014-06-01  00:00:00','2014-06-01  22:20:30')
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (287)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 05:31:22 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 05:33:03 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 05:40:53 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 05:58:38 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 06:23:09 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 06:23:40 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 06:47:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:06 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:32 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'acer' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:39 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:49 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:49 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:52 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:12:52 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:04 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:07 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable' and packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (22)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (272)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:07 [info] [haodan] 2014-06-02  07:13:07 201406  2014 06  2014-07-01  00:00:00 2014-06-01  00:00:00
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (284)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:07 [info] [haodan] insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
+                ('acer',1,'2014-06-01  00:00:00','2014-06-01  00:00:00','2014-06-02  07:13:07')
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (287)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:15 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:15 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:31 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:13:33 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'acer' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:14:01 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:14:05 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 07:14:05 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:05:13 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:05:19 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:37:25 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:37:43 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:37:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:16 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:20 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:21 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:21 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:21 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:22 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:22 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:22 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:23 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:26 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:27 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:27 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:27 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:28 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:28 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:28 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:38:29 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:41:25 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:41:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:42:05 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 09:42:21 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:08 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:08 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:10 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=1
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (190)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:12 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:12 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:14 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=2
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (120)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:28 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 10:28:28 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 12:47:12 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 13:13:33 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 13:19:20 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 13:58:28 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:07:26 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:13:58 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:13:59 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:14:01 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:16:54 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:19:06 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'mi' and category='beans'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (360)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:19:32 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:23 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:39 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:39 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:44 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:44 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:48 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where packet_id=13
+in /opt/nginx/yii/air/protected/components/DbDeal.php (38)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (158)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:49 [info] [sql] stop_date=2014-12-02 14:57:48 stop_stamp=1417503469
+
+in /opt/nginx/yii/air/protected/lib.php (88)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (335)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:49 [info] [sql] insert into user_quota (user_name, category, quota, remain, deal_id, state, state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ('acer', 'traffic', 800.00, 800.00, 51, 'enable', '未启用', '40元800MB', 'addition', '2014-06-02 14:57:49', '2014-12-02 14:57:48',now()) ,('acer', 'beans',  16.00, 16.00, 51, 'enable', '未启用', '40元800MB', 'addition', '2014-06-02 14:57:49', '2014-12-02 14:57:48',now()) ;
+in /opt/nginx/yii/air/protected/lib.php (129)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (335)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:49 [info] [sql] update packet_deal set state = 'done' where auto_id = 51;
+in /opt/nginx/yii/air/protected/lib.php (132)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (335)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:49 [info] [sql] update user_info set balance = balance - 40.00, total_cost = total_cost + 40.00 where user_name = 'acer';
+in /opt/nginx/yii/air/protected/lib.php (136)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (335)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:51 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:51 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:53 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 14:57:55 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'acer' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 15:56:07 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 16:08:34 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'mi' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 16:57:45 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:20:31 [error] [php] Undefined variable: dbDeal (/opt/nginx/yii/air/protected/controllers/ServiceController.php:400)
 Stack trace:
-#0 /opt/nginx/yii/framework/base/CModule.php(386): YiiBase::createComponent(Array)
-#1 /opt/nginx/yii/framework/base/CApplication.php(455): CModule->getComponent('db_radius')
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(129): CApplication->getDbByName('db_radius')
-#3 /opt/nginx/yii/air/protected/controllers/SiteController.php(30): SiteController->autoLogin()
-#4 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#5 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#6 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#7 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
-#9 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
-#10 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#11 /opt/nginx/yii/air/index.php(13): CApplication->run()
-#12 {main}
-REQUEST_URI=/
----
-2014/05/18 09:56:20 [error] [php] Undefined variable: g_nav_msg (/opt/nginx/yii/air/protected/views/layouts/air.php:19)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(76): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
-#2 /opt/nginx/yii/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
-#3 /opt/nginx/yii/framework/web/CBaseController.php(206): CContentDecorator->run()
-#4 /opt/nginx/yii/framework/web/CBaseController.php(300): SiteController->endWidget()
-#5 /opt/nginx/yii/air/protected/views/layouts/column1.php(6): SiteController->endContent()
-#6 /opt/nginx/yii/framework/web/CBaseController.php(126): require()
-#7 /opt/nginx/yii/framework/web/CBaseController.php(95): SiteController->renderInternal()
-#8 /opt/nginx/yii/framework/web/CController.php(784): SiteController->renderFile()
-#9 /opt/nginx/yii/air/protected/controllers/SiteController.php(35): SiteController->render()
-#10 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#11 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#12 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#13 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#14 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#15 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#16 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#17 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/views/layouts/air.php (19)
-in /opt/nginx/yii/air/protected/views/layouts/column1.php (6)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (35)
-2014/05/18 09:59:35 [error] [php] Undefined variable: g_nav_msg (/opt/nginx/yii/air/protected/views/layouts/air.php:19)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(76): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
-#2 /opt/nginx/yii/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
-#3 /opt/nginx/yii/framework/web/CBaseController.php(206): CContentDecorator->run()
-#4 /opt/nginx/yii/framework/web/CBaseController.php(300): SiteController->endWidget()
-#5 /opt/nginx/yii/air/protected/views/layouts/column1.php(6): SiteController->endContent()
-#6 /opt/nginx/yii/framework/web/CBaseController.php(126): require()
-#7 /opt/nginx/yii/framework/web/CBaseController.php(95): SiteController->renderInternal()
-#8 /opt/nginx/yii/framework/web/CController.php(784): SiteController->renderFile()
-#9 /opt/nginx/yii/air/protected/controllers/SiteController.php(35): SiteController->render()
-#10 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
-#11 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#12 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#13 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#14 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#15 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#16 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#17 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/views/layouts/air.php (19)
-in /opt/nginx/yii/air/protected/views/layouts/column1.php (6)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (35)
-2014/05/18 13:02:36 [error] [php] Undefined variable: g_msg (/opt/nginx/yii/air/protected/controllers/SiteController.php:31)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
 #3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
 #4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (31)
+REQUEST_URI=/index.php?r=service/charge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (400)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:07:43 [error] [php] Undefined variable: username (/opt/nginx/yii/air/protected/controllers/SiteController.php:54)
+2014/06/02 18:29:38 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:29:54 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:30:09 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (360)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:36:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "confirmCharge".' in /opt/nginx/yii/framework/web/CController.php:483
 Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('confirmCharge')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('confirmCharge')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/confirm...')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=service/confirmCharge
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/disCharge
+---
+2014/06/02 18:51:34 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:54:31 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:55:18 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:56:49 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:56:55 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:58:08 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:58:08 [error] [php] Undefined variable: return_url (/opt/nginx/yii/air/protected/views/service/do_charge.php:33)
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(869): ServiceController->renderFile()
+#1 /opt/nginx/yii/framework/web/CController.php(782): ServiceController->renderPartial()
+#2 /opt/nginx/yii/air/protected/controllers/ServiceController.php(413): ServiceController->render()
+#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionConfirmCharge()
+#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#6 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
+#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
+REQUEST_URI=/index.php?r=service/confirmCharge
+in /opt/nginx/yii/air/protected/views/service/do_charge.php (33)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (413)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 18:58:56 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:04:50 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:08:14 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:10:51 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:15:19 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:15:50 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:16:53 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:18:09 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:18:13 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:18:27 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:18:48 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:19:22 [error] [php] Undefined variable: dbDeal (/opt/nginx/yii/air/protected/controllers/ServiceController.php:432)
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
 #3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
 #4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (54)
+REQUEST_URI=/index.php?r=service/charge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (432)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:08:39 [error] [php] Undefined index: traffic_remian (/opt/nginx/yii/air/protected/controllers/SiteController.php:74)
+2014/06/02 19:19:28 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 19:19:30 [error] [php] Undefined variable: dbDeal (/opt/nginx/yii/air/protected/controllers/ServiceController.php:432)
 Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
 #3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
 #4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (74)
+REQUEST_URI=/index.php?r=service/charge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (432)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:09:04 [error] [php] Undefined variable: user_name (/opt/nginx/yii/air/protected/views/site/userinfo.php:26)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(92): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/views/site/userinfo.php (26)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (92)
+2014/06/02 20:20:30 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:10:04 [error] [php] Undefined variable: user_name (/opt/nginx/yii/air/protected/views/site/userinfo.php:26)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(88): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/views/site/userinfo.php (26)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (88)
+2014/06/02 21:04:21 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:15:50 [error] [php] Undefined variable: traffic_remail (/opt/nginx/yii/air/protected/views/site/userinfo.php:101)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(87): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/views/site/userinfo.php (101)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (87)
+2014/06/02 21:06:24 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:18:46 [error] [php] Undefined variable: g_msg (/opt/nginx/yii/air/protected/controllers/SiteController.php:31)
+2014/06/02 21:09:19 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:09:32 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:10:04 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:12:06 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:12:22 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:19:17 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:19:26 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:21:23 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:21:41 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:21:51 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:22:51 [error] [php] Undefined variable: dbDeal (/opt/nginx/yii/air/protected/controllers/ServiceController.php:432)
 Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
 #3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
 #4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (31)
+REQUEST_URI=/index.php?r=service/charge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (432)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/18 15:28:38 [error] [php] Use of undefined constant traffic_packet - assumed 'traffic_packet' (/opt/nginx/yii/air/protected/views/site/userinfo.php:67)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(85): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/userinfo
-in /opt/nginx/yii/air/protected/views/site/userinfo.php (67)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (85)
+2014/06/02 21:28:16 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/26 17:37:25 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'.
-in /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php (101)
-in /home/huiyan.jhf/nginx/yii/air/index.php (15)
-2014/05/26 17:37:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'' in /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php:541
-Stack trace:
-#0 /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php(395): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php(101): CDbCommand->queryAll()
-#2 /home/huiyan.jhf/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#3 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(282): CController->run('userinfo')
-#7 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/userinfo')
-#8 /home/huiyan.jhf/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /home/huiyan.jhf/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/userinfo
-HTTP_REFERER=http://10.232.132.185/index.php?r=site/index
----
-2014/05/26 17:37:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'.
-in /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php (101)
-in /home/huiyan.jhf/nginx/yii/air/index.php (15)
-2014/05/26 17:37:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, traffic_packet,traffic_addition, traffic_recharge, traffic_last, traffic_idle, traffic_busy, traffic_internal, traffic_bill,traffic_remain from traffic_mon where user_name = 'iphone' and date_mon = '201405'' in /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php:541
-Stack trace:
-#0 /home/huiyan.jhf/nginx/yii/framework/db/CDbCommand.php(395): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /home/huiyan.jhf/nginx/yii/air/protected/controllers/SiteController.php(101): CDbCommand->queryAll()
-#2 /home/huiyan.jhf/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionUserinfo()
-#3 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /home/huiyan.jhf/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(282): CController->run('userinfo')
-#7 /home/huiyan.jhf/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/userinfo')
-#8 /home/huiyan.jhf/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /home/huiyan.jhf/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/userinfo
-HTTP_REFERER=http://www.wifi.com/index-test.php
----
-2014/05/31 09:10:55 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:28:55 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:10:55 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
+2014/06/02 21:29:38 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:33:00 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:33:19 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:33:33 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:35:16 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:35:44 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:40:58 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:42:17 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:42:51 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:42:51 [info] [haodan] update user_info set balance=balance +  where user_name=''
+in /opt/nginx/yii/air/protected/components/DbDeal.php (84)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:42:51 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''.
+in /opt/nginx/yii/air/protected/components/DbDeal.php (85)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:42:51 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''' in /opt/nginx/yii/framework/db/CDbCommand.php:358
 Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
+#0 /opt/nginx/yii/air/protected/components/DbDeal.php(85): CDbCommand->execute()
+#1 /opt/nginx/yii/air/protected/controllers/ServiceController.php(434): DbDeal->updateChargePrice('', '', '')
+#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionCharge()
 #3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
 #4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
 #5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
+#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('charge')
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/charge')
 #8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #9 /opt/nginx/yii/air/index.php(15): CApplication->run()
 #10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://www.wifi.com/index.php?r=site/transanction
+REQUEST_URI=/index.php?r=service/charge
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/confirmCharge
 ---
-2014/05/31 09:11:02 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:44:29 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:11:02 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
+2014/06/02 21:44:30 [info] [haodan] update user_info set balance=balance +  where user_name=''
+in /opt/nginx/yii/air/protected/components/DbDeal.php (84)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:44:30 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''.
+in /opt/nginx/yii/air/protected/components/DbDeal.php (85)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:44:30 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''' in /opt/nginx/yii/framework/db/CDbCommand.php:358
 Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
+#0 /opt/nginx/yii/air/protected/components/DbDeal.php(85): CDbCommand->execute()
+#1 /opt/nginx/yii/air/protected/controllers/ServiceController.php(434): DbDeal->updateChargePrice('', '', '')
+#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionCharge()
 #3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
 #4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
 #5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
+#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('charge')
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/charge')
 #8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #9 /opt/nginx/yii/air/index.php(15): CApplication->run()
 #10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://www.wifi.com/index.php?r=site/transanction
+REQUEST_URI=/index.php?r=service/charge
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/confirmCharge
 ---
-2014/05/31 09:11:20 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:45:36 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:11:20 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
+2014/06/02 21:47:40 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:48:08 [info] [haodan] update user_info set balance=balance +100  where user_name='haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (84)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (433)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:48:49 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:48:51 [info] [haodan] update user_info set balance=balance +100  where user_name='haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (84)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (433)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:49:58 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:50:53 [info] [haodan] select email
+                from user_info where user_name = 'ss'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:50:53 [error] [php] Undefined offset: 0 (/opt/nginx/yii/air/protected/controllers/ServiceController.php:412)
 Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
+#3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
+REQUEST_URI=/index.php?r=service/confirmCharge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (412)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:51:01 [info] [haodan] select email
+                from user_info where user_name = 'ss'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:51:01 [error] [php] Undefined offset: 0 (/opt/nginx/yii/air/protected/controllers/ServiceController.php:412)
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(286): ServiceController->runAction()
+#1 /opt/nginx/yii/framework/web/CController.php(265): ServiceController->runActionWithFilters()
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): ServiceController->run()
+#3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
+REQUEST_URI=/index.php?r=service/confirmCharge
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (412)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:51:54 [info] [haodan] select email
+                from user_info where user_name = 'ss'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:27 [info] [haodan] select email
+                from user_info where user_name = 'ss'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:38 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:41 [info] [haodan] update user_info set balance=balance +5  where user_name='haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (82)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:59 [info] [haodan] update user_info set balance=balance +  where user_name=''
+in /opt/nginx/yii/air/protected/components/DbDeal.php (82)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:59 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''.
+in /opt/nginx/yii/air/protected/components/DbDeal.php (83)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 21:52:59 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where user_name=''' at line 1. The SQL statement executed was: update user_info set balance=balance +  where user_name=''' in /opt/nginx/yii/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /opt/nginx/yii/air/protected/components/DbDeal.php(83): CDbCommand->execute()
+#1 /opt/nginx/yii/air/protected/controllers/ServiceController.php(434): DbDeal->updateChargePrice('', '', '')
+#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): ServiceController->actionCharge()
 #3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
 #4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
 #5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
+#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('charge')
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/charge')
 #8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
 #9 /opt/nginx/yii/air/index.php(15): CApplication->run()
 #10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
+REQUEST_URI=/index.php?r=service/charge
+HTTP_REFERER=http://10.0.0.1/index.php?r=site/warning&message=%E5%85%85%E5%80%BC%E6%88%90%E5%8A%9F.&return_url=index.php?r=service/charge
 ---
-2014/05/31 09:12:29 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:54:22 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:12:29 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 09:12:31 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:54:30 [info] [haodan] select email
+                from user_info where user_name = 'haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:12:31 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://www.wifi.com/index.php?r=site/transanction
----
-2014/05/31 09:19:33 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:54:32 [info] [haodan] update user_info set balance=balance +5  where user_name='haodan'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (82)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:19:33 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'air.traffic_packet' doesn't exist. The SQL statement executed was: select t_id, t_desc, traffic, price from traffic_packet where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://www.wifi.com/index.php?r=site/transanction
----
-2014/05/31 09:28:43 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:54:42 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:28:43 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 09:29:47 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:55:32 [info] [haodan] select email
+                from user_info where user_name = 'acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (74)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (407)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:29:47 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 09:29:53 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:55:33 [info] [haodan] update user_info set balance=balance +5  where user_name='acer'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (82)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (434)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:29:53 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_id' in 'field list'. The SQL statement executed was: select t_id, t_desc, traffic, price from packet_info where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 09:30:21 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_desc' in 'field list'. The SQL statement executed was: select packet_id, t_desc, traffic, price from packet_info where category = 'packet' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (58)
+2014/06/02 21:55:35 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:30:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't_desc' in 'field list'. The SQL statement executed was: select packet_id, t_desc, traffic, price from packet_info where category = 'packet' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(58): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 09:31:34 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pi.t_desc' in 'field list'. The SQL statement executed was: select pi.packet_id, pi.t_desc, pi.traffic, pi.price,pi.movie_tickets from packet_info as pi,packet_auto as po
-                where pi.packet_id=pi.packet_id and pi.category = 'packet' and po.user_name='mi'
-                and po.enable_state='enable' order by price.
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (69)
+2014/06/02 23:11:14 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 09:31:34 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'pi.t_desc' in 'field list'. The SQL statement executed was: select pi.packet_id, pi.t_desc, pi.traffic, pi.price,pi.movie_tickets from packet_info as pi,packet_auto as po
-                where pi.packet_id=pi.packet_id and pi.category = 'packet' and po.user_name='mi'
-                and po.enable_state='enable' order by price' in /opt/nginx/yii/framework/db/CDbCommand.php:543
-Stack trace:
-#0 /opt/nginx/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
-#1 /opt/nginx/yii/air/protected/controllers/SiteController.php(69): CDbCommand->queryAll()
-#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionPacket()
-#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
-#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
-#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/packet')
-#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#10 {main}
-REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
----
-2014/05/31 13:29:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "packet".' in /opt/nginx/yii/framework/web/CController.php:483
+2014/06/02 23:11:53 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'iphone' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 23:21:33 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/02 23:28:21 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 05:27:09 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 05:54:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "packet".' in /opt/nginx/yii/framework/web/CController.php:483
 Stack trace:
 #0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('packet')
 #1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('packet')
@@ -689,95 +1689,10 @@ Stack trace:
 #4 /opt/nginx/yii/air/index.php(15): CApplication->run()
 #5 {main}
 REQUEST_URI=/index.php?r=site/packet
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/transanction
 ---
-2014/05/31 13:40:15 [error] [php] Undefined variable: message (/opt/nginx/yii/air/protected/views/site/warning.php:14)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(116): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionWarning()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/warning
-in /opt/nginx/yii/air/protected/views/site/warning.php (14)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (116)
+2014/06/03 05:54:20 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'haodan' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
-2014/05/31 13:41:52 [error] [php] Undefined variable: message (/opt/nginx/yii/air/protected/views/site/warning.php:14)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(116): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionWarning()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/warning
-in /opt/nginx/yii/air/protected/views/site/warning.php (14)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (116)
-in /opt/nginx/yii/air/index.php (15)
-2014/05/31 13:43:52 [error] [php] Undefined variable: message (/opt/nginx/yii/air/protected/views/site/warning.php:14)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(869): SiteController->renderFile()
-#1 /opt/nginx/yii/framework/web/CController.php(782): SiteController->renderPartial()
-#2 /opt/nginx/yii/air/protected/controllers/SiteController.php(116): SiteController->render()
-#3 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionWarning()
-#4 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
-#5 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#6 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#7 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#8 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#9 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#10 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/warning
-in /opt/nginx/yii/air/protected/views/site/warning.php (14)
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (116)
-in /opt/nginx/yii/air/index.php (15)
-2014/05/31 13:45:25 [error] [php] Use of undefined constant retData - assumed 'retData' (/opt/nginx/yii/air/protected/controllers/SiteController.php:118)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/warning
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (118)
-in /opt/nginx/yii/air/index.php (15)
-2014/05/31 13:45:26 [error] [php] Use of undefined constant retData - assumed 'retData' (/opt/nginx/yii/air/protected/controllers/SiteController.php:118)
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CController.php(286): SiteController->runAction()
-#1 /opt/nginx/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
-#2 /opt/nginx/yii/framework/web/CWebApplication.php(282): SiteController->run()
-#3 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
-#4 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#5 /opt/nginx/yii/air/index.php(15): CWebApplication->run()
-REQUEST_URI=/index.php?r=site/warning
-in /opt/nginx/yii/air/protected/controllers/SiteController.php (118)
-in /opt/nginx/yii/air/index.php (15)
-2014/05/31 13:47:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /opt/nginx/yii/framework/web/CWebApplication.php:286
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
-#1 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#2 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#3 {main}
-REQUEST_URI=/index.php?r=index
-HTTP_REFERER=http://10.0.0.1/index.php?r=site/warning
----
-2014/05/31 13:47:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in /opt/nginx/yii/framework/web/CWebApplication.php:286
-Stack trace:
-#0 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('index')
-#1 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
-#2 /opt/nginx/yii/air/index.php(15): CApplication->run()
-#3 {main}
-REQUEST_URI=/index.php?r=index
----

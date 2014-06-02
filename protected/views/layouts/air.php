@@ -6,6 +6,7 @@
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/style.css" />
+    <script src="<?php echo Yii::app()->request->baseUrl;?>/js/jquery-1.8.2.min.js"></script>
 </head>
 
 <body>

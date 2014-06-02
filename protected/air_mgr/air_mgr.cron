@@ -1,0 +1,3 @@
+MAILTO=""
+
+*/5 * * * * root  perl /root/air/protected/air_mgr/bw_mgr.pl  >> /tmp/air_mgr.log 2>&1

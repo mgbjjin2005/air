@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 $name = Yii::app()->name;
-$title = "加油包介绍";
+$title = "加油包购买确认";
 $this->pageTitle = $name." ".$title;
 
 Yii::app()->session['nav'] = "index";
@@ -19,19 +19,33 @@ Yii::app()->session['board_msg'] .= "4、加油包为单独的流量购买行为
     <colgroup>
         <col class="span1">
         <col class="span1">
-        <col class="span1">
     </colgroup>
     <thead>
         <tr>
-            <th colspan="3">加油包列表</th>
-        </tr>
-        <tr>
-            <th>价格</th>
-            <th>流量</th>
-            <th>办理</th>
+            <th colspan="2">加油包购买确认</th>
         </tr>
     </thead>
     <tbody>
+
+        <tr>
+            <th>加油包价格</th>
+            <th><?php ?></th>
+        </tr>
+
+        <tr>
+            <th>加油包流量</th>
+            <th><?php echo  ?></th>
+        </tr>
+
+        <tr>
+            <th>加油包有效期</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <th>加油包有效期</th>
+            <th></th>
+        </tr>
 
     <?php foreach($set_t as $row): ?>
         <tr>

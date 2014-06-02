@@ -11,10 +11,10 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 ?>
 
 <div class="menu">
-    <a href="index.php?r=site/addition">加油包</a>
-    <a href="index.php?r=site/packet">套餐变更</a>
-    <a href="index.php?r=site/charge">账户充值</a>
-    <a href="index.php?r=site/present">WIFI币赠送</a>
+    <a href="index.php?r=Service/addition">加油包</a>
+    <a href="index.php?r=service/packet">套餐变更</a>
+    <a href="index.php?r=service/disCharge">账户充值</a>
+    <a href="index.php?r=service/present">WIFI币赠送</a>
 </div>
 
 

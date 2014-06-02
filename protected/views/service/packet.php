@@ -23,7 +23,12 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th colspan="2">套餐:<?php echo $row['p_desc']; ?></th>
+            <th colspan="2" 
+                <?php if($row["user_status"] == true): ?> 
+                    style="color:#A1B60A"
+                <?php endif; ?> 
+            >
+                    套餐:<?php echo $row['p_desc']; ?></th>
             
         </tr>
     </thead>
@@ -40,12 +45,16 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
             <td>电影豆</td>
             <td><?php echo sprintf("%.2f", $row["movie_tickets"]);?>豆</td>
         </tr>
+        <tr>
+            <td>有效月</td>
+            <td><?php echo $row["period_month"];?>个月</td>
+        </tr>
 
         <tr>
             <td>状态</td>
             <td>
             <?php if ($row["user_status"] == true): ?>
-                当前已开通
+               <color style="color:#A1B60A" > 当前已开通</color>
             <?php elseif ($row["user_status"] == false): ?>
                 当前可开通
             <?php endif; ?>
@@ -54,12 +63,12 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
         <tr>
             <td></td>
             <td>
-            <?php if ($row["user_status"] == true): ?>
-                <a href="#">
+            <?php if ($row["user_status"] == true): ?> 
+                <a onclick="deletePacket(<?php echo $row['packet_id']?>)">
                 取消此套餐
-                </a>
+                </a>                  
             <?php elseif ($row["user_status"] == false): ?>
-                <a href="index.php?r=service/OpenPacket">
+                <a onclick="openPacket(<?php echo $row['packet_id']?>)">
                 开通此套餐
                 </a>
             <?php endif; ?>
@@ -71,4 +80,54 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
 </table>
  <?php endforeach; ?>
 </div>
+<script>
+     function openPacket(packet_id){
+        var return_url="index.php/r=service/packet";
+        var confirm_url="index.php?r=service/confirmOpenPacket";
+        var myForm = document.createElement("form");   
+        myForm.method="post" ; 
+        myForm.action = confirm_url;     
+        //packet_id
+        var myInput = document.createElement("input") ;   
+        myInput.setAttribute("name", "packet_id") ;   
+        myInput.setAttribute("value", packet_id); 
+        myForm.appendChild(myInput) ;
 
+        //return_url
+        var myInput2 = document.createElement("input") ;   
+        myInput2.setAttribute("name", "return_url") ;   
+        myInput2.setAttribute("value", return_url); 
+        myForm.appendChild(myInput2) ;
+
+        myForm.submit() ;   
+        document.body.removeChild(myForm) ; 
+
+
+     }
+
+    function deletePacket(packet_id){
+        var return_url="index.php/r=service/packet";
+        var confirm_url="index.php?r=service/confirmDeletePacket";
+        var myForm = document.createElement("form");   
+        myForm.method="post" ; 
+        myForm.action = confirm_url;     
+        //packet_id
+        var myInput = document.createElement("input") ;   
+        myInput.setAttribute("name", "packet_id") ;   
+        myInput.setAttribute("value", packet_id); 
+        myForm.appendChild(myInput) ;
+
+        //return_url
+        var myInput2 = document.createElement("input") ;   
+        myInput2.setAttribute("name", "return_url") ;   
+        myInput2.setAttribute("value", return_url); 
+        myForm.appendChild(myInput2) ;
+
+        myForm.submit() ;   
+        document.body.removeChild(myForm) ; 
+
+
+     }
+
+
+</script>

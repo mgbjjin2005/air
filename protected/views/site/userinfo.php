@@ -33,23 +33,23 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
         <tr>
             <td>电影豆</td>
             <td><?php echo sprintf("%.2f", $movie_tickets);?>豆</td>
-            <td><a href="index.php?r=service/movieTicketsDetail"> 详情</a></td>
+            <td><a href="index.php?r=service/movieTicketsDetail">过期详情</a></td>
         </tr>
 
         <tr>
             <td>账户余额</td>
             <td><?php echo sprintf("%.2f",$balance);?> 元</td>
             <td>
-                <a href="index.php?r=charge">充值</a>
+                <a href="index.php?r=charge">账户充值</a>
                 </br>
-                <a href="index.php?r=charge/chargeDetail">历史记录</a>
+                <a href="index.php?r=charge/chargeDetail">交易记录</a>
             </td>
         </tr>
 
         <tr>
             <td>绑定状态</td>
             <td>已绑定 </td>
-            <td><a href="index.php?r=site/bindinfo">详情</a></td>
+            <td><a href="index.php?r=site/bindinfo">查看详情</a></td>
         </tr>
 
     </tbody>
@@ -65,34 +65,34 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
     <tbody>
 
         <tr>
-            <td>已用忙时流量</td>
+            <td>忙时流量</td>
             <td><?php echo sprintf("%.2f", $traffic_busy);?>MB</td>
         </tr>
 
         <tr>
-            <td>已用闲时流量</td>
+            <td>闲时流量</td>
             <td><?php echo sprintf("%.2f", $traffic_idle);?>MB</td>
         </tr>
 
         <tr>
-            <td>已用电影流量</td>
+            <td>影视流量</td>
             <td><?php echo sprintf("%.2f",$traffic_internal)?>MB</td>
         </tr>
 
         <tr>
-            <td>已使用总流量</td>
+            <td>总使用量</td>
             <td> <?php echo sprintf("%.2f", $traffic_idle + $traffic_busy + $traffic_internal);?>MB</td>
         </tr>
 
 
         <tr>
             <td>计费流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_bill);?>MB</td>
+            <td><span class="notice_info"><?php echo sprintf("%.2f", $traffic_bill);?>MB</span></td>
         </tr>
 
         <tr>
             <td>剩余流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_remain);?>MB</td>
+            <td><span class="notice_info"><?php echo sprintf("%.2f", $traffic_remain);?>MB</span></td>
             </td>
         </tr>
 

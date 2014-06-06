@@ -10,6 +10,7 @@ body{
 img{
 	border:none;
 	}
+                               
 h1,h2,h3,h4,h5,h6{
 	margin:0;
 	padding:0;
@@ -20,9 +21,21 @@ h1{
     font-size: 1.2em;
     font-weight: bold;
 }
+.h1_class{
+    margin:0;
+    padding:0;
+    margin:0.3em 0;
+    font-size: 15px; /*1.2em;*/
+    font-weight: bold;
 
+}
 .nav{
     color:#009966;
+}
+
+.notice_info{
+    /*color:#FF6666;*/
+    color:#FF6666;
 }
 
 h2{
@@ -38,7 +51,10 @@ a:hover{
 	color:#0066CC;
 	text-decoration:none;
 	}
-
+/*airwifi*/
+.a_class{
+        color:#0975a2;
+}
 
 /* logo */
 .logo{

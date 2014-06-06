@@ -1,8 +1,5 @@
-<?php
-Yii::app()->session['nav'] = "index";
-Yii::app()->session['nav_msg'] = "影视专区";
-?>
 <!--筛选器-->
+</br>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tv/filter.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tv/tv.css" />
 <div class="yk-filter yk-filter-open" id="filter">
@@ -20,7 +17,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
 				<li><a href="/v_showlist/c102.html">其它</a></li>
 			</ul>
             
-			<!--<div class="btn-handle">更多<b class="caret"></b></div>-->
+			<div class="btn-handle">更多<b class="caret"></b></div>
 		</div>
     
 		<div class="item item-moreshow">
@@ -51,12 +48,11 @@ Yii::app()->session['nav_msg'] = "影视专区";
 			</ul>    
 		</div>
    
-    </div>   
-    <!--
+    </div>    
 	<div class="yk-filter-handle">
 		<div id="filter_handle" class="btn-handle" style="display: block;">
 		</div>
-	</div>-->
+	</div>
 </div>
 <!--end 筛选器-->
 <!--begin the main-->

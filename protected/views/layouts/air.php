@@ -15,11 +15,11 @@
     &nbsp;|&nbsp;<a href="site/message">8条未读消息</a>
 </div>
 <div class="logo">
-	<h1>
-		<a href="index.php?r=site/index"><?php echo Yii::app()->name;?></a>
+	<div class="h1_class" >
+		<a  href="index.php?r=site/index"><span class="a_class" ><?php echo Yii::app()->name;?></span></a>
 		<span class="nav">&gt</span>
-		<a href="index.php?r=site/<?php echo Yii::app()->session['nav']; ?>"><?php echo CHTML::encode(Yii::app()->session['nav_msg']); ?></a>
-	</h1>
+		<a  href="index.php?r=site/<?php echo Yii::app()->session['nav']; ?>"><span class="a_class" ><?php echo CHTML::encode(Yii::app()->session['nav_msg']); ?></span></a>
+	</div>
 </div>
 <div class="body_split"></div>
     <?php echo $content; ?>

@@ -1696,3 +1696,391 @@ REQUEST_URI=/index.php?r=site/packet
 in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
 in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
 in /opt/nginx/yii/air/index.php (15)
+2014/06/03 06:44:31 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 07:01:55 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 07:06:00 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 07:06:11 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'air' and category='beans'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (360)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 07:06:15 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 07:06:18 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'air' and category='beans'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (360)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 09:47:38 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 11:15:31 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:43:04 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:55:54 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:55:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:55:58 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:56:00 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:56:00 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:56:01 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 13:56:02 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 19:59:32 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 19:59:34 [info] [haodan] select quota, remain, state,state_desc, packet_desc, start_date, stop_date ,packet_category
+                from user_quota where user_name = 'acer' and category='traffic'
+                 and stop_date> now() 
+                order by stop_date;
+in /opt/nginx/yii/air/protected/components/DbDeal.php (48)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (373)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 19:59:55 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 20:00:20 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 20:50:53 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 20:51:28 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 21:05:34 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'acer' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 21:45:25 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 21:46:21 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 21:50:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "present".' in /opt/nginx/yii/framework/web/CController.php:483
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('present')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('present')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('service/present')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=service/present
+HTTP_REFERER=http://10.0.0.1/index.php?r=service/transaction
+---
+2014/06/03 21:52:26 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 21:58:51 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 22:01:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "index.php?r=tv".' in /opt/nginx/yii/framework/web/CController.php:483
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(270): CController->missingAction('index.php?r=tv')
+#1 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('index.php?r=tv')
+#2 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/index.php?...')
+#3 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/index.php?r=tv
+HTTP_REFERER=http://10.0.0.1/index.php?r=tv
+---
+2014/06/03 22:02:45 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'addition' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (87)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 22:02:45 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 22:02:49 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/03 22:02:49 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='acer'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 07:12:27 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:08:49 [error] [exception.CException] exception 'CException' with message 'TvController cannot find the requested view "error_msg".' in /opt/nginx/yii/framework/web/CController.php:878
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CController.php(782): CController->renderPartial('error_msg', NULL, true)
+#1 /opt/nginx/yii/air/protected/controllers/TvController.php(31): CController->render('error_msg')
+#2 /opt/nginx/yii/framework/web/actions/CInlineAction.php(49): TvController->actionIndex()
+#3 /opt/nginx/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /opt/nginx/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /opt/nginx/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /opt/nginx/yii/framework/web/CWebApplication.php(282): CController->run('')
+#7 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('tv')
+#8 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#9 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/index.php?r=tv
+---
+2014/06/04 08:09:10 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:13:52 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:14:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "charge/chargeDetail".' in /opt/nginx/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /opt/nginx/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('charge/chargeDe...')
+#1 /opt/nginx/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /opt/nginx/yii/air/index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=charge/chargeDetail
+HTTP_REFERER=http://10.0.0.1/index.php?r=site/userinfo
+---
+2014/06/04 08:16:25 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:17:15 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:18:19 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:21:53 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:21:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:22:14 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:22:49 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:23:15 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:24:24 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:24:27 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:25:04 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:27:12 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:27:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:28:32 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:29:16 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:29:57 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:30:06 [info] [haodan] select packet_id, p_desc, traffic, price,movie_tickets,period_month from packet_info 
+                where category = 'packet' and enable_state='enable' order by price
+in /opt/nginx/yii/air/protected/components/DbDeal.php (30)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (57)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:30:06 [info] [haodan] select po.packet_id from packet_auto as po
+                where po.user_name='iphone'
+                and po.enable_state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (13)
+in /opt/nginx/yii/air/protected/controllers/ServiceController.php (64)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/04 08:31:47 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/06 05:16:07 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/06 06:18:06 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'air' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/06 07:18:51 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)
+2014/06/06 07:18:53 [info] [haodan] select sum(remain) as count
+                from user_quota where user_name = 'iphone' and category='beans'
+                 and state='enable'
+in /opt/nginx/yii/air/protected/components/DbDeal.php (59)
+in /opt/nginx/yii/air/protected/controllers/SiteController.php (94)
+in /opt/nginx/yii/air/index.php (15)

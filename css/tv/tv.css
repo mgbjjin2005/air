@@ -1,5 +1,4 @@
 @charset "utf-8";
-
 article,
 aside,
 details,
@@ -61,6 +60,7 @@ img {
 .google-maps img {
   max-width: none;
 }
+
 button,
 input,
 select,
@@ -118,6 +118,10 @@ a:visited {
   text-decoration: none;
   color: #555555;
 }
+/*airwifi*/
+.a_class{
+    color:#0975a2;
+}
 a:hover {
   color: #cc3311;
 }
@@ -128,7 +132,6 @@ a.white{
 a.blue {
   color: #3399e0;
 }
-
 
 .yk-w970 .yk-w970-col18,.yk-w970 .yk-w970-col17,.yk-w970 .yk-w970-col16,.yk-w970 .yk-w970-col15,.yk-w970 .yk-w970-col14,.yk-w970 .yk-w970-col13,.yk-w970 .yk-w970-col12,.yk-w970 .yk-w970-col11,.yk-w970 .yk-w970-col10,.yk-w970 .yk-w970-col9,.yk-w970 .yk-w970-col8,.yk-w970 .yk-w970-col7,.yk-w970 .yk-w970-col6,.yk-w970 .yk-w970-col5,.yk-w970 .yk-w970-col4,.yk-w970 .yk-w970-col3,.yk-w970 .yk-w970-col2,.yk-w970 .yk-w970-col1 {
   float: left;
@@ -290,9 +293,10 @@ a.blue {
 .yk-box .yk-foot {
   clear: both;
 }
+/*
 html {
   -webkit-text-size-adjust: 100%;
-}
+}*/
 .v,
 .p {
   margin: 0;
@@ -701,12 +705,12 @@ html {
 }
 
 .p {
-  width: 200px;
+  width: 145px;
 }
 .p .p-thumb,
 .p .p-link {
-  width: 200px;
-  height: 300px;
+  width: 145px;
+  height: 218px;
 }
 .p .p-thumb img{
   height:100%;
@@ -806,6 +810,7 @@ html {
 .p .pa .p-meta-title a{
   line-height:18px;
   color: #555;
+  margin-left: 4px;
 }
 .p .pa .p-meta-title a:hover{
   color: #c31;
@@ -1302,7 +1307,7 @@ span.btn-large {
   float: left;
   min-height: 1px;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 5px;
   display: inline;
 }
 .yk-col22 {

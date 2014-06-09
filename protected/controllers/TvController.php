@@ -31,9 +31,11 @@ class TvController extends Controller
             $this->render('error_msg');
             return;
         }
+        $ret=air_get_media_list(0,0,0,1);
+        $ret['base_url']="www.wifi.com/";
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('tv');
+		$this->render('tv',$ret);
 	}
 
 }

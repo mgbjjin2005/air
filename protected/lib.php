@@ -2,6 +2,7 @@
 
 function airAutoLogin()
 {
+    air_get_media_list(0,0,0,1);
     $ip = $_SERVER["REMOTE_ADDR"];
     if ($ip == "10.0.222.222") {
         $msg  = "打开页面出现问题，请参照以下建议处理: <br>";
@@ -39,7 +40,181 @@ function airAutoLogin()
     return true;
 }
 
+function air_get_category($id_kind, $id_area, $id_type)
+{
+    $ret = array();
+    $kind = array();
+    $area = array();
+    $type = array();
+    $record = array();
+    $selected_auto_id = 0;
 
+    $sql  = "select auto_id, class, m_kind, m_name, value, parent_class_id ";
+    $sql .= "from media_category order by class, value";
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+    if($count <= 0){
+        Yii::app()->session['msg'] =  "电影分类查找错误，请重试，如果还有问题请联系管理员";
+        $this->render('error_msg');
+        exit;
+    }
+
+    foreach ($set_t as $tuple) {
+        $auto_id = $tuple["auto_id"];
+        $class = $tuple["class"];
+        $m_kind = $tuple["m_kind"];
+        $m_name = $tuple["m_name"];
+        $value = $tuple["value"];
+        $parent_class_id = $tuple["parent_class_id"];
+
+        if ($class == 1) {
+            $obj = array();
+            if ($m_kind == "video_kind") {
+                $obj["name"] = $m_name;
+                $obj["id"] = $value;
+                if ($value == $id_kind) {
+                    $obj["selected"] = 1;
+                    $selected_auto_id = $auto_id;
+                } else {
+                    $obj["selected"] = 0;
+                }
+                $kind[] = $obj;
+
+            } else if ($m_kind == "area") {
+                $obj["name"] = $m_name;
+                $obj["id"] = $value;
+                if ($value == $id_area) {
+                    $obj["selected"] = 1;
+                
+                } else {
+                    $obj["selected"] = 0;
+                }
+                $area[] = $obj;
+            }
+
+        } else if ($class == 2) {
+            $obj = array();
+            if ($parent_class_id == $selected_auto_id) {
+                $obj["name"] = $m_name;
+                $obj["id"] = $value;
+                if ($value == $id_type) {
+                    $obj["selected"] = 1;
+                
+                } else {
+                    $obj["selected"] = 0;
+                }
+                $type[] = $obj;
+            }
+        } /*end if*/
+    }/*end foreach*/
+
+    $ret["kind"] = $kind;
+    $ret["area"] = $area;
+    $ret["type"] = $type;
+    return $ret;
+}
+
+/*参数：
+id_kind: 大类目的标志位
+id_area: 区域标志位
+id_type: 小类目的标志位
+page:当前页数，默认第一页
+num:每一页的记录数
+key:搜索关键字(默认空)
+
+返回结果
+ret["kind"] item("id", "name", "selected")
+ret["area"] item("id", "name", "selected")
+ret["type"] item("id", "name", "selected")
+ret["records"] item();
+ret["cur_page"] = 
+ret["total_page"] = 
+ret["total_record"] =
+*/
+function air_get_media_list($id_kind,$id_area,$id_type,$page)
+{
+    $ret = array();
+    $category = array();
+
+    $rows = 40;
+    if ($id_kind <= 0) {
+        $id_kind = 0;
+        $id_type = 0;
+    }
+
+    if ($id_area <= 0) {
+        $id_area = 0;
+    }
+
+    if ($page <= 0) {
+        $page = 1;
+    }
+
+    $category = air_get_category($id_kind,$id_area,$id_type);
+    $ret["kind"] = $category["kind"];
+    $ret["area"] = $category["area"];
+    $ret["type"] = $category["type"];
+
+    $ret["total_records"] = 0;
+    $ret["cur_page"] = $page;
+    $ret["total_page"] = 0;
+
+    $cond = "";
+    if ($id_kind > 0) {
+        $cond .= " and m_kind_flag & $id_kind != 0 ";
+    }
+
+    if ($id_area > 0) {
+        $cond .= " and m_area_flag & $id_area != 0 ";
+    }
+
+    if ($id_type > 0) {
+        $cond .= " and m_type_flag & $id_type != 0 ";
+    }
+
+    $sql = "select count(*) as records from media where enable_state = 'enable' $cond";
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+    if ($count == 1) {
+        $ret["total_records"]  = $set_t[0]["records"];
+
+    } else {
+        return $ret;
+    }
+
+    $ret["total_page"] = ceil($ret["total_records"] / $rows);
+
+    if ($page >= $ret["total_page"]) {
+        $page = $ret["total_page"];
+    }
+
+    $low = ($page -1 ) * $rows;
+    $sql  = "select auto_id, m_chs_name,m_main_actors,m_douban_num,m_total_pv, m_pic_path ";
+    $sql .= "from media where enable_state = 'enable'  $cond ";
+    $sql .= "order by m_create_date desc ";
+    $sql .= "limit $low, $rows";
+
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+    if ($count < 1) {
+        $ret["total_records"] = 0;
+        return $ret;
+    }
+
+    foreach ($set_t as $tuple) {
+        $obj = array();
+        $obj["id"] = $tuple["auto_id"];
+        $obj["name"] = $tuple["m_chs_name"];
+        $obj["actors"] = $tuple["m_main_actors"];
+        $obj["douban_num"] = $tuple["m_douban_num"];
+        $obj["pv"] = $tuple["m_total_pv"];
+        $obj["poster_url"] = $tuple["m_pic_path"];
+        $ret["recoreds"][] = $obj;
+    }
+
+    return $ret;
+
+}
 /*
    添加套餐交易。
    start_date 格式：2014-05-29 12:15:36

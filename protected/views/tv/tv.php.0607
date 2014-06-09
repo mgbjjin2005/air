@@ -86,7 +86,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
 </div>
 <!--end 筛选器-->
 <!--begin the main-->
-<div class=" yk-row yk-v-80">
+<div class="yk-row yk-v-80">
 	<!--begin the 1th 第一个电影div-->
      <?php if ($total_records == 0): ?>
      无内容
@@ -96,7 +96,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
             <div class="p p-small">
 				<!--大图片以及图片上面的内容-->
                 <div class="p-thumb">
-                    <img src="<?php echo $row['poster_url'] ?>" alt="<?php echo $row['name']?>">
+                    <img src="<?php echo $row['poster_url']?>" alt="<?php echo $row['name']?>">
                     <div class="p-thumb-tagrt">
                         <i class="ico-SD" title="超清"></i>
                     </div>
@@ -140,13 +140,49 @@ Yii::app()->session['nav_msg'] = "影视专区";
                     </span>
                     </div>
 					<div class="p-meta-entry">
-						<label>播放:<?php echo $row['pv']?></label><span class="p-num"><?php echo $row['pv']?></span>
+						<label>播放:<?echo $row[pv]?></label><span class="p-num">303.3万</span>
 					</div>
                 </div>
             </div>
         </div>
 	<!--end of the 1th tv-->
 	 <?php endforeach; ?>
+	<!--
+	<div class="yk-col3">
+            <div class="p p-small">
+				<!--大图片以及图片上面的内容-->
+                <div class="p-thumb">
+                    <img src="http://r4.ykimg.com/05160000529FD8B26758396F360D66B0" alt="风暴">
+                    <div class="p-thumb-tagrt">
+                        <i class="ico-SD" title="超清"></i>
+                    </div>
+                    
+                    <div class="p-thumb-taglb"><span class="p-status">正片</span></div>
+                    <div class="p-thumb-tagrb"><span class="p-rating"><em>8.</em>7</span></div>
+                    <div class="p-thumb-overlay"></div>
+                </div>
+				<!--电影的播放链接-->
+                <div class="p-link">
+                    <a href="http://www.youku.com/show_page/id_zb583d13e243011e38b3f.html" target="_blank" title="风暴"></a>
+                </div>
+                <div class="p-isdrama"></div>
+				<!--电影的标题，主演及播放次数信息-->
+                <div class="p-meta pa">
+                    <div class="p-meta-title">
+						<a href="http://www.youku.com/show_page/id_zb583d13e243011e38b3f.html" target="_blank" title="风暴">X战警:第一战</a>
+					</div>
+                    <div class="p-meta-entry">
+						<span class="p-actor"><label>主演:詹姆斯·麦卡沃伊...</label>
+                        <a href="http://www.youku.com/star_page/uid_UNDU0NjQ=.html" target="_blank">刘德华</a>
+                    </span>
+                    </div>
+					<div class="p-meta-entry">
+						<label>播放: 453</label><span class="p-num">303.3万</span>
+					</div>
+                </div>
+            </div>
+        </div>
+        -->
 	
 </div>
 <!--end the main-->

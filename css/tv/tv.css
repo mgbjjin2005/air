@@ -1377,8 +1377,8 @@ span.btn-large {
   width: 35px;
 }
 .yk-row {
-  margin-left: -5px;
-margin-right: -5px;
+ /* margin-left: -5px;*/
+    /*margin-right: -5px;*/
   *zoom: 1;
   *display: inline;
   *font-size:0;

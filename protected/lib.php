@@ -171,10 +171,10 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page)
     if ($id_type > 0) {
         $cond .= " and m_type_flag & $id_type != 0 ";
     }
-
     $sql = "select count(*) as records from media where enable_state = 'enable' $cond";
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
-    $count = count($set_t);
+	
+	$count = count($set_t);
     if ($count == 1) {
         $ret["total_records"]  = $set_t[0]["records"];
 
@@ -189,13 +189,24 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page)
     }
 
     $low = ($page -1 ) * $rows;
+	//BY haodan	
+	$criteria=new CDbCriteria();
     $sql  = "select auto_id, m_chs_name,m_main_actors,m_douban_num,m_total_pv, m_pic_path ";
     $sql .= "from media where enable_state = 'enable'  $cond ";
     $sql .= "order by m_create_date desc ";
-    $sql .= "limit $low, $rows";
+    //$sql .= "limit $low, $rows";
 
-    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
-    $count = count($set_t);
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->query();
+	//BY haodan
+	$pages=new CPagination($set_t->rowCount);
+	$pages->pageSize=10; 
+	$pages->applyLimit($criteria); 
+	$set_t=Yii::app()->getDbByName("db_air")->createCommand($sql." LIMIT :offset,:limit"); 
+	$set_t->bindValue(':offset', $pages->currentPage*$pages->pageSize); 
+	$set_t->bindValue(':limit', $pages->pageSize); 
+	$set_t=$set_t->queryAll();
+	//end of haodan
+	$count = count($set_t);
     if ($count < 1) {
         $ret["total_records"] = 0;
         return $ret;
@@ -211,6 +222,7 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page)
         $obj["poster_url"] = $tuple["m_pic_path"];
         $ret["recoreds"][] = $obj;
     }
+	$ret['pages']=$pages;
 
     return $ret;
 

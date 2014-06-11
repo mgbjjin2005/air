@@ -137,7 +137,7 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://static.yo
 
 /* 绛涢€夌粨鏋� */
 .yk-filterresult{margin-bottom:40px;}
-.yk-filterresult .yk-pager{text-align:center;line-height:0;}
+.yk-filterresult .yk-pager{text-align:center;line-height:0;margin-top: 25px;}
 .yk-filterresult .yk-pager .yk-pages{display:inline-block;*display:inline;*zoom:1;}
 .yk-filterresult .null{padding:100px 0;text-align:center;font-size:20px;color:#555;font-family:"Microsoft YaHei","寰蒋闆呴粦",helvetica,arial,verdana,tahoma,sans-serif;}
 .yk-filterresult .null a{color:#06a7e1;}

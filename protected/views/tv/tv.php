@@ -9,12 +9,12 @@ Yii::app()->session['nav_msg'] = "影视专区";
     <div class="yk-filter-panel">
         <div class="item item-moreshow">
 			<label>分类</label>
-			<ul>
+			<ul id="filter_kind">
             <?php foreach($kind as $k): ?>
                 <?php if ($k["selected"] == 0): ?>
-				<li ><a onclick="selectKind('<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
+				<li id='filter_kind_<?php echo $k['id']?>' name='<?php echo $k['name']?>'><a onclick="selectKind('kind','<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
                 <?php elseif ($k["selected"] == 1): ?>
-                <li class="current"><span><?php echo $k['name']?></span></li>
+                <li class="current" id='filter_kind_<?php echo $k['id']?>' name='<?php echo $k['name']?>'><span><?php Yii::app()->session['kind_cur'] = $k['id'];echo $k['name'];?></span></li>
                 <?php endif; ?>
 			 <?php endforeach; ?>
             </ul>
@@ -22,12 +22,12 @@ Yii::app()->session['nav_msg'] = "影视专区";
 		</div>
         <div class="item item-moreshow">
 			<label>地区</label>
-			<ul>
+			<ul id="filter_area">
             <?php foreach($area as $k): ?>
                 <?php if ($k["selected"] == 0): ?>
-				<li ><a onclick="selectKind('<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
+				<li id='filter_area_<?php echo $k['id']?>'><a onclick="selectKind('area','<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
                 <?php elseif ($k["selected"] == 1): ?>
-                <li class="current"><span><?php echo $k['name']?></span></li>
+                <li class="current" id='filter_area_<?php echo $k['id']?>'><span><?php Yii::app()->session['area_cur'] = $k['id'];echo $k['name']?></span></li>
                 <?php endif; ?>
 			 <?php endforeach; ?>
             </ul>
@@ -35,12 +35,12 @@ Yii::app()->session['nav_msg'] = "影视专区";
 		</div>
         <div class="item item-moreshow">
 			<label>类型</label>
-			<ul>
+			<ul id="filter_type">
             <?php foreach($type as $k): ?>
                 <?php if ($k["selected"] == 0): ?>
-				<li ><a onclick="selectKind('<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
+				<li id='filter_type_<?php echo $k['id']?>'><a onclick="selectKind('type','<?php echo $k['id']?>')"><?php echo $k['name']?></a></li>
                 <?php elseif ($k["selected"] == 1): ?>
-                <li class="current"><span><?php echo $k['name']?></span></li>
+                <li class="current" id='filter_type_<?php echo $k['id']?>'><span><?php Yii::app()->session['type_cur'] = $k['id'];echo $k['name']?></span></li>
                 <?php endif; ?>
 			 <?php endforeach; ?>
             </ul>
@@ -86,11 +86,13 @@ Yii::app()->session['nav_msg'] = "影视专区";
 </div>
 <!--end 筛选器-->
 <!--begin the main-->
-<div class=" yk-row yk-v-80">
+<div class='yk-filterresult'>
+<div class="yk-row yk-v-80">
 	<!--begin the 1th 第一个电影div-->
-     <?php if ($total_records == 0): ?>
-     无内容
-     <?php endif; ?>
+ <?php if ($total_records == 0): ?>
+ 无内容
+ <?php else: ?>
+
     <?php foreach($recoreds as $row): ?>
 	<div class="yk-col3">
             <div class="p p-small">
@@ -147,6 +149,96 @@ Yii::app()->session['nav_msg'] = "影视专区";
         </div>
 	<!--end of the 1th tv-->
 	 <?php endforeach; ?>
-	
-</div>
+<?php endif; ?>	
+</div><!--end of row-->
+<?php if ($total_records > 0): ?>
+<div id="pager" class="yk-pager"> 
+		<?php 
+		$this->widget('CLinkPager',array( 
+			'header'=>'', 
+			'firstPageLabel' => '首页', 
+			'lastPageLabel' => '末页', 
+			'prevPageLabel' => '上一页', 
+			'nextPageLabel' => '下一页', 
+			'pages' => $pages, 
+			'maxButtonCount'=>13 
+			) 
+		); 
+		?> 
+</div><!--end of page-->
+<?php endif; ?>
+</div><!--end of result-->
 <!--end the main-->
+<script type="text/javascript">
+	var kind_id='<?php  echo Yii::app()->session['kind_cur']?>';
+	var area_id='<?php  echo Yii::app()->session['area_cur']?>';
+	var type_id='<?php  echo Yii::app()->session['type_cur']?>';
+	//alert(kind_id);
+	//alert(area_id);
+	//alert(type_id);
+	$(document).ready(function(){
+
+	});
+	function selectKind(name,id){
+		var li_id="#filter_"+name+"_"+id;
+		var li_name=$(li_id).attr("name");
+		//
+		if(name=='kind'){
+			kind_id=id;
+		}else if(name=='area'){
+			area_id=id;
+		}else if(name=='type'){
+			type_id=id;
+		}
+		//添加类 替换，加上
+		/*
+		$(li_id).addClass('current');
+		var html="";
+		html="<span>"+li_name+"</span>";
+		$(li_id).html(html);
+		*/
+		//把选中的li id的class置为current，把其他选中的置为空
+		/*
+		if(name=='kind'){
+			$("#kind_filter li").each(function(){
+				$(this).removeClass('current');
+			});
+			
+		}else if(name=='area'){
+			$("#area_filter li").each(function(){
+				$(this).removeClass('current');
+			});
+		}else if(name=='type'){
+			$("#type_filter li").each(function(){
+				$(this).removeClass('current');
+			});
+		}*/
+		//删除click种类的当前class
+		/*
+		$("ul").find("li[class='current']").each(function(){
+			var tmp_id=$(this).attr('id');
+			var tmp_name=$(this).attr('name');
+			var html="";
+			if(tmp_id.indexOf(name)>0){
+				$(this).removeClass('current');
+				
+				//<a onclick="selectKind('kind','1')">电影</a>
+				html="<a onclick='selectKind('"+name+"','"+id+"')'>"+tmp_name+"</a>";
+				//加上新的html
+				alert(html);
+				$(this).html(html);
+			}
+		});
+		*/
+		
+		//找到为current的元素id
+		/*
+		kind_id=<?php echo Yii::app()->session['kind_cur']?>;
+		area_id=<?php echo Yii::app()->session['area_cur']?>;
+		type_id=<?php echo Yii::app()->session['type_cur']?>;
+		*/
+		//ajax操作
+		document.location.href="index.php?r=tv&kind_id="+kind_id+"&area_id="+area_id+"&type_id="+type_id;
+                
+	}
+</script>

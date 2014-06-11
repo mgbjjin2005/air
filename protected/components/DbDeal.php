@@ -69,7 +69,7 @@ class DbDeal
      }
      //获取用户信息
      public function getUserInfo($user_name){
-        $sql="select email
+        $sql="select email,user_name
                 from user_info where user_name = '$user_name'";
         Yii::log($sql, 'info', 'haodan');
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
@@ -84,6 +84,31 @@ class DbDeal
         return $set_t;
 
      }
+	 public function getMediaInfo($id){
+		$sql = "select auto_id,m_alias,m_director,m_main_actors,m_time_length
+				,m_show_date,m_revenue,m_douban_num
+				,m_original_name,m_chs_name,m_area_desc,m_kind_desc,m_type_desc
+				,m_total_pv,m_pic_path,m_des from media as m
+                where m.enable_state='enable' and m.auto_id=$id";
+        Yii::log($sql, 'info', 'haodan');
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+		return $set_t;
+	 }
+	 public function getMediaDetail($media_id="",$media_detail_id=""){
+		$con="1";
+		if($media_detail_id!=""){
+			$con=$con." and auto_id=$media_detail_id";
+		}
+		if($media_id!=""){
+			$con=$con." and m_id=$media_id";
+		}
+		$sql = "select auto_id,m_id,m_alias,m_chs_desc,m_price
+				,m_pv,m_video_path,m_real_path from media_detail as m
+                where  ".$con;
+        Yii::log($sql, 'info', 'haodan');
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        return $set_t;
+	 }
 
 
 

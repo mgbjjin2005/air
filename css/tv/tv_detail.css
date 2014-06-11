@@ -11,7 +11,12 @@
 .overview .opus .nBox,.overview .opus .series_year,.overview .opus .positive,.overview .opus .series_topic{_position:relative;}
 .overview .opus .positive .collgrid4w,.overview .opus .series_topic .collgrid4w,.overview .opus .series_year .collgrid4w{_position:relative;}
 
-.overview_wrap{margin-bottom:30px;}
+.overview_wrap{margin-bottom:30px; font-size: 13.333333969116211px;}
+.overview_wrap .baseinfo ,
+.overview_wrap .basedata
+ {color:#909090; font-size: 13.333333969116211px;}
+
+.labelClass {color:#909090;margin-right:5px;font-size: 13.333333969116211px; }
 
 /*节目标题栏CSS--按分类定制规则(all)*/
 .base{margin-bottom:15px;padding:10px 0 15px;position:relative;border-bottom:1px solid #e5e5e5;min-height:24px;_height:24px;}
@@ -43,7 +48,6 @@ word-wrap: break-word;}
 .showInfo .baseinfo .row2,
 .showInfo .basedata .row2{*margin-bottom:-3px;}
 .showInfo label{color:#909090;margin-right:5px;}
-.showInfo .labelClass{color:#909090;margin-right:5px;}
 .showInfo .baseinfo .link{width:200px;height:300px;z-index:2;position:absolute;top:0;left:0;background:url(images/master.png) no-repeat 5000px 5000px;}
 .showInfo .baseinfo .link a{display:block;height:100%;}
 .showInfo .baseinfo .thumb{width:200px;height:300px;position:absolute;top:0;left:0;margin-bottom:0;background:#999;}

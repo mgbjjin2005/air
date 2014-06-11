@@ -40,7 +40,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
 		}
 	}
 </script>
-<div class="s_main col2_21">
+<div class="s_main col2_21" style="margin-top: -40px;">
 <!--start the main-->
 	<div id="showInfo_wrap">
 		<div id="showInfo">
@@ -91,12 +91,12 @@ Yii::app()->session['nav_msg'] = "影视专区";
                         <div class="interact-box">
                             <div class="interact-skin" id="player_tabsbox" style="width: auto;">
                                 <ul class="tabs">
-                                    <li class="current" id="subnav_showDesc" _to="videoinfo">
+                                    <li  id="subnav_showDesc" _to="videoinfo">
                                         <a onclick="changeTab(this,'showDesc')" charset="hz-4008949-1000752">
                                             详情介绍
                                         </a>
                                     </li>
-                                    <li id="subnav_showSeries" _to="showlist" _type="side" >
+                                    <li class="current" id="subnav_showSeries" _to="showlist" _type="side" >
                                         <a onclick="changeTab(this,'showSeries')" charset="hz-4008949-1000752">
                                             剧集列表
                                         </a>
@@ -109,7 +109,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
                         </div>
                         <!--end interact-box-->
                         <!--content剧集系列-->
-                        <div class="yk-vbox" id="reload_showSeries" style="display: none;">
+                        <div class="yk-vbox" id="reload_showSeries" >
                             <div class="yk-body">
                                 
                                 <div class="showlists">
@@ -119,11 +119,15 @@ Yii::app()->session['nav_msg'] = "影视专区";
                                             <div class="inner">
                                                 <div class="panel">
                                                     <ul class="rel-aspect" vid="180620718">
-														<?php foreach($detail as $row): ?>
+														<?php foreach($detail as $key=>$row): ?>
+															<?php if ($key == 0): ?>
                                                         <li class="current">
-                                                            <a _hzcharset="hz-4009222-1000752" class="A" href="<?echo $row['m_video_path']?>">
+															<?php else: ?>
+														<li class="">
+															<?php endif; ?>
+                                                            <a _hzcharset="hz-4009222-1000752" class="A" href="index.php?r=tv/toWatch&id=<?php echo $row['auto_id']?>">
                                                                 <div class="headline">
-                                                                    <?echo $row['m_chs_desc']?>
+                                                                    <?php echo $row['m_chs_desc']?>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -145,7 +149,7 @@ Yii::app()->session['nav_msg'] = "影视专区";
 				</div><!--end of 导航-->
 				<div class="bd" id="bd">
 					<!--影片基本信息-->
-					<div  class="opus" id="reload_showDesc">
+					<div  class="opus" id="reload_showDesc" style="display: none;">
 						<div id="overview_wrap">
 							<div id="overview">
 								<div class="overview_wrap">

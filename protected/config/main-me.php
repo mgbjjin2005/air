@@ -59,7 +59,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=radius',
 			'emulatePrepare' => true,
 			'username' => 'air',
-			'password' => '***King1985***',
+			'password' => '',
 			'charset' => 'utf8',
             'class' => 'CDbConnection'
 		),
@@ -67,8 +67,8 @@ return array(
 		'db_air'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=air',
 			'emulatePrepare' => true,
-			'username' => 'air',
-			'password' => '***King1985***',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
             'class' => 'CDbConnection'
 		),

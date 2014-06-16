@@ -2,18 +2,31 @@
 
 function airAutoLogin()
 {
-    air_get_media_list(0,0,0,1);
-    $ip = $_SERVER["REMOTE_ADDR"];
-    if ($ip == "10.0.222.222") {
-        $msg  = "打开页面出现问题，请参照以下建议处理: <br>";
-        $msg .= "1、如果你刚从2G/3G/4G状态切换到wifi状态，请稍等10秒再刷新此页.<br>";
-        $msg .= "2、请使用UC/QQ/百度流量器来浏览此网站。<br>";
-        Yii::app()->session['msg'] = $msg;
-        return false;
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $username = "";
+    if (isset($_COOKIE['username'])) {
+        $username = $_COOKIE['username'];
     }
 
-    $sql  = "select username,acctstarttime,acctstoptime,callingstationid, framedipaddress from radacct ";
-    $sql .= "where framedipaddress = '$ip' and acctstoptime is NULL;";
+    if ($ip == "10.0.222.222") {
+        if ($username == "") {
+            $msg  = "自动登录过程出现问题，请参考如下方法解决此问题 <br>";
+            $msg .= "1、如果你刚从2G/3G/4G状态切换到wifi状态，请稍等10秒再刷新此页.<br>";
+            $msg .= "2、请使用猎豹/UC//百度流量器来浏览此网站。<br>";
+            $msg .= "3、如果上面都不成功，请断掉wifi重新连接，对此给您带来的不便我们深表歉意。<br>";
+            Yii::app()->session['msg'] = $msg;
+            return false;
+        }
+
+        $sql  = "select username,acctstarttime,acctstoptime,callingstationid, framedipaddress from radacct ";
+        $sql .= "where username = '$username' and acctstoptime is NULL;";
+
+    } else {
+        $sql  = "select username,acctstarttime,acctstoptime,callingstationid, framedipaddress from radacct ";
+        $sql .= "where framedipaddress = '$ip' and acctstoptime is NULL;";
+    }
+
     $login_ret = Yii::app()->getDbByName("db_radius")->createCommand($sql)->queryAll();
     $count = count($login_ret);
     if($count != 1){
@@ -24,6 +37,7 @@ function airAutoLogin()
 
     $session = Yii::app()->session;
     foreach ($login_ret as $tuple) {
+        $username = $tuple["username"];
         Yii::app()->session['username'] = $tuple["username"];
         Yii::app()->session['mac'] = $tuple["callingstationid"];
         Yii::app()->session['ip'] = $tuple["framedipaddress"];
@@ -33,6 +47,8 @@ function airAutoLogin()
         Yii::app()->session['nav_msg'] = "";
         Yii::app()->session['board_name'] = "";
         Yii::app()->session['board_msg'] = "";
+        $expire = time() + 86400 * 2;
+        setcookie ("username", $username, $expire); 
 
         return true;
     }
@@ -199,7 +215,7 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page)
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->query();
 	//BY haodan
 	$pages=new CPagination($set_t->rowCount);
-	$pages->pageSize=10; 
+	$pages->pageSize=16; 
 	$pages->applyLimit($criteria); 
 	$set_t=Yii::app()->getDbByName("db_air")->createCommand($sql." LIMIT :offset,:limit"); 
 	$set_t->bindValue(':offset', $pages->currentPage*$pages->pageSize); 
@@ -348,6 +364,16 @@ function air_get_stamp_after_month($date, $period)
     $sec  = $matchs[6][0];
 
     return mktime($hour,$min,$sec,$mon + $period,$day,$year);
+}
+
+function air_format_str($str, $max_length)
+{
+    $len = mb_strlen($str,'utf-8');
+    if ($len < $max_length) {
+        return $str;
+    }
+    
+    return mb_substr($str, 0, $max_length - 3, 'utf-8') . "...";
 }
 
 ?>

@@ -1,6 +1,20 @@
 <?php
+$name = Yii::app()->name;
+$title = "影视专区";
+$this->pageTitle = $name." ".$title;
+
 Yii::app()->session['nav'] = "index";
-Yii::app()->session['nav_msg'] = "影视专区";
+Yii::app()->session['nav_msg'] = $title;
+Yii::app()->session['board_name'] = $title;
+Yii::app()->session['board_msg']  = "1、浏览本网站所产生的所有流量均被视为内部流量，不计入计费带宽。</br>";
+Yii::app()->session['board_msg'] .= "2、经过测试，安卓环境下，猎豹浏览器看电影效果最好；";
+Yii::app()->session['board_msg'] .= "iphone下都比较不错。建议大家选择合适的浏览器观看</br>";
+Yii::app()->session['board_msg'] .= "3、为了提高小站的电影质量，我们在选片的时候精挑细选,";
+Yii::app()->session['board_msg'] .= "大部分电影都是全球票房过50亿的超级经典大片</br>";
+Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配有中文字幕，大家可以放心购买观看。</br>";
+
+
+
 ?>
 <!--筛选器-->
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tv/filter.css" />
@@ -134,7 +148,11 @@ Yii::app()->session['nav_msg'] = "影视专区";
 				<!--电影的标题，主演及播放次数信息-->
                 <div class="p-meta pa">
                     <div class="p-meta-title">
-						<a href="/index.php?r=tv/detail&id=<?php echo $row['id']?>" target="_blank" title="<?php echo $row['name']?>"><?php echo $row['name']?></a>
+						<a href="/index.php?r=tv/detail&id=<?php echo $row['id']?>" target="_blank">
+                            <?php
+                                print($row['name']);
+                            ?>
+                        </a>
 					</div>
                     <div class="p-meta-entry">
 						<span class="p-actor"><label>主演:<?php echo $row['actors']?></label>

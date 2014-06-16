@@ -345,18 +345,16 @@ sub do_state()
          }
 
         if (($id_kind = &get_class1_id($m_kind)) < 1) {
-             print("...2 id_kind=$id_kind\n");
-            return 0;
+            $id_kind = 0;
         }
         
         if (($id_area = &get_class1_id($m_area)) < 1) {
-            print("...3 id_area=$id_area\n");
-            return 0;
+            $id_area = 0;
         }
-        
+       
+        print("id_kind=$id_kind m_type=$m_type\n");
         if (($id_type = &get_class2_id($id_kind, $m_type)) < 1) {
-            print("...4\n");
-            return 0;
+            $id_type = 0;
         }
 
         print("$id_kind, $id_area, $id_type\n");
@@ -377,7 +375,7 @@ sub do_state()
         }
 
         if (length($m_price) < 1) {
-            $m_episode = 0;
+            $m_episode = 1;
         }
         &update_media_detail();
         return 1;
@@ -419,7 +417,8 @@ sub down_load_detail()
     $sql = "select auto_id from media where m_alias = '$1'";
     $sth = $db_air->prepare($sql);
     if(not $sth->execute()) {
-        print("sql execute error. ".$sth->errstr."\n");
+        print("没有查询到对应的电影信息，忽略本次下载$m_path sql execute error. ".$sth->errstr."\n");
+        return;
     }
     my $m_id = 0;
     if (my $ref = $sth->fetchrow_hashref()) {
@@ -492,13 +491,15 @@ sub down_load_detail()
 
 sub update_media()
 {
+    $m_original_name = $db_air->quote($m_original_name);
+    $m_chs_name = $db_air->quote($m_chs_name);
     $m_desc = $db_air->quote($m_desc);
     my $poster_url = "media/$year$mon/poster/$m_alias.jpg";
     $sql = "insert into media (m_chs_name,m_original_name,m_alias,m_director,";
     $sql .= "m_main_actors,m_time_length,m_show_date,m_kind_flag,m_area_flag,";
     $sql .= "m_type_flag,m_kind_desc,m_area_desc,m_type_desc,m_revenue,m_imdb_num,";
     $sql .= "m_douban_num,m_pic_path,m_des) values (";
-    $sql .= "'$m_chs_name','$m_original_name','$m_alias','$m_director',";
+    $sql .= "$m_chs_name,$m_original_name,'$m_alias','$m_director',";
     $sql .= "'$m_actor', $m_time_length,'$m_show_date', $id_kind, $id_area,";
     $sql .= "$id_type,'$m_kind','$m_area','$m_type',$m_revenue,";
     $sql .= "$m_imdb_num, $m_douban_num,'$poster_url',$m_desc)";

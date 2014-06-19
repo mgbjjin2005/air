@@ -2,7 +2,6 @@
 
 function airAutoLogin()
 {
-
     $ip = $_SERVER['REMOTE_ADDR'];
     $username = "";
     if (isset($_COOKIE['username'])) {
@@ -366,14 +365,51 @@ function air_get_stamp_after_month($date, $period)
     return mktime($hour,$min,$sec,$mon + $period,$day,$year);
 }
 
-function air_format_str($str, $max_length)
+function air_format_str($string, $length, $etc = '...')
 {
-    $len = mb_strlen($str,'utf-8');
-    if ($len < $max_length) {
-        return $str;
+    $result = '';
+    $string = html_entity_decode(trim(strip_tags($string)), ENT_QUOTES, 'UTF-8');
+    $strlen = strlen($string);
+    for ($i = 0; (($i < $strlen) && ($length > 0)); $i++)
+    {
+        if ($number = strpos(str_pad(decbin(ord(substr($string, $i, 1))), 8, '0', STR_PAD_LEFT), '0'))
+        {
+            if ($length < 1.0)
+            {
+                break;
+            }
+            $result .= substr($string, $i, $number);
+            $length -= 1.0;
+            $i += $number - 1;
+
+        } else {
+            $result .= substr($string, $i, 1);
+            $length -= 0.5;
+        }
     }
-    
-    return mb_substr($str, 0, $max_length - 3, 'utf-8') . "...";
+
+    $result = htmlspecialchars($result, ENT_QUOTES, 'UTF-8');
+
+    if ($i < $strlen)
+    {
+        $result .= $etc;
+    }
+    return $result;
 }
+
+
+function air_output_des($des)
+{
+    $ret = "";
+    $arr = array();
+    $arr = explode("\n",$des);
+
+    foreach ($arr as $line){
+        $ret .=  "  $line <br/>";
+    }
+
+    return $ret;
+}
+
 
 ?>

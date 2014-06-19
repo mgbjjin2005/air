@@ -149,9 +149,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
                 <div class="p-meta pa">
                     <div class="p-meta-title">
 						<a href="/index.php?r=tv/detail&id=<?php echo $row['id']?>" target="_blank">
-                            <?php
-                                print($row['name']);
-                            ?>
+                            <?php print(air_format_str($row['name'],8)); ?>
                         </a>
 					</div>
                     <div class="p-meta-entry">
@@ -179,7 +177,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 			'prevPageLabel' => '上一页', 
 			'nextPageLabel' => '下一页', 
 			'pages' => $pages, 
-			'maxButtonCount'=>13 
+			'maxButtonCount'=>5 
 			) 
 		); 
 		?> 

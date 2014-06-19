@@ -1,6 +1,6 @@
 <?php
 $name = Yii::app()->name;
-$title = "影视专区";
+$title = "电影详情";
 $this->pageTitle = $name." ".$title;
 
 Yii::app()->session['nav'] = "index";
@@ -97,7 +97,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
                     <?php endif; ?>
 
                         <a class="A" href="index.php?r=tv/toWatch&id=<?php echo $row['auto_id']?>">
-                            <div class="headline"><?php echo $row['m_chs_desc']?></div></a>
+                            <div class="headline"><?php print(air_format_str($row['m_chs_desc'], 10) . " / ".$row['m_price']."豆")?></div></a>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -122,7 +122,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 
         </ul>
         <div class="overview_wrap">
-            <span class="short"><?php echo $info['m_des']; ?></span>
+            <span class="short"><?php print("<br/>&nbsp&nbsp&nbsp&nbsp".air_output_des($info['m_des'])); ?></span>
         </div>
 
     </div>

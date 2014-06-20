@@ -60,7 +60,12 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
             </ul>
             
 		</div>
-
+		
+		<div class="item item-moreshow">
+			<label>搜索</label>
+			<input class="i_stext c_a5" value=""  placeholder="影片名/明星/导演"  id='keys' name='keys' style="width:60%"/>
+            <input onclick="search()" id="air_tv_search" type="button" class="i_slbut">
+		</div>
         <!--
 		<div class="item item-moreshow">
 			<label>地区</label>
@@ -193,7 +198,31 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 	//alert(area_id);
 	//alert(type_id);
 	$(document).ready(function(){
-
+		/*begin to for placeholder*/
+		var funPlaceholder=function(element){
+			var placeholder='';   
+			if(element&&!("placeholder"in document.createElement("input"))&&(placeholder=element.getAttribute("placeholder"))){
+				element.onfocus=function(){
+					if(this.value===placeholder){
+						this.value="";            
+					}
+					this.style.color='';       
+				 };        
+				element.onblur=function(){
+					if(this.value===""){
+						this.value=placeholder;                
+						this.style.color='graytext';                
+					}
+				};                
+				//样式初始化
+				if(element.value===""){
+					element.value=placeholder;            
+					element.style.color='graytext';            
+				}
+		}};
+		funPlaceholder(document.getElementById("keys"));
+		/*end of for holder*/
+		
 	});
 	function selectKind(name,id){
 		var li_id="#filter_"+name+"_"+id;
@@ -257,4 +286,10 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 		document.location.href="index.php?r=tv&kind_id="+kind_id+"&area_id="+area_id+"&type_id="+type_id;
                 
 	}
+	function search(){
+		var search_value=encodeURI($("#keys").val());
+		document.location.href="index.php?r=tv&keys="+search_value;
+         
+	}
+	
 </script>

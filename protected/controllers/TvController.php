@@ -35,8 +35,10 @@ class TvController extends Controller
         $type_id=$req->getParam("type_id",0);
 		$area_id=$req->getParam("area_id",0);
 		$kind_id=$req->getParam("kind_id",0);
+		$keys=$req->getParam("keys","");
 		$page_cur=$req->getParam("page_cur",1);
-        $ret=air_get_media_list($kind_id,$area_id,$type_id,$page_cur);
+		$keys=urldecode($keys);
+        $ret=air_get_media_list($kind_id,$area_id,$type_id,$page_cur,$keys);
 		//var_dump($ret);
         //$ret['base_url']="www.wifi.com/";
 		// renders the view file 'protected/views/site/index.php'

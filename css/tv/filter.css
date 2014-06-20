@@ -167,3 +167,31 @@ _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://static.yo
 .ad-inner{position:relative;left:-50%;text-align:center;}
 .yk-w970 .yk-AD-tong{width:970px;}
 .yk-w1190 .yk-AD-tong{width:1190px;}
+
+/*搜索按钮*/
+.i_stext {
+	background: url(../../images/showtime_bg.jpg) repeat-x 0 -33px;
+	border: 1px solid #aaa8a8;
+	border-right: 0;
+	border-radius: 3px 0 0 3px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	padding: 5px 10px;
+	height: 20px;
+	overflow: hidden;
+	line-height: 22px;
+	float: left;
+	margin: 0 0  5px 0;
+	height: 18px;
+}
+.i_slbut {
+	background: url(../../images/showtime.jpg) no-repeat -2px -11px;
+	height: 32px;
+	width: 32px;
+	border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border: 0;
+	float: left;
+	cursor: pointer;
+}

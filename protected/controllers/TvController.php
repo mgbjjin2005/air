@@ -170,28 +170,16 @@ class TvController extends Controller
             return;
         }
 		$ret=air_video_buy($user_name,$id);
+		$retData=array();
+        $retData["return_url"]="index.php?r=tv/ToWatch";
+        
 		if($ret==false){
-            $this->render('//site/error_msg');
-            return;
+            $retData["message"]="ERROR:".Yii::app()->session['msg'];
+            
 		}else{
-			$dbDeal=new DbDeal();
-			//获取media_detail表里面的数据
-			$media_info = $dbDeal->getMediaDetail("",$id);
-			if ($media_info ==null || count($media_info)<1) {
-				Yii::app()->session['msg'] = "该影片详情为null.";
-				$this->render('//site/error_msg');
-				return;
-			}
-			//获取media表里面的数据
-			$media = $dbDeal->getMediaInfo($media_info[0]['m_id']);
-			if ($media ==null || count($media)<1) {
-				Yii::app()->session['msg'] = "该影片为null.";
-				$this->render('//site/error_msg');
-				return;
-			}
-			$ret['media_info']=$media_info[0];
-            $ret['media']=$media[0];
-			$this->render('tv_watch',$ret);
+			$retData["message"]="成功付费";
+            
 		}
+		echo CJSON::encode($retData);
 	}
 }

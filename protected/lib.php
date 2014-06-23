@@ -28,11 +28,11 @@ function airAutoLogin()
 
     $login_ret = Yii::app()->getDbByName("db_radius")->createCommand($sql)->queryAll();
     $count = count($login_ret);
-    if($count != 1){
+    if($count < 1) {
         $msg = "认证过程出现未知问题，请在浏览器中访问10.0.222.222,退出后重新登录后再来访问此页面，count=$count";
         Yii::app()->session['msg'] = $msg;
         return false;
-    }
+    };
 
     $session = Yii::app()->session;
     foreach ($login_ret as $tuple) {
@@ -51,8 +51,215 @@ function airAutoLogin()
 
         return true;
     }
-    //Yii::app()->session['msg'] = "正常";
     return true;
+}
+
+function air_video_buy($user_name, $video_id) {
+    $ret = array();
+    $m_id = 0;
+    $mv_id = 0;
+    $beans = 0;
+    $traffic = 0;
+    $balance = 0;
+
+    $check_ret = array();
+    $check_ret = air_check_user_buy($user_name, $video_id);
+    if ($check_ret["flag"] != 'need_buy') {
+        return false;
+    }
+
+    $m_id = $check_ret["m_id"];
+    $mv_id = $check_ret["mv_id"];
+    $mv_name = $check_ret["mv_name"];
+    $beans = $check_ret["beans"];
+    $balance = $check_ret["balance"];
+    $traffic = $check_ret["traffic"];
+    $price = $check_ret["price"];
+
+    $quota_sql_arr = array();
+    if ($beans > 0) {
+        /*处理电影豆*/
+        $sql  = "select auto_id, remain from user_quota where user_name = '$user_name' ";
+        $sql .= "and state = 'enable' and category = 'beans' and stop_date > now() ";
+        $sql .= "and remain > 0 order by stop_date;";
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        $count = count($set_t);
+        if($count <= 0){
+            Yii::app()->session['msg'] =  "没有查找到bean quota.";
+            return false;
+        }
+        
+        foreach ($set_t as $tuple) {
+            $quota_id = $tuple["auto_id"];
+            $remain = $tuple["remain"];
+            $state = "enable";
+            $state_desc = "使用中";
+            if ($beans > $remain) {
+                $beans -= $remain;
+                $state = "disable";
+                $state_desc = "已用完";
+                $t_sql  = "update from user_quota set remain = 0, state='$state', ";
+                $t_sql .= "state_desc = '$state_desc' where auto_id = $quota_id";
+                array_push($quota_sql_arr, $t_sql);
+
+            } else {
+                if ($beans == $remain) {
+                    $state = "disable";
+                    $state_desc = "已用完";
+
+                }
+
+                $t_sql  = "update from user_quota set remain = remain - $beans, state='$state', ";
+                $t_sql .= "state_desc = '$state_desc' where auto_id = $quota_id"; 
+                array_push($quota_sql_arr, $t_sql);
+                break;
+            }
+        }
+    }
+    
+    $conn  = Yii::app()->getDbByName("db_air");
+    $transaction = $conn->beginTransaction();
+
+    try {
+        foreach ($quota_sql_arr as $k){
+            Yii::app()->getDbByName("db_air")->createCommand($k)->execute();
+        }
+
+        if ($balance > 0) {
+            $t_sql = "update user_info set balance -= $balance where user_name = '$user_name'";
+            Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+        }
+
+        $start_date = Date("Y-m-d");
+        $star_date .= " 00:00:00";
+        $stop_stamp  = air_get_stamp_after_month($start_date, 1);
+        $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
+
+        if ($traffic > 0) {
+            $t_sql  = "insert into user_quota (user_name, category, quota, remain, deal_id, state, ";
+            $t_sql .= "state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ";
+            $t_sql .= "('$user_name', 'traffic', $traffic, $traffic, 0, 'enable', '未启用', ";
+            $t_sql .= "'看电影"."$mv_name"."赠送', 'null', '$start_date', '$stop_date',now()) "; 
+            Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+        }
+
+        $mac = Yii::app()->session['mac'];
+
+        $start_date = date("Y-m-d H:i:s");
+        $stop_stamp  = air_get_stamp_after_day($start_date, 3);
+        $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
+
+        $t_sql  = "insert into media_deal_info ";
+        $t_sql .= "(m_id, mv_id, user_name, mac, price,m_chs_desc,create_date,expire_date) values ";
+        $t_sql .= "(m_id,mv_id,'$user_name','$mac',$price,'$mv_name','$start_date','$stop_date')";
+        Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+        $transaction->commit();
+
+    } catch (Exception $e) {
+        $transaction->rollBack();
+        Yii::app()->session['msg'] = "交易失败，请重试，如果再有问题请联系管理员".$e->getMessage();
+        return false;
+    }
+
+    return true;
+}
+
+
+function air_check_user_buy($user_name, $video_id) {
+    $ret = array();
+    $price = 0;
+    $space = 0;
+    $mv_name = "";
+    $m_id = 0;
+    $mac = Yii::app()->session['mac'];
+
+    $sql = "select m_id, m_space, m_price,m_chs_desc from media_detail where auto_id = $video_id";
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+
+    if($count > 0){
+        $price = $set_t[0]["m_price"];
+        $mv_name = $set_t[0]["m_chs_desc"];
+        $space = $set_t[0]["m_space"];
+        $m_id = $set_t[0]["m_id"];
+
+    } else {
+        $ret["flag"] = "error";
+        Yii::app()->session['msg'] = "没有查到该视频的信息，请选择其他视频观看。";
+        return;
+    }
+
+    if ($price <= 0) {
+        $ret["flag"] = "already_buy";
+        return $ret;
+    }
+
+    $sql  = "select deal_id from media_deal_info where user_name = '$user_name' ";
+    $sql .= "and mac = '$mac' and m_id = $video_id and expire_date > now()"; 
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+    if($count > 0){
+        $ret["flag"] = "already_buy";
+        return $ret;
+    }
+ 
+    /*检查电影豆*/
+    $sql  = "select sum(remain) as value from user_quota where user_name = '$user_name' ";
+    $sql .= "and  category = 'beans' and state = 'enable' and stop_date > now()";
+    $beans = air_get_value_by_sql($sql);
+    $ret["m_id"] = $m_id;
+    $ret["mv_id"] = $video_id;
+    $ret["flag"] = "need_buy";
+    $ret["mv_name"] = $mv_name;
+    $ret["price"] = $price;
+
+    if ($beans >= $price) {
+        $ret["beans"] = $beans;
+        $ret["balance"] = 0;
+        $ret["traffic"] = 0;
+        $ret["buy_msg"] = "电影豆充足，购买此电影需要消耗$price电影豆.";
+        return $ret;
+    }
+
+    $sql  =  "select balance as value from user_info where user_name = '$user_name'";
+    $balance = air_get_value_by_sql($sql);
+
+    if ($beans + $balance >= $price) {
+        $ramain = $balance - $beans;
+        $traffic = sprintf("%.1f", $remain * 5);
+        $ret["beans"] = $beans;
+        $ret["balance"] = $remain;
+        $ret["traffic"] = $traffic;
+
+        if ($beans > 0) {
+            $ret["buy_msg"]  = "购买此电影需要消耗".$beans."电影豆和".$remain;
+            $ret["buy_msg"] .= "元账户余额。同时你将获得".$traffic."MB上网流量.";
+
+        } else {
+            $ret["buy_msg"] = "购买此电影需要消耗".$remain."元账户余额.";
+            $ret["buy_msg"] .= "同时你将获得".$traffic."MB上网流量.";
+        }
+
+        return $ret;
+
+    } else {
+        $ret["flag"] = "error";
+        Yii::app()->session['msg'] = "oh...no...，账户余额不足，赶紧去充值吧.";
+        return;
+    }
+
+}
+
+function air_get_value_by_sql($sql)
+{
+    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($set_t);
+    if ($count < 1) {
+        return 0;
+    }
+
+    return $set_t[0]["values"];
 }
 
 function air_get_category($id_kind, $id_area, $id_type)
@@ -146,7 +353,7 @@ ret["cur_page"] =
 ret["total_page"] = 
 ret["total_record"] =
 */
-function air_get_media_list($id_kind,$id_area,$id_type,$page)
+function air_get_media_list($id_kind,$id_area,$id_type,$page,$keys)
 {
     $ret = array();
     $category = array();
@@ -186,6 +393,13 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page)
     if ($id_type > 0) {
         $cond .= " and m_type_flag & $id_type != 0 ";
     }
+
+    $key_len = strlen($keys);
+    if ($key_len > 1) {
+        $cond .= " and (m_chs_name like '%$keys%' or m_director like '%$keys%' or m_main_actors like '%$keys%') ";
+    }
+
+
     $sql = "select count(*) as records from media where enable_state = 'enable' $cond";
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
 	
@@ -346,6 +560,23 @@ function air_add_packet_deal($user_name, $packet_id)
     }
 
     return true;
+}
+
+
+function air_get_stamp_after_day($date, $period)
+{
+    if (preg_match_all('/(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)/', $date, $matchs) == 0) {
+        return 0;
+    }
+
+    $year = $matchs[1][0];
+    $mon  = $matchs[2][0];
+    $day  = $matchs[3][0];
+    $hour = $matchs[4][0];
+    $min  = $matchs[5][0];
+    $sec  = $matchs[6][0];
+
+    return mktime($hour,$min,$sec,$mon,$day + $period,$year);
 }
 
 

@@ -3,7 +3,7 @@ Yii::app()->session['nav'] = "index";
 Yii::app()->session['nav_msg'] = "放映厅";
 
 $name = Yii::app()->name;
-$title = "放映厅";
+$title = "放映厅(".$media_info['m_chs_desc'].")";
 $this->pageTitle = $name." ".$title;
 
 Yii::app()->session['nav'] = "index";

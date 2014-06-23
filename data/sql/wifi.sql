@@ -124,17 +124,19 @@ CREATE TABLE IF NOT EXISTS `air`.`user_binding` (
 
 /*电影购买记录(目前只能支持单集购买，不支持打包购买)*/
 CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
-   `deal_id`      varchar(64)     NOT NULL,       /*订单编号*/
-   `m_id`         bigint(20)      NOT NULL,       /*视频ID*/
-   `user_name`    varchar(64)     NOT NULL,       /*用户名*/
-   `price`        DECIMAL(14,2)   DEFAULT '0.0',  /*购买价格*/
-   `total_cost`   DECIMAL(14,2)   DEFAULT '0.0',  /*累积消费额*/
-   `view_times`   int             DEFAULT  0,     /*累积观看次数*/
-   `create_date`  TIMESTAMP,                      /*用户创建时间*/
-   `expire_date`  TIMESTAMP,                      /*资源有效期截止时间*/
+   `deal_id`      varchar(64)     NOT NULL,         /*订单编号*/
+   `m_id`         bigint(20)      NOT NULL,         /*视频ID*/
+   `mv_id`        bigint(20)      NOT NULL,         /*视频所属的电影或电视剧的media_id*/
+   `user_name`    varchar(64)     NOT NULL,         /*用户名*/
+   `mac`          varchar(64)     NOT NULL,         /*设备mac*/
+   `price`        DECIMAL(14,2)   DEFAULT '0.0',    /*购买价格*/
+   `m_chs_desc`   varchar(64),                      /*视频文字描述.(功夫熊猫 720p, 功夫熊猫 1080p)*/
+   `create_date`  TIMESTAMP,                        /*用户创建时间*/
+   `expire_date`  TIMESTAMP,                        /*资源有效期截止时间*/
 
-   INDEX(`user_name`),
-   INDEX(`m_id`,`user_name`)
+   INDEX(`user_name`,`mac`),
+   INDEX(`user_name`,`mac`,`m_id`),
+   INDEX(`user_name`,`mac`,`mv_id`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

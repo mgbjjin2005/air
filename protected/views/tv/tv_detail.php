@@ -116,7 +116,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
             <li><span class="labelClass">类型    :</span><?php echo $info['m_type_desc']; ?></li>
             <li><span class="labelClass">导演    :</span><?php echo $info['m_director']; ?></li>
             <li><span class="labelClass">主演    :</span><?php echo $info['m_main_actors']; ?></li>
-            <li><span class="labelClass">播放次数:</span><?php echo $info['m_total_pv']; ?></li>
+            <li><span class="labelClass">播放次数:</span><?php echo $info['m_total_pv']; ?>次</li>
             <li><span class="labelClass">时长    :</span><?php echo $info['m_time_length']; ?>分钟</li>
             <li class="clear"></li>
 

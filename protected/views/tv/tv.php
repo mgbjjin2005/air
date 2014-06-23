@@ -63,7 +63,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 		
 		<div class="item item-moreshow">
 			<label>搜索</label>
-			<input class="i_stext c_a5" value=""  placeholder="影片名/明星/导演"  id='keys' name='keys' style="width:60%"/>
+			<input class="i_stext c_a5" value=""  placeholder="影片名/演员名/导演名"  id='keys' name='keys' style="width:60%"/>
             <input onclick="search()" id="air_tv_search" type="button" class="i_slbut">
 		</div>
         <!--

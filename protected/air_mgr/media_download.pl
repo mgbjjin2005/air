@@ -468,6 +468,7 @@ sub down_load_detail()
         return;
     }
 
+    print("-----m_chs_desc=$m_chs_desc\n");
     $sql  = "replace into media_detail (m_id,m_alias,m_space,m_price,m_chs_desc,";
     $sql .= "m_episode,m_video_path,m_real_path) values (";
     $sql .= "$m_id,'$alias',$space,$m_price,'$m_chs_desc',$m_episode,";

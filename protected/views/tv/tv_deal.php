@@ -9,15 +9,21 @@ Yii::app()->session['nav_msg'] = "支付电影";
             <th colspan="2"> 支付电影信息:</th>
             
         </tr>
+		
     </thead>
     <tbody>
 		<tr>
+			<td> 支付须知</td>
+            <td> <?php echo $media_info['buy_msg'];?></th>
+            
+        </tr>
+		<tr>
             <td> 影片</td>
-            <td><?php echo $media_info['m_chs_desc'];?> </td>
+            <td><?php echo $media_info['mv_name'];?> </td>
         </tr>
 		<tr>
             <td>电影价格</td>
-            <td><?php echo $media_info['m_price'];?>豆</td>
+            <td><?php echo $media_info['beans'];?>豆</td>
         </tr>
         <tr>
             <td>支付账户</td>
@@ -30,7 +36,7 @@ Yii::app()->session['nav_msg'] = "支付电影";
         
         <tr>
             <td>支付金额</td>
-            <td><?php echo $media_info['m_price'];?>元</td>
+            <td><?php echo $media_info['price'];?>元</td>
         </tr>
 
         <tr>
@@ -52,12 +58,8 @@ Yii::app()->session['nav_msg'] = "支付电影";
 <script>
      function doCharge(){
         var url="index.php?r=tv/charge";
-		/*
-        var charge_name='';
-        var charge_name_type='';
-        var charge_wifibi='';
-        var charge_price='';
-        $.ajax({type: "post", url: url,async:false,data:{charge_name:charge_name,charge_name_type:charge_name_type,charge_wifibi:charge_wifibi,charge_price:charge_price}
+        var mv_id='<?php echo $media_info['mv_id']?>';
+        $.ajax({type: "post", url: url,async:false,data:{mv_id:mv_id}
         ,success: function(resData)
         {
                 var resData = eval("(" + resData + ")"); 

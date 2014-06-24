@@ -90,7 +90,7 @@ class TvController extends Controller
         }
 		$dbDeal=new DbDeal();
 		//先通过函数判断 用户是否 可以看这个电影
-		$tmp_ret=air_check_user_buy("haodan",$id);
+		$tmp_ret=air_check_user_buy($user_name,$id);
 		$flag=$tmp_ret['flag'];
 		if($flag=='error'){
 			$this->render('//site/error_msg');
@@ -98,7 +98,7 @@ class TvController extends Controller
 		}else if($flag=='already_buy'){
 			//获取media_detail表里面的数据
 			$media_info = $dbDeal->getMediaDetail("",$id);
-			if ($media_info ==null || count($media_info)<1) {
+			if ($media_info ==null || count($media_info)<1)   {
 				Yii::app()->session['msg'] = "该影片详情为null.";
 				$this->render('//site/error_msg');
 				return;
@@ -116,7 +116,8 @@ class TvController extends Controller
 		}else if($flag=='need_buy'){
 			$ret['media_info']=$tmp_ret;
 			$user_info=$dbDeal->getUserInfo($user_name);
-			$ret['user_info']=$user_info;
+			$ret['user_info']=$user_info[0];
+            $ret['return_url']="index.php?r=tv/detail&id=".$ret["media_info"]['m_id'];
 			$this->render('tv_deal',$ret);
 		}
 		
@@ -170,15 +171,24 @@ class TvController extends Controller
             return;
         }
 		$ret=air_video_buy($user_name,$id);
+        //获取media_detail表里面的数据
+        $dbDeal=new DbDeal();
+        $media_info = $dbDeal->getMediaDetail("",$id);
+        if ($media_info ==null || count($media_info)<1)   {
+            Yii::app()->session['msg'] = "该影片详情为null.";
+            $this->render('//site/error_msg');
+            return;
+        }
 		$retData=array();
-        $retData["return_url"]="index.php?r=tv/ToWatch";
         
 		if($ret==false){
             $retData["message"]="ERROR:".Yii::app()->session['msg'];
-            
+            $retData["status"]="Failed";
+            $retData["return_url"]="index.php?r=tv/detail&id=".$media_info[0]['m_id'];
 		}else{
 			$retData["message"]="成功付费";
-            
+            $retData["status"]="Success";
+            $retData["return_url"]="index.php?r=tv/ToWatch&id=".$id;
 		}
 		echo CJSON::encode($retData);
 	}

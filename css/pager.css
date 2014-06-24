@@ -62,5 +62,11 @@ ul.yiiPager .hidden a
 ul.yiiPager .first,
 ul.yiiPager .last
 {
+	/*display:none;*/
+}
+
+ul.yiiPager .previous,
+ul.yiiPager .next
+{
 	display:none;
 }

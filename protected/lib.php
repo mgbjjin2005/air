@@ -98,7 +98,7 @@ function air_video_buy($user_name, $video_id) {
                 $beans -= $remain;
                 $state = "disable";
                 $state_desc = "已用完";
-                $t_sql  = "update from user_quota set remain = 0, state='$state', ";
+                $t_sql  = "update user_quota set remain = 0, state='$state', ";
                 $t_sql .= "state_desc = '$state_desc' where auto_id = $quota_id";
                 array_push($quota_sql_arr, $t_sql);
 
@@ -109,7 +109,7 @@ function air_video_buy($user_name, $video_id) {
 
                 }
 
-                $t_sql  = "update from user_quota set remain = remain - $beans, state='$state', ";
+                $t_sql  = "update user_quota set remain = remain - $beans, state='$state', ";
                 $t_sql .= "state_desc = '$state_desc' where auto_id = $quota_id"; 
                 array_push($quota_sql_arr, $t_sql);
                 break;
@@ -126,12 +126,12 @@ function air_video_buy($user_name, $video_id) {
         }
 
         if ($balance > 0) {
-            $t_sql = "update user_info set balance -= $balance where user_name = '$user_name'";
+            $t_sql = "update user_info set balance = balance - $balance where user_name = '$user_name'";
             Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
         }
 
         $start_date = Date("Y-m-d");
-        $star_date .= " 00:00:00";
+        $start_date .= " 00:00:00";
         $stop_stamp  = air_get_stamp_after_month($start_date, 1);
         $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
 
@@ -151,7 +151,7 @@ function air_video_buy($user_name, $video_id) {
 
         $t_sql  = "insert into media_deal_info ";
         $t_sql .= "(m_id, mv_id, user_name, mac, price,m_chs_desc,create_date,expire_date) values ";
-        $t_sql .= "(m_id,mv_id,'$user_name','$mac',$price,'$mv_name','$start_date','$stop_date')";
+        $t_sql .= "($m_id,$mv_id,'$user_name','$mac',$price,'$mv_name','$start_date','$stop_date')";
         Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
 
         $transaction->commit();
@@ -195,8 +195,8 @@ function air_check_user_buy($user_name, $video_id) {
         return $ret;
     }
 
-    $sql  = "select deal_id from media_deal_info where user_name = '$user_name' ";
-    $sql .= "and mac = '$mac' and m_id = $video_id and expire_date > now()"; 
+    $sql  = "select auto_id from media_deal_info where user_name = '$user_name' ";
+    $sql .= "and mac = '$mac' and mv_id = $video_id and expire_date > now()"; 
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
     $count = count($set_t);
     if($count > 0){
@@ -218,7 +218,7 @@ function air_check_user_buy($user_name, $video_id) {
         $ret["beans"] = $beans;
         $ret["balance"] = 0;
         $ret["traffic"] = 0;
-        $ret["buy_msg"] = "电影豆充足，购买此电影需要消耗$price电影豆.";
+        $ret["buy_msg"] = "电影豆充足，购买此电影需要消耗$price"."电影豆.";
         return $ret;
     }
 
@@ -226,7 +226,7 @@ function air_check_user_buy($user_name, $video_id) {
     $balance = air_get_value_by_sql($sql);
 
     if ($beans + $balance >= $price) {
-        $ramain = $balance - $beans;
+        $remain = $price - $beans;
         $traffic = sprintf("%.1f", $remain * 5);
         $ret["beans"] = $beans;
         $ret["balance"] = $remain;
@@ -259,7 +259,7 @@ function air_get_value_by_sql($sql)
         return 0;
     }
 
-    return $set_t[0]["values"];
+    return $set_t[0]["value"];
 }
 
 function air_get_category($id_kind, $id_area, $id_type)

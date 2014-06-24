@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_binding` (
 
 /*电影购买记录(目前只能支持单集购买，不支持打包购买)*/
 CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
-   `deal_id`      varchar(64)     NOT NULL,         /*订单编号*/
+   `auto_id`      bigint(20)      NOT NULL AUTO_INCREMENT,
    `m_id`         bigint(20)      NOT NULL,         /*视频ID*/
    `mv_id`        bigint(20)      NOT NULL,         /*视频所属的电影或电视剧的media_id*/
    `user_name`    varchar(64)     NOT NULL,         /*用户名*/
@@ -134,10 +134,11 @@ CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
    `create_date`  TIMESTAMP,                        /*用户创建时间*/
    `expire_date`  TIMESTAMP,                        /*资源有效期截止时间*/
 
+   PRIMARY KEY (`auto_id`),
    INDEX(`user_name`,`mac`),
    INDEX(`user_name`,`mac`,`m_id`),
    INDEX(`user_name`,`mac`,`mv_id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 /*套餐信息*/

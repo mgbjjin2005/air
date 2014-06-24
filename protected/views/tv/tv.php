@@ -182,7 +182,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 			'prevPageLabel' => '上一页', 
 			'nextPageLabel' => '下一页', 
 			'pages' => $pages, 
-			'maxButtonCount'=>5 
+			'maxButtonCount'=>6 
 			) 
 		); 
 		?> 

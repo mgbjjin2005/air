@@ -118,8 +118,11 @@ class SiteController extends Controller
 
         $retData=array();
         $retData["return_url"]=$req->getParam("return_url","index.php?r=site/index");
+        if($retData['return_url']=="index.php?r=tv/detail"){
+            $id=$req->getParam("id","-1");
+            $retData['return_url']=$retData['return_url']."&id=".$id;
+        }
         $retData["message"]=$req->getParam("message","");
-
 	    $this->render('warning', $retData);
 	}
     

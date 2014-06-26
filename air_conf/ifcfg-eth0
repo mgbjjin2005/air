@@ -1,0 +1,7 @@
+DEVICE=eth0
+ONBOOT=yes
+TYPE=Ethernet
+BOOTPROTO=dhcp
+USERCTL=no
+MASTER=bond0
+SLAVE=yes

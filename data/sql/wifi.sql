@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media_category` (
    `m_name`          varchar(32),                                   /*类目名*/
    `value`           int            DEFAULT 1,                      /*标志位*/
    `parent_class_id` bigint(20)     DEFAULT 0,                      /*如果不是顶级类目，此处是上一层级类目的auto_id*/
-   `m_create_date`   TIMESTAMP,                                     /*记录创建时间*/
+   `m_create_date`   DATETIME,                                      /*记录创建时间*/
 
    PRIMARY KEY (`auto_id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `air`.`media_detail` (
    `m_pv`            int            DEFAULT 0,                      /*视频被浏览的次数*/
    `m_buy_pv`        int            DEFAULT 0,                      /*视频被购买的次数*/
     
-   `m_create_date`   TIMESTAMP,                                     /*记录创建时间*/
-   `m_modify_date`   TIMESTAMP,                                     /*记录修改时间*/
+   `m_create_date`   DATETIME,                                      /*记录创建时间*/
+   `m_modify_date`   DATETIME,                                      /*记录修改时间*/
 
    PRIMARY KEY (`auto_id`),
    UNIQUE KEY (`m_alias`), 
@@ -68,12 +68,27 @@ CREATE TABLE IF NOT EXISTS `air`.`media` (
    `m_total_pv`      int            DEFAULT 0,                      /*影片访问pv*/
    `m_pic_path`      varchar(512)   DEFAULT NULL,                   /*视频的展示图片的路径(media/201403/pic/md5(id).jpg)*/
    `m_des`           varchar(4096)  DEFAULT NULL,                   /*剧情简介*/
-   `m_create_date`   TIMESTAMP,                                     /*记录创建时间*/
-   `m_modify_date`   TIMESTAMP,                                     /*记录修改时间*/
+   `m_create_date`   DATETIME,                                      /*记录创建时间*/
+   `m_modify_date`   DATETIME,                                      /*记录修改时间*/
 
    PRIMARY KEY (`auto_id`),
    UNIQUE KEY (`m_alias`), 
    INDEX (`m_kind_flag`,`enable_state`),
+   INDEX (`m_create_date`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*发给用户的信息*/
+CREATE TABLE IF NOT EXISTS `air`.`user_msg` (
+   `auto_id`         bigint(20)     NOT NULL AUTO_INCREMENT,
+   `user_name`       varchar(64)    NOT NULL,                       /*用户名*/
+   `title`           varchar(128)   ,                               /*标题*/
+   `msg`             varchar(1024)  ,                               /*内容*/
+   `m_level`         int            DEFAULT  1,                     /*消息级别(info=0/notice=1/warn=2/emerage=3)*/
+   `read`            varchar(16)    DEFAULT 'no',                   /*消息是否已读*/
+   `m_create_date`   DATETIME,                                      /*记录创建时间*/
+
+   PRIMARY KEY (`auto_id`),
+   INDEX (`user_name`,`read`),
    INDEX (`m_create_date`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -86,11 +101,24 @@ CREATE TABLE IF NOT EXISTS `air`.`user_info` (
    `email`        varchar(64)     NOT NULL,        /*邮箱*/
    `balance`      DECIMAL(14,2)   DEFAULT '0.0',   /*账户余额*/
    `total_cost`   DECIMAL(14,2)   DEFAULT '0.0',   /*累积消费额*/
-   `create_date`  TIMESTAMP,                       /*用户创建时间*/
+   `create_date`  DATETIME,                        /*用户创建时间*/
 
    PRIMARY KEY (`user_name`),
    INDEX(`user_name`,`password`),
    INDEX(`user_name`,`password_md5`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*资金/电影豆变动表（所有跟资金和电影豆相关的操作都要记录到此表）*/
+CREATE TABLE IF NOT EXISTS `air`.`transaction_info` (
+   `user_name`    varchar(64)     NOT NULL,        /*用户名*/
+   `msg`          varchar(128)    ,                /*交易描述*/
+   `category`     varchar(16)     DEFAULT 'money', /*money:金钱交易；beans:电影豆交易*/
+   `change_quota` DECIMAL(14,2)   DEFAULT '0.0',   /*增加或减少的数额*/
+   `create_date`  DATETIME,                        /*用户创建时间*/
+
+   PRIMARY KEY (`user_name`),
+   INDEX(`user_name`,`category`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -115,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_binding` (
    `bind_state`   varchar(16)     NOT NULL,                  /*绑定状态 (YES/NO)*/
    `valid_key`    varchar(256)    DEFAULT NULL,              /*设备迁移过程时要通过邮件验证的验证key*/
    `valid_state`  varchar(16)     DEFAULT 'done',            /*当前验证状态("email_done":邮件已发出；"done":已经验证通过)*/
-   `create_date`  TIMESTAMP,                                 /*创建时间*/
+   `create_date`  DATETIME,                                 /*创建时间*/
 
     PRIMARY KEY (`auto_id`),
     INDEX(`user_name`, `mac`, `bind_state`)
@@ -131,8 +159,8 @@ CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
    `mac`          varchar(64)     NOT NULL,         /*设备mac*/
    `price`        DECIMAL(14,2)   DEFAULT '0.0',    /*购买价格*/
    `m_chs_desc`   varchar(64),                      /*视频文字描述.(功夫熊猫 720p, 功夫熊猫 1080p)*/
-   `create_date`  TIMESTAMP,                        /*用户创建时间*/
-   `expire_date`  TIMESTAMP,                        /*资源有效期截止时间*/
+   `create_date`  DATETIME,                        /*用户创建时间*/
+   `expire_date`  DATETIME,                        /*资源有效期截止时间*/
 
    PRIMARY KEY (`auto_id`),
    INDEX(`user_name`,`mac`),
@@ -151,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_info` (
    `category`      varchar(32)     NOT NULL,                    /*addition(加油包)/packet(固定套餐)*/
    `enable_state`  varchar(16)     DEFAULT   'enable',          /*enable/disable*/
    `price`         DECIMAL(14,2)   DEFAULT   '0.0',             /*价格*/
-   `create_date`   TIMESTAMP,                                   /*套餐创建时间*/
+   `create_date`   DATETIME,                                    /*套餐创建时间*/
 
    PRIMARY KEY (`packet_id`),
    INDEX(`category`)
@@ -164,9 +192,9 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_auto` (
    `user_name`     varchar(64)     NOT NULL,                    /*用户名*/
    `packet_id`     bigint(20)      NOT NULL,
    `enable_state`  varchar(16)     NOT NULL   DEFAULT 'enable', /*状态 enable/disable*/
-   `check_date`    TIMESTAMP       NOT NULL,                    /*检查点*/
-   `valid_date`    TIMESTAMP       NOT NULL,                    /*套餐第一次生效的时间*/
-   `create_date`   TIMESTAMP,                                   /*创建时间*/
+   `check_date`    DATETIME        NOT NULL,                    /*检查点*/
+   `valid_date`    DATETIME        NOT NULL,                    /*套餐第一次生效的时间*/
+   `create_date`   DATETIME        NOT NULL,                    /*创建时间*/
 
    PRIMARY KEY (`auto_id`),
    INDEX(`enable_state`),
@@ -185,10 +213,10 @@ CREATE TABLE IF NOT EXISTS `air`.`packet_deal` (
    `user_name`     varchar(64)     NOT NULL,                    /*用户名*/
    `packet_id`     bigint(20)      NOT NULL,                    /*套餐ID*/
    `price`         DECIMAL(14,2)   DEFAULT  '0.0',              /*当时购买价格*/
-   `start_date`    TIMESTAMP       NOT NULL,                    /*开始时间*/
-   `stop_date`     TIMESTAMP       NOT NULL,                    /*资源过期时间*/
+   `start_date`    DATETIME        NOT NULL,                    /*开始时间*/
+   `stop_date`     DATETIME        NOT NULL,                    /*资源过期时间*/
    `state`         varchar(16)     NOT NULL,                    /*init(正在做)/done(已完成)*/
-   `create_date`   TIMESTAMP,                                   /*创建时间*/
+   `create_date`   DATETIME,                                   /*创建时间*/
 
    PRIMARY KEY (`auto_id`),
    INDEX(`state`),
@@ -204,14 +232,15 @@ CREATE TABLE IF NOT EXISTS `air`.`user_quota` (
    `category`        varchar(32)     NOT NULL,                  /*traffic/ticket*/
    `quota`           DECIMAL(14,2)   DEFAULT  '0.0',            /*总量，多少MB，或多少电影券*/
    `remain`          DECIMAL(14,2)   DEFAULT  '0.0',            /*余量*/
-   `deal_id`         bigint(20)      ,                          /*交易号*/
+   `deal_id`         bigint(20)      DEFAULT   0,               /*交易号*/
+   `packet_auto_id`  bigint(20)      DEFAULT   0,               /*如果是对应固定套餐产生的资源，这里需要填上套餐的packet_auto.auto_id*/
    `state`           varchar(16)     NOT NULL,                  /*enable/disable*/
    `state_desc`      varchar(16)     NOT NULL,                  /*new(还没使用)/using(正在被使用)/finish/expire*/
    `packet_desc`     varchar(128)    NOT NULL,                  /*套餐描述:冗余数据，对象packet_info.p_desc*/
    `packet_category` varchar(16)     NOT NULL,                  /*套餐类型:冗余数据，对应packet_info.category*/
-   `start_date`      TIMESTAMP       NOT NULL,                  /*开始时间*/
-   `stop_date`       TIMESTAMP       NOT NULL,                  /*资源过期时间*/
-   `create_date`     TIMESTAMP,                                 /*创建时间*/
+   `start_date`      DATETIME        NOT NULL,                  /*开始时间*/
+   `stop_date`       DATETIME        NOT NULL,                  /*资源过期时间*/
+   `create_date`     DATETIME,                                  /*创建时间*/
 
    PRIMARY KEY (`auto_id`),
    INDEX(`start_date`),
@@ -230,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_mon` (
    `traffic_remain`    DECIMAL(14,2)   DEFAULT  '0.0',            /*剩余流量*/
    `movie_tickets`     DECIMAL(14,2)   DEFAULT   0,               /*剩余电影券*/
    `date_mon`          varchar(64)     NOT NULL,                  /*月份(201405)*/
-   `create_date`       TIMESTAMP,                                 /*创建时间*/
+   `create_date`       DATETIME,                                 /*创建时间*/
 
    PRIMARY KEY(`user_name`,`date_mon`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -255,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_mon` (
 CREATE TABLE IF NOT EXISTS `air`.`traffic_realtime` (
    `user_name`    varchar(64)     NOT NULL,       /*用户名*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0', /*流量*/
-   `update_date`  TIMESTAMP,                      /*创建时间*/
+   `update_date`  DATETIME,                       /*创建时间*/
 
     PRIMARY KEY (`user_name`,`update_date`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -267,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `air`.`traffic_total` (
    `hour`         int             NOT NULL,                       /*小时*/
    `min`          int             NOT NULL,                       /*分(5-10分钟粒度)*/
    `traffic`      DECIMAL(14,2)   DEFAULT  '0.0',                 /*出口流量+入口流量*/
-   `create_date`  TIMESTAMP,                                      /*创建时间*/
+   `create_date`  DATETIME,                                       /*创建时间*/
 
    PRIMARY KEY(`day`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -280,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media_cart` (
    `m_desc`       varchar(128)    NOT NULL,      /*视频信息描述（蜘蛛侠系列之超凡蜘蛛侠、爱情公寓四第18集）*/
    `price`        DECIMAL(14,2)   DEFAULT '0.0', /*购买价格*/
    `expire`       int             DEFAULT  0,    /*资源购买后的有效期，单位为天，对应global_conf.moive_expire*/
-   `expire_date`  TIMESTAMP,                     /*该信息在购物车的有效期*/
+   `expire_date`  DATETIME,                      /*该信息在购物车的有效期*/
 
    INDEX(`user_name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -303,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `air`.`user_info` (
    `email`        varchar(64)     NOT NULL,        /*邮箱*/
    `balance`      DECIMAL(14,2)   DEFAULT '0.0',   /*账户余额*/
    `total_cost`   DECIMAL(14,2)   DEFAULT '0.0',   /*累积消费额*/
-   `create_date`  TIMESTAMP,                       /*用户创建时间*/
+   `create_date`  DATETIME,                        /*用户创建时间*/
 
    PRIMARY KEY (`user_name`),
    INDEX(`user_name`,`password`),

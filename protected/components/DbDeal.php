@@ -55,7 +55,7 @@ class DbDeal
      public function getUserServiceCount($type){
         $sql="select sum(remain) as count
                 from user_quota where user_name = '".Yii::app()->session['username']."' and category='$type'
-                 and state='enable'";
+                 and state='enable' and stop_date > now()";
         Yii::log($sql, 'info', 'haodan');
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         if($set_t==null || count($set_t)<1 || $set_t[0]['count'] ==null)

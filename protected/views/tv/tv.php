@@ -6,13 +6,9 @@ $this->pageTitle = $name." ".$title;
 Yii::app()->session['nav'] = "index";
 Yii::app()->session['nav_msg'] = $title;
 Yii::app()->session['board_name'] = $title;
-Yii::app()->session['board_msg']  = "1、浏览本网站所产生的所有流量均被视为内部流量，不计入计费带宽。</br>";
-Yii::app()->session['board_msg'] .= "2、经过测试，安卓环境下，猎豹浏览器看电影效果最好；";
-Yii::app()->session['board_msg'] .= "iphone下都比较不错。建议大家选择合适的浏览器观看</br>";
-Yii::app()->session['board_msg'] .= "3、为了提高小站的电影质量，我们在选片的时候精挑细选,";
-Yii::app()->session['board_msg'] .= "大部分电影都是全球票房过50亿的超级经典大片</br>";
-Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配有中文字幕，大家可以放心购买观看。</br>";
-
+Yii::app()->session['board_msg']  = "1、浏览本网站所产生的流量算内部流量，不会计入计费流量。</br>";
+Yii::app()->session['board_msg'] .= "2、所有的外语片均有中文字幕，可以放心的选择观看。</br>";
+Yii::app()->session['board_msg'] .= "3、不同的浏览器对视频的播放能力差别很大，建议优先尝试使用猎豹/UC/百度浏览器进行观看.</br>";
 
 
 ?>
@@ -182,7 +178,7 @@ Yii::app()->session['board_msg'] .= "4、本网站内的所有国外大片都配
 			'prevPageLabel' => '上一页', 
 			'nextPageLabel' => '下一页', 
 			'pages' => $pages, 
-			'maxButtonCount'=>6 
+			'maxButtonCount'=>5 
 			) 
 		); 
 		?> 

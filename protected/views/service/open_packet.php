@@ -20,12 +20,12 @@
             <td><?php echo sprintf("%.2f", $packet["movie_tickets"]);?>豆</td>
         </tr>
         <tr>
-            <td>有效月</td>
+            <td>有效期</td>
             <td><?php echo $packet["period_month"];?>个月</td>
         </tr>
 
         <tr>
-            <td>生效月份</td>
+            <td>生效时间</td>
             <td>
                 <!--
                 <div class="checkbox_div">  
@@ -34,6 +34,7 @@
                 <input type="radio" name=" cur_month_ok" value="1" checked/><label>下个月生效</label>
                 </div>-->
 
+                <!--
                 <div class="controls_form">
                     <label class="radio">
                         <input type="radio" name="cur_month_ok"  value="1" checked="">
@@ -44,7 +45,9 @@
                          当月生效
                      </label>
                   </div>
+                -->
 
+                开通后立即生效
             </td>
         </tr>
         <tr>

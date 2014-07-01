@@ -30,7 +30,7 @@
             </td>
             <td>
                  <input type="hidden" name="packet_id" value="<?php echo $packet['packet_id']?>">
-                <a  href="javascript:deletePacket(<?php echo $packet['packet_id']?>)" >确定删除</a> &nbsp;&nbsp;
+                <a  href="javascript:deletePacket(<?php echo $packet['packet_id']?>)" >确认取消</a> &nbsp;&nbsp;
                 <a  href="<?php echo $return_url;?>">返回</a>
             </td>
         </tr>

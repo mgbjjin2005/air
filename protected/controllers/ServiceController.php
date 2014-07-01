@@ -252,47 +252,25 @@ class ServiceController extends Controller
         //warning
         $retData=array();
         $retData["return_url"]="index.php?r=service/packet";
-        //get check_date 如果cur_month_ok=1，是下个月生效，是0的话是当月生效
-        $today=date("Y-m-d  H:i:s");
-        $tmp_date=date("Ym");      
-        $tmp_year=substr($tmp_date,0,4);
-        $tmp_mon =substr($tmp_date,4,2);
-        $tmp_thismonth_time=mktime(0,0,0,$tmp_mon,1,$tmp_year);
-        $tmp_nextmonth_time=mktime(0,0,0,$tmp_mon+1,1,$tmp_year);
-        $tmp_this=date("Y-m-d  H:i:s",$tmp_thismonth_time ); 
-        $tmp_next=date("Y-m-d  H:i:s",$tmp_nextmonth_time   );  
-        //get check_date
-        if($cur_month_ok==0){
-            $check_date=$tmp_this;
-        }else{
-            $check_date=$tmp_next;
-        }
-        //check 一个套餐当前有效只能有一个
-        $dbDeal=new DbDeal();
-        $packetAuto=$dbDeal->getPacketAutoById($packet_id);
-        if($packetAuto!=null && count($packetAuto)>=1){
-            $retData["message"]="您已经开通此套餐";
-            //$this->render("//site/warning", $retData );
-            //return;
-            //var_dump($retData);
+
+        /*防止重复提交*/
+        $sql  = "select count(*) as value from packet_auto where user_name = '$user_name' ";
+        $sql .= "and packet_id = $packet_id and enable_state = 'enable'";
+
+        $count = air_get_value_by_sql($sql);
+        if ($count >=1) {
+            $retData["message"]="你已经开通过此套餐。为了防止误操作导致不必要的损失，系统不允许同时开通两个完全一样的套餐，如果确实需要，请选择开通其他套餐.";
             echo CJSON::encode($retData);
-        }  
-        //get params
-        //echo "**$tmp_date  $tmp_year $tmp_mon  $tmp_next $tmp_this</br>";
-        //echo "'$user_name',$packet_id,$check_date,$check_date,$today";
-        //insert to db
-        Yii::log("$today $tmp_date  $tmp_year $tmp_mon  $tmp_next $tmp_this", 'info', 'haodan');
-        $sql="insert into packet_auto(user_name,packet_id,check_date,valid_date,create_date) values
-                ('$user_name',$packet_id,'$check_date','$check_date','$today')";
-        Yii::log($sql, 'info', 'haodan');
-        $rowCount= Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
-        if( $rowCount==1){
-            $retData["message"]="开通成功,10分钟生效";
-            //$this->render('//site/warning', $retData);
-        }else{
-            $retData["message"]="开通失败";
-	        //$this->render("//site/warning", $retData );
+            return;
         }
+
+        if(air_add_packet_deal($user_name,$packet_id)) {
+            $retData["message"]="恭喜,套餐开通成功";
+
+        } else {
+            $retData["message"] = Yii::app()->session['msg'];
+        }
+
         echo CJSON::encode($retData);
 
     }
@@ -310,7 +288,7 @@ class ServiceController extends Controller
         $retData=array();
         $retData["return_url"]="index.php?r=service/packet";
         if( $rowCount>=1){
-            $retData["message"]="取消成功";
+            $retData["message"]="套餐取消成功。";
             //$this->render('//site/warning', $retData);
         }else{
             $retData["message"]="取消失败";

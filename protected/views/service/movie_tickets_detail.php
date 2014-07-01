@@ -1,8 +1,12 @@
 <?php
 /* @var $this SiteController */
 $name = Yii::app()->name;
-$title = "当前电影豆详情";
-$this->pageTitle = $name." ".$title;
+$this->pageTitle = $name." 电影豆详情";
+
+Yii::app()->session['nav'] = "";
+Yii::app()->session['nav_msg'] = "电影豆详情";
+Yii::app()->session['board_name'] = "信息栏";
+Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI服务；使用".$name."不仅可以畅游互联网, 更有超过1000部超高清国内外大片可以不用等待立即观看。赶紧过来体验吧^_^";
 
 
 ?>

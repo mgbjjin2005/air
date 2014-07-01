@@ -64,7 +64,11 @@ function air_video_buy($user_name, $video_id) {
 
     $check_ret = array();
     $check_ret = air_check_user_buy($user_name, $video_id);
-    if ($check_ret["flag"] != 'need_buy') {
+    if ($check_ret["flag"] == "already_buy") {
+        return true;
+    }
+
+    if ($check_ret["flag"] != "need_buy") {
         return false;
     }
 
@@ -88,14 +92,15 @@ function air_video_buy($user_name, $video_id) {
             Yii::app()->session['msg'] =  "没有查找到bean quota.";
             return false;
         }
-        
+
+        $offset = $price;
         foreach ($set_t as $tuple) {
             $quota_id = $tuple["auto_id"];
             $remain = $tuple["remain"];
             $state = "enable";
             $state_desc = "使用中";
-            if ($beans > $remain) {
-                $beans -= $remain;
+            if ($offset > $remain) {
+                $offset -= $remain;
                 $state = "disable";
                 $state_desc = "已用完";
                 $t_sql  = "update user_quota set remain = 0, state='$state', ";
@@ -103,13 +108,13 @@ function air_video_buy($user_name, $video_id) {
                 array_push($quota_sql_arr, $t_sql);
 
             } else {
-                if ($beans == $remain) {
+                if ($offset == $remain) {
                     $state = "disable";
                     $state_desc = "已用完";
 
                 }
 
-                $t_sql  = "update user_quota set remain = remain - $beans, state='$state', ";
+                $t_sql  = "update user_quota set remain = remain - $offset, state='$state', ";
                 $t_sql .= "state_desc = '$state_desc' where auto_id = $quota_id"; 
                 array_push($quota_sql_arr, $t_sql);
                 break;
@@ -133,13 +138,16 @@ function air_video_buy($user_name, $video_id) {
         $start_date = Date("Y-m-d");
         $start_date .= " 00:00:00";
         $stop_stamp  = air_get_stamp_after_month($start_date, 1);
-        $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
+        $stop_date = date("Y-m-d H:i:s", $stop_stamp);
 
         if ($traffic > 0) {
             $t_sql  = "insert into user_quota (user_name, category, quota, remain, deal_id, state, ";
             $t_sql .= "state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ";
             $t_sql .= "('$user_name', 'traffic', $traffic, $traffic, 0, 'enable', '未启用', ";
             $t_sql .= "'看电影"."$mv_name"."赠送', 'null', '$start_date', '$stop_date',now()) "; 
+            Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+            $t_sql = "update user_mon set traffic_remain = traffic_remain + $traffic where user_name='$user_name'";
             Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
         }
 
@@ -246,7 +254,7 @@ function air_check_user_buy($user_name, $video_id) {
     } else {
         $ret["flag"] = "error";
         Yii::app()->session['msg'] = "oh...no...，账户余额不足，赶紧去充值吧.";
-        return;
+        return $ret;
     }
 
 }
@@ -259,7 +267,12 @@ function air_get_value_by_sql($sql)
         return 0;
     }
 
-    return $set_t[0]["value"];
+    $ret = $set_t[0]["value"];
+    if($ret == NULL) {
+        $ret = 0;
+    }
+
+    return $ret;
 }
 
 function air_get_category($id_kind, $id_area, $id_type)
@@ -456,23 +469,59 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page,$keys)
     return $ret;
 
 }
+
+
+/*
+$flag：为真的时候表示即使有这条记录，也要强制刷新remain的值。往往是user_quota又有新的资源的时候调用
+       为假的时候表示只有在没有对应的记录时才更新，如果已经存在这条记录，则不更新.
+*/
+function air_update_user_mon($user_name,$flag = false)
+{
+    $exist = false;
+    $date_mon = Date("Ym");
+    $sql = "select date_mon from user_mon where user_name = '$user_name' and date_mon = '$date_mon'";
+    $data_set = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($data_set);
+    if ($count >= 1) {
+        $exist = true;
+    }
+
+    if ($exist == true && $flag == false) {
+        return;
+    }
+
+    $sql  = "select sum(remain) as value from user_quota where user_name = '$user_name' ";
+    $sql .= " and category = 'traffic' and  state='enable' and start_date < now()";
+    $user_remain = air_get_value_by_sql($sql); 
+
+    if ($exist) {
+        $sql =  "update user_mon set traffic_remain = $user_remain ";
+        $sql .= "where user_name = '$user_name' and date_mon = '$date_mon'";
+
+    } else {
+        $sql = "insert into user_mon (user_name, traffic_idle, traffic_busy, ";
+        $sql .= "traffic_bill, traffic_remain, date_mon) values ";
+        $sql .= "('$user_name', 0, 0, 0, $user_remain, '$date_mon');";
+    }
+    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+}
 /*
    添加套餐交易。
    start_date 格式：2014-05-29 12:15:36
  */
 function air_add_packet_deal($user_name, $packet_id)
 {
+    $sql_packet_auto = "";
+    $sql_packet_deal = "";
+    $sql_user_quota = "";
+    $sql_user_mon = "";
+    $sql_user_info = "";
+    $packet_auto_id = 0;
+
     $start_date = Date("Y-m-d H:i:s");
     //用户信息
-    $sql = "select balance from user_info where user_name = '$user_name'";
-    $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
-    $count = count($set_t);
-    if ($count != 1) {
-        Yii::app()->session['msg'] =  "用户信息有误，请重新登录后再试，如果还有问题请联系管理员";
-        return false;
-    }
-
-    $balance = $set_t[0]["balance"];
+    $sql = "select balance as value from user_info where user_name = '$user_name'";
+    $balance = air_get_value_by_sql($sql);
 
     //套餐信息
     $sql  = "select p_desc, traffic, period_month, movie_tickets, category, price ";
@@ -491,66 +540,89 @@ function air_add_packet_deal($user_name, $packet_id)
     $packet_period_month  = $data_set[0]["period_month"];
     $beans = $data_set[0]["movie_tickets"];
 
-
     if ($balance < $packet_price) {
         Yii::app()->session['msg'] =  "余额不足, 交易失败。";
         return false;
     }
 
+    /*如果是固定套餐，从本月第一天开始算;如果是加油包，从当前时间开始算*/
+    if ($packet_category == "packet") {
+        $start_date = Date("Y-m");
+        $start_date .= "-01 00:00:00";
+    }
+
     $start_stamp = air_get_stamp_after_month($start_date, 0);
     $stop_stamp  = air_get_stamp_after_month($start_date, $packet_period_month);
-    $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
+    $stop_date = date("Y-m-d H:i:s", $stop_stamp);
 
     Yii::log("stop_date=$stop_date stop_stamp=$stop_stamp\n","info","sql");
+    
     if ($start_stamp == 0) {
         Yii::app()->session['msg'] =  "时间参数格式有误，参考格式2013-02-06 04:10:28.";
         return false;
     }
 
+    /*如果是固定套餐，需要insert packet_auto表*/
+    if ($packet_category == "packet") {
+        $sql  = "insert into packet_auto (user_name,packet_id,enable_state,";
+        $sql .= "check_date,valid_date,create_date) values ";
+        $sql .= "('$user_name',$packet_id,'disable','$stop_date','$start_date',now())";
+        $packet_auto_id = air_get_auto_id($sql);
+        if ($packet_auto_id <= 0) {
+            Yii::app()->session['msg'] = "packet_auto执行失败，请重试，如果再有问题请联系管理员";
+            return false;
+        }
+    }
+
     /*插入deal_id,获得deal_id*/
     $sql  = "insert into packet_deal (user_name, packet_id, price, state,create_date) ";
     $sql .= "values ('$user_name', $packet_id, $packet_price, 'init', now()); ";
-    
-    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
-    
-    $sql = "select LAST_INSERT_ID() as id;";
-    $data_set = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
-    $count = count($data_set);
-    $deal_id = 0;
-    if ($count == 1) {
-        $deal_id = $data_set[0]["id"];
-    }
-
+   
+    $deal_id = air_get_auto_id($sql);
     if ($deal_id <= 0) {
-        Yii::app()->session['msg'] = "交易表插入数据出错，请重试，如果再有问题请联系管理员";
+        Yii::app()->session['msg'] = "packet_deal插入数据出错，请重试，如果再有问题请联系管理员";
         return false;
     }
+  
 
     /*所有数据收集完毕，进行更新*/
 
     $conn  = Yii::app()->getDbByName("db_air");
     $transaction = $conn->beginTransaction();
 
-    $sql  = "insert into user_quota (user_name, category, quota, remain, deal_id, state, ";
-    $sql .= "state_desc, packet_desc, packet_category, start_date, stop_date, create_date) values ";
-    $sql .= "('$user_name', 'traffic', $packet_traffic, $packet_traffic, $deal_id, 'enable', '未启用', ";
-    $sql .= "'$packet_desc', '$packet_category', '$start_date', '$stop_date',now()) ";
-    
+    $sql  = "insert into user_quota (user_name, category, quota, remain, deal_id, ";
+    $sql .= "packet_auto_id,state, state_desc, packet_desc, packet_category, ";
+    $sql .= "start_date, stop_date, create_date) values ";
+    $sql .= "('$user_name', 'traffic', $packet_traffic, $packet_traffic, $deal_id, ";
+    $sql .= "$packet_auto_id ,'enable', '未启用', '$packet_desc', '$packet_category', ";
+    $sql .= "'$start_date', '$stop_date',now()) ";
+     
     if ($beans > 0) {
-        $sql .= ",('$user_name', 'beans',  $beans, $beans, $deal_id, 'enable', '未启用', ";
-        $sql .= "'$packet_desc', '$packet_category', '$start_date', '$stop_date',now()) ;";
+        $sql .= ",('$user_name', 'beans',  $beans, $beans, $deal_id, $packet_auto_id,";
+        $sql .= "'enable', '未启用', '$packet_desc', '$packet_category', '$start_date',";
+        $sql .= "'$stop_date',now()) ;";
     }
 
     try {
         Yii::log($sql,"info","sql");
         Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+        
         $sql = "update packet_deal set state = 'done' where auto_id = $deal_id;";
         Yii::log($sql,"info","sql");
         Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
         $sql  = "update user_info set balance = balance - $packet_price, ";
         $sql .= "total_cost = total_cost + $packet_price where user_name = '$user_name';";
         Yii::log($sql,"info","sql");
         Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
+        if ($packet_auto_id > 0) {
+            $sql = "update packet_auto set enable_state = 'enable' where auto_id = $packet_auto_id;";
+            Yii::log($sql,"info","sql");
+            Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
+        }
+
         $transaction->commit();
 
     } catch (Exception $e) {
@@ -559,9 +631,25 @@ function air_add_packet_deal($user_name, $packet_id)
         return false;
     }
 
+    /*检查user_mon数据完整性*/
+    air_update_user_mon($user_name, true);
+    
     return true;
 }
 
+
+function air_get_auto_id($sql) {
+    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+    $sql = "select LAST_INSERT_ID() as id;";
+    $data_set = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+    $count = count($data_set);
+    $auto_id = 0;
+    if ($count == 1) {
+        $auto_id = $data_set[0]["id"];
+    }
+
+    return $auto_id;
+}
 
 function air_get_stamp_after_day($date, $period)
 {

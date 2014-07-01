@@ -36,6 +36,51 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+    public function actionVideoList()
+    {
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $user_name = Yii::app()->session["username"];
+        $mac = Yii::app()->session["mac"];
+        
+        $sql  = "select auto_id,m_id,mv_id,price,m_chs_desc, ";
+        $sql .= "(timestamp(expire_date) - timestamp(now())) as expire, ";
+        $sql .= "expire_date ,create_date from  media_deal_info where ";
+        $sql .= "user_name = '$user_name' and mac ='$mac' and ";
+        $sql .= "(to_days(now()) - to_days(expire_date)) <= 30 ";
+        $sql .= "order by expire_date desc";
+
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+
+        $ret_expire =  array();
+        $ret_history = array();
+        $ret['user_name'] = $user_name;
+        foreach ($set_t as $tuple) {
+            $expire = $tuple['expire'];
+            $obj = array();
+
+            $obj["mv_id"] = $tuple["mv_id"];
+            $obj["price"] = $tuple["price"];
+            $obj["name"] = $tuple["m_chs_desc"];
+            $obj["expire_date"] = $tuple["expire_date"];
+            $obj["buy_date"] = $tuple["create_date"];
+
+            if ($expire > 0) {
+                $ret_expire[] = $obj;
+
+            } else {
+                $ret_history[] = $obj;
+            }
+
+        }
+       
+        $this->render('//site/video_list',array('ret_expire'=>$ret_expire, 'ret_history'=>$ret_history));
+        
+    }
+
     public function actionUserinfo()
     {
         if (airAutoLogin() == false) {
@@ -45,16 +90,8 @@ class SiteController extends Controller
 
         $user_name = Yii::app()->session["username"];
         $cur_mon = Date("Ym");
+        air_update_user_mon($user_name,false);
         
-        /*每月的0点 到 0点10分为出账期，不允许查账*/
-        /*
-        $day = Date("d");
-        if ($day == 1) {
-            Yii::app()->session['msg'] =  "正在出账，还没有本月的相关信息。请在10分钟以后再来查询...";
-            $this->render('error_msg');
-            return;
-        }
-        */
         //流量相关的
         $sql  = "select traffic_idle, ";
         $sql .= "traffic_busy, traffic_internal, traffic_bill,traffic_remain from ";
@@ -62,7 +99,7 @@ class SiteController extends Controller
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         $count = count($set_t);
         if($count != 1){
-            Yii::app()->session['msg'] =  "没有查询到您的相关信息，请联系管理员";
+            Yii::app()->session['msg'] =  "没有查询到相关信息;如果你是首次登陆，请稍等10分钟再来查看.";
             $this->render('error_msg');
             return;
         }

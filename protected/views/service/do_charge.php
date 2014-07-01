@@ -1,8 +1,23 @@
+
+<?php
+/* @var $this SiteController */
+$name = Yii::app()->name;
+$this->pageTitle = $name." 账户充值确认";
+
+Yii::app()->session['nav'] = "charge";
+Yii::app()->session['nav_msg'] = "充值确认";
+Yii::app()->session['board_name'] = "信息栏";
+Yii::app()->session['board_msg']  = "1、此页面仅供自己充值使用，如果需要帮助其它人充值，可以先在此页面为自己充值，然后通过‘业务办理’->‘转账给好友’功能完成。";
+
+?>
+
+
+
 <div class="content">
     <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th colspan="2"> 充值信息:</th>
+            <th colspan="2"> 充值信息</th>
             
         </tr>
     </thead>
@@ -12,12 +27,12 @@
             <td><?php echo $charge_name;?> </td>
         </tr>
         <tr>
-            <td>账户详情</td>
-            <td><?php echo "账户邮箱:$email";?></td>
+            <td>邮箱</td>
+            <td><?php echo "$email";?></td>
         </tr>
         <tr>
-            <td>充值WIFI币</td>
-            <td><?php echo $charge_wifibi;?>WIFI币</td>
+            <td>充值金额</td>
+            <td><?php echo $charge_wifibi;?>元</td>
         </tr>
         <tr>
             <td>应付金额</td>

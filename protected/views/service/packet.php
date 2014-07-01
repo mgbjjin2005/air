@@ -25,7 +25,7 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
         <tr>
             <th colspan="2" 
                 <?php if($row["user_status"] == true): ?> 
-                    style="color:#A1B60A"
+                    style="color:#009966"
                 <?php endif; ?> 
             >
                     套餐:<?php echo $row['p_desc']; ?></th>
@@ -54,7 +54,7 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
             <td>状态</td>
             <td>
             <?php if ($row["user_status"] == true): ?>
-               <color style="color:#A1B60A" > 当前已开通</color>
+               <color style="color:#009966" > 当前已开通</color>
             <?php elseif ($row["user_status"] == false): ?>
                 当前可开通
             <?php endif; ?>
@@ -63,10 +63,13 @@ Yii::app()->session['board_msg'] .= "6、如果本月流量不够需要增加本
         <tr>
             <td></td>
             <td>
-            <?php if ($row["user_status"] == true): ?> 
-                <a onclick="deletePacket(<?php echo $row['packet_id']?>)">
-                取消此套餐
-                </a>                  
+            <?php if($row["user_status"] == true) :?>
+                <?php if($row["price"] > 0) :?>
+                    <a onclick="deletePacket(<?php echo $row['packet_id']?>)">
+                    取消此套餐
+                <?php else: ?>
+                    免费套餐,无需取消
+                <?php endif;?>
             <?php elseif ($row["user_status"] == false): ?>
                 <a onclick="openPacket(<?php echo $row['packet_id']?>)">
                 开通此套餐

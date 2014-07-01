@@ -6,7 +6,10 @@ $this->pageTitle = $name." 我的账户";
 Yii::app()->session['nav'] = "userinfo";
 Yii::app()->session['nav_msg'] = "我的账户";
 Yii::app()->session['board_name'] = "信息栏";
-Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI服务；使用".$name."不仅可以畅游互联网, 更有超过1000部超高清国内外大片可以不用等待立即观看。赶紧过来体验吧^_^";
+Yii::app()->session['board_msg']  = "月总流量: 本月可以使用的总流量.包含本月已经使用的和还没有使用的.<br>忙时流量: 7:00-23:00期间使用的总流量.<br>";
+Yii::app()->session['board_msg'] .= "闲时流量: 23:00-7:00期间使用的总流量.<br>总使用量: 本月实际已经使用的流量.<br>";
+Yii::app()->session['board_msg'] .= "计费流量: 本月计费的流量数。比如你本月用了100MB忙时流量，300MB闲时流量，按照目前闲时流量按照1/3折算，则本月算你用的流量数为100+(300/3) = 200MB.<br>";
+Yii::app()->session['board_msg'] .= "剩余流量：目前剩余可用的流量数。请保持账户有剩余流量，流量用完后将会被下线或限速到3KB/秒";
 
 ?>
 
@@ -33,24 +36,30 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
         <tr>
             <td>电影豆</td>
             <td><?php echo sprintf("%.2f", $movie_tickets);?>豆</td>
-            <td><a href="index.php?r=service/movieTicketsDetail">过期详情</a></td>
+            <td><a href="index.php?r=service/movieTicketsDetail">详情</a></td>
         </tr>
 
         <tr>
             <td>账户余额</td>
             <td><?php echo sprintf("%.2f",$balance);?> 元</td>
             <td>
-                <a href="index.php?r=charge">账户充值</a>
-                </br>
-                <a href="index.php?r=charge/chargeDetail">交易记录</a>
+                <a href="index.php?r=service/disCharge">充值</a>,
+                <a href="index.php?r=service/disCharge">明细</a>
             </td>
         </tr>
 
         <tr>
-            <td>绑定状态</td>
-            <td>已绑定 </td>
-            <td><a href="index.php?r=site/bindinfo">查看详情</a></td>
+            <td>我的电影</td>
+            <td ><a href = "index.php?r=site/videoList">电影列表</a></td>
+            <td></td>
         </tr>
+
+        <tr>
+            <td>月总流量</td>
+            <td><?php print(sprintf("%.1f", $traffic_bill) + sprintf("%.1f", $traffic_remain));?>MB</td>
+            <td><a href="index.php?r=service/userPacketDetail">详情</a></td>
+        </tr>
+
 
     </tbody>
 </table>
@@ -58,41 +67,35 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>本月流量</th>
-            <th><a href="index.php?r=service/userPacketDetail">当前开通详情</a></th>
+            <th colspan="2">本月流量使用明细</th>
         </tr>
     </thead>
     <tbody>
 
         <tr>
             <td>忙时流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_busy);?>MB</td>
+            <td><?php echo sprintf("%.1f", $traffic_busy);?>MB</td>
         </tr>
 
         <tr>
             <td>闲时流量</td>
-            <td><?php echo sprintf("%.2f", $traffic_idle);?>MB</td>
-        </tr>
-
-        <tr>
-            <td>影视流量</td>
-            <td><?php echo sprintf("%.2f",$traffic_internal)?>MB</td>
+            <td><?php echo sprintf("%.1f", $traffic_idle);?>MB</td>
         </tr>
 
         <tr>
             <td>总使用量</td>
-            <td> <?php echo sprintf("%.2f", $traffic_idle + $traffic_busy + $traffic_internal);?>MB</td>
+            <td> <?php echo sprintf("%.1f", $traffic_idle + $traffic_busy + $traffic_internal);?>MB</td>
         </tr>
 
 
         <tr>
             <td>计费流量</td>
-            <td><span class="notice_info"><?php echo sprintf("%.2f", $traffic_bill);?>MB</span></td>
+            <td><span class="notice_info"><?php echo sprintf("%.1f", $traffic_bill);?>MB</span></td>
         </tr>
 
         <tr>
             <td>剩余流量</td>
-            <td><span class="notice_info"><?php echo sprintf("%.2f", $traffic_remain);?>MB</span></td>
+            <td><span class="notice_info"><?php echo sprintf("%.1f", $traffic_remain);?>MB</span></td>
             </td>
         </tr>
 

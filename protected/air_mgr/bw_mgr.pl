@@ -87,6 +87,30 @@ $db_radius = &air_connect_db("radius", "localhost", "air", "***King1985***", "33
 exit 0;
 
 #----------------------------------------------function---------------------------------------------------
+sub reject_user()
+{
+    my ($user_name,$client_ip,$ros_ip,$session_id) = @_;
+    print("ros_ip =$ros_ip, session_id=$session_id, user_name=$user_name, client_ip=$client_ip\n");
+    #更新用户组到受限用户组.
+    $sql = "update radusergroup set groupname = 'limited' where username='$user_name'";
+    $sth = $db_radius->prepare($sql);
+    print("$sql\n");
+    $sth->execute();
+
+    #下线用户.
+    my $path = "/tmp/reject_user.dat";
+    `rm -f $path` if (-e $path);
+    `echo "Acct-Session-Id=$session_id" >> $path`;
+    `echo "Framed-IP-Address=$client_ip" >> $path`;
+    `echo "User-Name=$user_name" >> $path`;
+    `echo "NAS-IP-Address=$ros_ip" >> $path`;
+
+    if (-e $path) {
+        `cat $path | /usr/bin/radclient -x $ros_ip:3799 disconnect ''King1985*_*''`;
+    }
+}
+
+
 sub update_user_bw()
 {
     $sql  = "select auto_id,user_name,remain, unix_timestamp(stop_date) as stop_stp from user_quota where ";
@@ -195,10 +219,16 @@ sub update_user_bw()
         print("quota user_name=$username,user_remain=$user_remain bill=$t_bill traffic=$traffic\n");
         if ($user_remain <= 0) {
             #此用户流量全部使用完，踢掉此用户。
-            my $msg = "亲,你的账户$username"."流量已经全部用完，系统已经阻止你登陆, ";
-            $msg .= "请及时去www.air-wifi.cn购买新的加油包后再来登陆。";
-            $msg .= "给亲带来的不便，我们深表歉意。";
-            &air_msg_user($username, "流量用尽", $msg, "emerge");
+            my $session_id = $origin_hash{$username}{"session_id"};
+            my $client_ip = $origin_hash{$username}{"client_ip"};
+            my $ros_ip = $origin_hash{$username}{"ros_ip"};
+
+            &reject_user($username,$client_ip,$ros_ip,$session_id);
+            print("用户$username"."流量耗尽，自动下线.\n");
+            #my $msg = "亲,你的账户$username"."流量已经全部用完，系统已经阻止你登陆, ";
+            #$msg .= "请及时去www.air-wifi.cn购买新的加油包后再来登陆。";
+            #$msg .= "给亲带来的不便，我们深表歉意。";
+            #&air_msg_user($username, "流量用尽", $msg, "emerge");
             $user_remain = 0;
         }
 
@@ -378,9 +408,10 @@ sub air_get_date_by_month_offset()
 sub process_radacct_items()
 {
     #取radacct数据库
-    $sql  = "select radacctid id, username, acctstarttime start_time, acctstoptime stop_time, ";
+    $sql  = "select radacctid id, username, acctstarttime start_time, acctstoptime stop_time,";
     $sql .= "acctsessiontime session_time, acctinputoctets input, acctoutputoctets output, ";
-    $sql .= "callingstationid mac,acctterminatecause terminate_cause, framedipaddress client_ip";
+    $sql .= "callingstationid mac,acctterminatecause terminate_cause, framedipaddress client_ip,";
+    $sql .= "acctsessionid session_id, nasipaddress ros_ip";
     $sql .= " from radacct";
 
     $sql_sub  = "insert into user_login_history (username, start_time, stop_time, session_time, input,";
@@ -396,6 +427,9 @@ sub process_radacct_items()
             my ($mac, $terminate_cause, $ip) = ($ref->{"mac"}, $ref->{"terminate_cause"}, $ref->{"client_ip"});
             my $traffic = $input+$output;
             $origin_hash{$username}{"total"} += $traffic;
+            $origin_hash{$username}{"session_id"} = $ref->{"session_id"};
+            $origin_hash{$username}{"client_ip"} = $ref->{"client_ip"};
+            $origin_hash{$username}{"ros_ip"} = $ref->{"ros_ip"};
 
             if (defined($stop_time) and length($stop_time) > 5) {
                 my $t_id = $ref->{"id"};

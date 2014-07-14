@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Air-WIFI登录页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<meta http-equiv="keywords" content="air-wifi" />
+<meta http-equiv="description" content="air-wifi" />
+<link href="css/style.css"rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+$(if chap-id)
+<div class="content">
+  <form name="sendin" action="$(link-login-only)" method="post" >
+    <input type="hidden" name="username" />
+    <input type="hidden" name="password" />
+    <input type="hidden" name="dst" value="$(link-orig)" />
+    <input type="hidden" name="popup" value="true" />
+  </form>
+</div>
+<script type="text/javascript" src="/md5.js"></script> 
+<script type="text/javascript">
+	<!--
+ function doLogin() {
+		document.sendin.username.value = document.login.username.value;
+		document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+		document.sendin.submit();
+		return false;
+}
+
+function getCookie(c_name){
+	if (document.cookie.length > 0) {
+		c_start=document.cookie.indexOf(c_name + "=");
+　　　　　　if (c_start!=-1){ 
+　　　　　　　　c_start=c_start + c_name.length+1;
+　　　　　　　　c_end=document.cookie.indexOf(";",c_start);
+　　　　　　　　if (c_end==-1) c_end=document.cookie.length;　
+　　　　　　　　return unescape(document.cookie.substring(c_start,c_end));
+　　　　　　} 
+　　　　}
+　　　　return "";
+}
+
+	//-->
+	</script> 
+$(endif)
+<div class="logo">
+  <div class="h1_class" > <a href="http://10.0.0.1/index.php"><span class="a_class" >Air-WIFI</span></a> <span class="nav">&gt</span> <a  href="http://10.0.0.1/index.php"><span class="a_class" >登陆页</span></a> </div>
+</div>
+<div class="body_split"></div>
+<div class="content">
+  <form name="login" action="$(link-login-only)" method="post" >
+    <input type="hidden" name="dst" value="$(link-orig)" />
+    <input type="hidden" name="popup" value="true" />
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <td>用户名：</td>
+          <td style="padding:1px 1px 1px 1px "><input type="text" name="username" value="$(username)" maxlength="16"></td>
+        </tr>
+        <tr>
+          <td>密码：</td>
+          <td  style="padding:1px 1px 1px 1px "><input type="password" name="password" maxlength="16"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a onclick="javascript:ros_submit()">登录</a></td>
+        </tr>
+        <tr>
+          <td colspan="2"><a href="http://10.0.0.1/index.php?r=site/register">新用户注册</a></td>
+        </tr>
+        <tr>
+          <td colspan="2">$(if error)
+            <div class="error_msg">$(error)</div>
+            $(endif)</td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<!--end of the content-->
+
+<div class="footer">
+  <p>(测试中，谢谢光顾 ^_^) Design By <a href="http://www.air-wifi.cn">Air-WIFI</a></p>
+</div>
+</body>
+<script type="text/javascript">
+<!--
+  
+  user_name = getCookie("air_user_name");
+  document.login.username.value = user_name;
+  if (user_name.length > 1) {
+  	document.login.password.focus();
+  } else {
+  	document.login.username.focus();
+  }
+//-->
+
+	function ros_submit() {
+		$(if chap-id) 
+			if (!doLogin()) {
+				return false;
+			}
+		$(endif)
+
+		document.login.submit();
+	}
+
+</script>
+</html>

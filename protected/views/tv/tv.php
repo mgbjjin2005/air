@@ -3,12 +3,12 @@ $name = Yii::app()->name;
 $title = "影视专区";
 $this->pageTitle = $name." ".$title;
 
-Yii::app()->session['nav'] = "index";
+Yii::app()->session['nav'] = "tv";
 Yii::app()->session['nav_msg'] = $title;
 Yii::app()->session['board_name'] = $title;
 Yii::app()->session['board_msg']  = "1、浏览本网站所产生的流量算内部流量，不会计入计费流量。</br>";
 Yii::app()->session['board_msg'] .= "2、所有的外语片均有中文字幕，可以放心的选择观看。</br>";
-Yii::app()->session['board_msg'] .= "3、不同的浏览器对视频的播放能力差别很大，建议优先尝试使用猎豹/UC/百度浏览器进行观看.</br>";
+Yii::app()->session['board_msg'] .= "3、不同的浏览器对视频的播放能力差别很大，建议优先尝试使用猎豹/UC/百度浏览器进行观看。</br>";
 
 
 ?>

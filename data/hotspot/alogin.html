@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="pragma" content="no-cache">
+<!--    <meta http-equiv="refresh" content="4; url=$(link-redirect)">
+-->	<meta http-equiv="expires" content="-1">
+    <title>Air-WIFI登录成功绍</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<script language="JavaScript">
+function air_sleep(sleepTime) {
+       for(var start = Date.now(); Date.now() - start <= sleepTime; ) { } 
+}
+
+function startClock() {
+		document.cookie  = 'air_user_name=$(username)';
+    	location.href = '$(link-redirect)';
+}
+
+</script>
+
+<!--<body  onLoad="startClock()">-->
+<body>
+<div class="logo">
+	<div class="h1_class" >
+		<a href="http://10.0.0.1/index.php"><span class="a_class" >Air-WIFI</span></a>
+		<span class="nav">&gt</span>
+		<span class="a_class" >登录成功</span>
+	</div>
+</div>
+
+<div class="body_split"></div>
+<div class="notice_info">
+	&nbsp;&nbsp;欢迎你 <span style="color:#009966"><strong>$(username)</strong></span>,登录成功.<br> 
+    &nbsp;&nbsp;页面将在
+	<span id="span_time" style="color:#009966"></span>
+	秒后自动跳转到<a href="$(link-redirect)">Air-WIFI.</a>
+</div>
+<br>
+<h2 class="board">提示</h2>
+<div class="content">
+    <p>1、账户信息、高清免流量电影，尽在 <a href="$(link-redirect)">Air-WIFI</a></br></p>
+    <p>2、为了保证高清电影的播放体验，强烈建议大家在浏览内网的时候使优先用 猎豹/UC/百度流量器。</br></p>
+</div>
+
+<div class="footer">
+    <p>Design By <a href="http://www.air-wifi.cn">Air-WIFI</a></p>
+</div>
+</body>
+</html>
+
+<script language="JavaScript">
+	document.cookie  = 'air_user_name=$(username)';
+	var i =5;
+	var i =5;
+document.all["span_time"].innerHTML = "<strong>"+i+"</strong>";
+function air_count_down()
+{
+	if (i > 0) {
+		i --;
+		document.all["span_time"].innerHTML = "<strong>"+i+"</strong>";
+		if (i == 0) {
+			location.href = '$(link-redirect)';
+		}
+	}
+}
+
+setInterval('air_count_down()', 1000);
+</script>

@@ -10,10 +10,9 @@ function airAutoLogin()
 
     if ($ip == "10.0.222.222") {
         if ($username == "") {
-            $msg  = "自动登录过程出现问题，请参考如下方法解决此问题 <br>";
-            $msg .= "1、如果你刚从2G/3G/4G状态切换到wifi状态，请稍等10秒再刷新此页.<br>";
-            $msg .= "2、请使用猎豹/UC//百度流量器来浏览此网站。<br>";
-            $msg .= "3、如果上面都不成功，请断掉wifi重新连接，对此给您带来的不便我们深表歉意。<br>";
+            $msg  = "自动登录过程还没有完成，参考如下即可解决 <br>";
+            $msg .= "1、如果你刚登录wifi，请稍等10秒再重复刷新此页.<br>";
+            $msg .= "2、如果以上操作仍然不成功，请断掉wifi重新连接再试，对此给您带来的不便我们深表歉意。<br>";
             Yii::app()->session['msg'] = $msg;
             return false;
         }
@@ -29,9 +28,11 @@ function airAutoLogin()
     $login_ret = Yii::app()->getDbByName("db_radius")->createCommand($sql)->queryAll();
     $count = count($login_ret);
     if($count < 1) {
-        $msg = "认证过程出现未知问题，请在浏览器中访问10.0.222.222,退出后重新登录后再来访问此页面，count=$count";
-        Yii::app()->session['msg'] = $msg;
-        return false;
+        header("Location: http://www.state.com");
+        exit;
+        #$msg = "认证过程出现未知问题，请在浏览器中访问10.0.222.222,退出后重新登录后再来访问此页面，count=$count";
+        #Yii::app()->session['msg'] = $msg;
+        #return false;
     };
 
     $session = Yii::app()->session;
@@ -48,9 +49,9 @@ function airAutoLogin()
         Yii::app()->session['board_msg'] = "";
         $expire = time() + 86400 * 2;
         setcookie ("username", $username, $expire); 
-
-        return true;
     }
+
+    air_update_user_radgroup(Yii::app()->session['username']);
     return true;
 }
 
@@ -133,6 +134,12 @@ function air_video_buy($user_name, $video_id) {
         if ($balance > 0) {
             $t_sql = "update user_info set balance = balance - $balance where user_name = '$user_name'";
             Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+            $sql  = "insert into transaction_info (user_name,msg,category,change_quota,create_date) ";
+            $sql .= "values ('$user_name', '购买电影\"$mv_name\"', 'money', -$balance, now())";
+            Yii::log($sql,"info","sql");
+            Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
         }
 
         $start_date = Date("Y-m-d");
@@ -149,6 +156,7 @@ function air_video_buy($user_name, $video_id) {
 
             $t_sql = "update user_mon set traffic_remain = traffic_remain + $traffic where user_name='$user_name'";
             Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
         }
 
         $mac = Yii::app()->session['mac'];
@@ -170,6 +178,7 @@ function air_video_buy($user_name, $video_id) {
         return false;
     }
 
+    air_update_user_radgroup($user_name);
     return true;
 }
 
@@ -471,6 +480,41 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page,$keys)
 }
 
 
+function air_update_user_radgroup($user_name)
+{
+    
+    $sql  = "select sum(remain) as value from user_quota where user_name = '$user_name' ";
+    $sql .= " and category = 'traffic' and  state='enable' and start_date <= now()";
+    $user_remain = air_get_value_by_sql($sql); 
+
+    $group = "limited";
+    Yii::app()->session['group'] = "状态: 访问受限";
+    if ($user_remain > 0) {
+        $group = "vip";
+        Yii::app()->session['group'] = "状态: 正常使用"; 
+    }
+
+    $sql = "update radusergroup set groupname = '$group' where username='$user_name'";
+    Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+}
+
+
+function air_update_pv_by_detail_id($id)
+{
+    
+    if ($id <= 0) {
+        return;
+    }
+
+    $sql = "select m_id as value from media_detail where auto_id = $id";
+    $m_id = air_get_value_by_sql($sql);
+    $sql = "update media_detail set m_pv = m_pv + 1 where auto_id = $id";
+    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+    $sql = "update media set m_total_pv = m_total_pv + 1 where auto_id = $m_id";
+    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
+}
+
 /*
 $flag：为真的时候表示即使有这条记录，也要强制刷新remain的值。往往是user_quota又有新的资源的时候调用
        为假的时候表示只有在没有对应的记录时才更新，如果已经存在这条记录，则不更新.
@@ -491,7 +535,7 @@ function air_update_user_mon($user_name,$flag = false)
     }
 
     $sql  = "select sum(remain) as value from user_quota where user_name = '$user_name' ";
-    $sql .= " and category = 'traffic' and  state='enable' and start_date < now()";
+    $sql .= " and category = 'traffic' and  state='enable' and start_date <= now()";
     $user_remain = air_get_value_by_sql($sql); 
 
     if ($exist) {
@@ -622,6 +666,11 @@ function air_add_packet_deal($user_name, $packet_id)
             Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
 
         }
+
+        $sql  = "insert into transaction_info (user_name,msg,category,change_quota,create_date) ";
+        $sql .= "values ('$user_name', '购买套餐\"$packet_desc\"', 'money', -$packet_price, now())";
+        Yii::log($sql,"info","sql");
+        Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
 
         $transaction->commit();
 

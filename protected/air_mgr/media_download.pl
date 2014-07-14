@@ -499,11 +499,11 @@ sub update_media()
     $sql = "insert into media (m_chs_name,m_original_name,m_alias,m_director,";
     $sql .= "m_main_actors,m_time_length,m_show_date,m_kind_flag,m_area_flag,";
     $sql .= "m_type_flag,m_kind_desc,m_area_desc,m_type_desc,m_revenue,m_imdb_num,";
-    $sql .= "m_douban_num,m_pic_path,m_des) values (";
+    $sql .= "m_douban_num,m_pic_path,m_des,m_create_date) values (";
     $sql .= "$m_chs_name,$m_original_name,'$m_alias','$m_director',";
     $sql .= "'$m_actor', $m_time_length,'$m_show_date', $id_kind, $id_area,";
     $sql .= "$id_type,'$m_kind','$m_area','$m_type',$m_revenue,";
-    $sql .= "$m_imdb_num, $m_douban_num,'$poster_url',$m_desc)";
+    $sql .= "$m_imdb_num, $m_douban_num,'$poster_url',$m_desc,now())";
 
     $sth = $db_air->prepare($sql);
     if(not $sth -> execute()) {

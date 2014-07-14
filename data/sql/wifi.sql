@@ -117,7 +117,6 @@ CREATE TABLE IF NOT EXISTS `air`.`transaction_info` (
    `change_quota` DECIMAL(14,2)   DEFAULT '0.0',   /*增加或减少的数额*/
    `create_date`  DATETIME,                        /*用户创建时间*/
 
-   PRIMARY KEY (`user_name`),
    INDEX(`user_name`,`category`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

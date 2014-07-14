@@ -1,7 +1,16 @@
 <?php
-Yii::app()->session['nav'] = "index";
-Yii::app()->session['nav_msg'] = "支付电影";
+$name = Yii::app()->name;
+$title = "电影购买";
+$this->pageTitle = $name." ".$title;
+
+Yii::app()->session['nav'] = "tv";
+Yii::app()->session['nav_msg'] = $title;
+Yii::app()->session['board_name'] = $title;
+Yii::app()->session['board_msg']  = "1、请在购买后三天内尽快观看，否则电影将会过期。</br>";
+Yii::app()->session['board_msg'] .= "2、电影是跟移动设备绑定的，即你在哪台设备上买的这部电影，就在哪部设备上观看。</br>";
 ?>
+
+
 <div class="content">
     <table class="table table-bordered table-striped">
     <thead>

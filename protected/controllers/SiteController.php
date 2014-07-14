@@ -36,6 +36,80 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+    public function actionRegister(){
+        $this->render('register');
+    }
+
+    public function actionDoRegister() {
+        $req =  Yii::app()->request ;
+        $user_name=$req->getParam("user_name","");
+        $pwd=$req->getParam("password","");
+        $email=$req->getParam("email","");
+
+        $sql = "select user_name from user_info where user_name = '$user_name'";
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        $count = count($set_t);
+        if ($count >= 1) {
+            Yii::app()->session["msg"] = "用户名$user_name"."已经存在，请选择一个新的用户名.";
+            Yii::app()->session["ret_url"] = "index.php?r=site/register";
+            Yii::app()->session["button_msg"] = "重新注册";
+            $this->render('info');
+            return;
+        }
+ 
+        $md5_pwd = md5($pwd);
+        $sql =  "insert into user_info (user_name,password,password_md5,email,balance,total_cost,create_date) ";
+        $sql .= "values ('$user_name','$pwd','$md5_pwd','$email',0,0,now())";
+        $ret_a = Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+        
+        $sql = "insert into radusergroup (username,groupname,priority) values ('$user_name','limited',1)";
+        $ret_b = Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+
+        $sql = "insert into radcheck (username,attribute,op,value) values ('$user_name','Cleartext-Password', ':=', '$pwd')";
+        $ret_c = Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+
+        if (!($ret_a and $ret_b and $ret_c)) {
+            Yii::app()->session["msg"] = "用户名$user_name"."已经存在，请选择一个新的用户名.";
+            Yii::app()->session["ret_url"] = "index.php?r=site/register";
+            Yii::app()->session["button_msg"] = "重新注册";
+            $this->render('info');
+            return;
+        }
+
+        Yii::app()->session["msg"]  = "恭喜你, $user_name"."。你已经注册成功, 点击下面的按钮即可登录。<br>";
+        Yii::app()->session["msg"] .= "你当前的账户为受限账户，为了保证你能顺利上网，请登录后尽快前往www.wifi.com充值并购买流量.";
+        Yii::app()->session["ret_url"] = "http://www.login.com";
+        Yii::app()->session["button_msg"] = "立即登录";
+
+        $this->render('info');
+    }
+
+    public function actionBalanceDetail(){
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $user_name = Yii::app()->session["username"];
+        
+        $sql  = "select user_name,msg,change_quota,create_date from transaction_info ";
+        $sql .= "where user_name = '$user_name' and category = 'money' ";
+        $sql .= "order by create_date desc limit 30";
+
+        $ret = array();
+        $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
+        foreach ($set_t as $tuple) {
+            $obj = array();
+            $obj["msg"] = $tuple["msg"];
+            $obj["change_quota"] = $tuple["change_quota"];
+            $obj["create_date"] = $tuple["create_date"];
+            $ret[] = $obj;
+        }
+
+        $this->render('//site/balance_detail',array('ret'=>$ret));
+
+    }
+
     public function actionVideoList()
     {
         if (airAutoLogin() == false) {

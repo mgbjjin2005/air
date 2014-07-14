@@ -3,7 +3,7 @@
 $name = Yii::app()->name;
 $this->pageTitle = $name." 我的账户";
 
-Yii::app()->session['nav'] = "userinfo";
+Yii::app()->session['nav'] = "site/userinfo";
 Yii::app()->session['nav_msg'] = "我的账户";
 Yii::app()->session['board_name'] = "信息栏";
 Yii::app()->session['board_msg']  = "月总流量: 本月可以使用的总流量.包含本月已经使用的和还没有使用的.<br>忙时流量: 7:00-23:00期间使用的总流量.<br>";
@@ -24,7 +24,7 @@ Yii::app()->session['board_msg'] .= "剩余流量：目前剩余可用的流量�
     <tbody>
         <tr>
             <td>用户名称</td>
-            <td><?php echo $user_name;?></td>
+            <td class="notice_info"><strong><?php echo $user_name;?></strong></td>
             <td></td>
         </tr>
         <!--
@@ -44,7 +44,7 @@ Yii::app()->session['board_msg'] .= "剩余流量：目前剩余可用的流量�
             <td><?php echo sprintf("%.2f",$balance);?> 元</td>
             <td>
                 <a href="index.php?r=service/disCharge">充值</a>,
-                <a href="index.php?r=service/disCharge">明细</a>
+                <a href="index.php?r=site/balanceDetail">明细</a>
             </td>
         </tr>
 

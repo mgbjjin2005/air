@@ -81,6 +81,12 @@ class DbDeal
         $sql="update user_info set balance=balance +$charge_price  where user_name='$charge_name'";
         Yii::log($sql, 'info', 'haodan');
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
+        $sql  = "insert into transaction_info (user_name,msg,category,change_quota,create_date) ";
+        $sql .= "values ('$charge_name', '账户充值', 'money', $charge_price, now())";
+        Yii::log($sql,"info","sql");
+        Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
         return $set_t;
 
      }

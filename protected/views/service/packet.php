@@ -4,7 +4,7 @@ $name = Yii::app()->name;
 $title = "套餐介绍";
 $this->pageTitle = $name." ".$title;
 
-Yii::app()->session['nav'] = "index";
+Yii::app()->session['nav'] = "service/transaction";
 Yii::app()->session['nav_msg'] = $title;
 Yii::app()->session['board_name'] = $title;
 Yii::app()->session['board_msg']  = "1、套餐为包月形式，新的套餐办理后，老的套餐会在下月自动失效。</br>";

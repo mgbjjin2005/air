@@ -1,3 +1,17 @@
+<?php
+$name = Yii::app()->name;
+$this->pageTitle = $name." 开通套餐";
+
+Yii::app()->session['nav'] = "service/packet";
+Yii::app()->session['nav_msg'] = "开通套餐";
+Yii::app()->session['board_name'] = "信息栏";
+Yii::app()->session['board_msg']  = "1、套餐的有效期起止时间为自然月。不管是本月哪一天开通，有效期都是从本月的第一天开始算，所以请根据自己的情况做相应的安排。<br>";
+Yii::app()->session['board_msg'] .= "2、套餐与加油包的区别是：套餐是连续的，如果不手动取消，默认是每个月你都是开通此套餐。加油包是独立的，一次开通只对当次有效，系统不会自动为你开通加油包。<br>"
+
+
+?>
+
+
 <div class="content">
     <table class="table table-bordered table-striped">
     <thead>

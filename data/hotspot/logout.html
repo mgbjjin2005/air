@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Air-WIFI账户退出</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<meta http-equiv="keywords" content="air-wifi" />
+<meta http-equiv="description" content="air-wifi" />
+
+<link href="css/style.css"rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<script language="JavaScript">
+<!--
+function openLogin() {
+	if (window.name != 'hotspot_logout') return true;
+	open('$(link-login)', '_blank', '');
+	window.close();
+	return false;
+}
+	
+function Login() {
+	/*清除自动登录的cookie*/
+	document.cookie  = '';
+	window.location.href= "$(link-login)";
+}
+//-->
+</script>
+
+<div class="top_menu">
+    你好,&nbsp;$(username), 你已经成功退出！&nbsp;&nbsp;
+</div>
+<div class="logo">
+    <div class="h1_class" >
+        <span class="a_class" >Air-WIFI &gt 退出</span>
+    </div>
+</div>
+<div class="body_split"></div>
+
+<div class="content">
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th colspan="2">你已经成功退出！</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>用户名</td>
+            <td class="notice_info"><strong>$(username)</strong></td>
+        </tr>
+       
+        <tr>
+            <td>IP地址</td>
+            <td>$(ip)</td>
+        </tr>
+
+        <tr>
+            <td>MAC地址</td>
+            <td>$(mac)</td>
+        </tr>
+
+        <tr>
+            <td>在线时间</td>
+            <td >$(uptime)</td>
+        </tr>
+$(if session-time-left)
+        <tr>
+            <td>剩余时间</td>
+            <td>$(session-time-left)</td>
+        </tr>
+$(endif)
+		<tr>
+            <td>流量</td>
+            <td>$(bytes-in-nice) / $(bytes-out-nice)</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            	<a onclick="javascript:Login()">重新登录</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+
+
+<h2 class="board">信息栏</h2>
+<div class="content">
+    <p>1、欢迎使用Air-WIFI。</p>
+</div>
+
+<div class="footer">
+    <p>Copyright &copy; by <a href="http://10.0.0.1">Air-WIFI</a></p>
+</div>
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 $name = Yii::app()->name;
 $this->pageTitle = $name." 账户充值";
 
-Yii::app()->session['nav'] = "charge";
+Yii::app()->session['nav'] = "service/transaction";
 Yii::app()->session['nav_msg'] = "账户充值";
 Yii::app()->session['board_name'] = "信息栏";
 Yii::app()->session['board_msg']  = "1、此页面仅供自己充值使用，如果需要帮助其它人充值，可以先在此页面为自己充值，然后通过‘业务办理’->‘转账给好友’功能完成。";

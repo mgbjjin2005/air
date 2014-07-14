@@ -110,6 +110,8 @@ class TvController extends Controller
 				$this->render('//site/error_msg');
 				return;
 			}
+
+            air_update_pv_by_detail_id($id);
 			$ret['media_info']=$media_info[0];
             $ret['media']=$media[0];
 			$this->render('tv_watch',$ret);

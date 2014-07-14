@@ -266,6 +266,7 @@ class ServiceController extends Controller
 
         if(air_add_packet_deal($user_name,$packet_id)) {
             $retData["message"]="恭喜,套餐开通成功";
+            air_update_user_radgroup($user_name);
 
         } else {
             $retData["message"] = Yii::app()->session['msg'];
@@ -311,9 +312,10 @@ class ServiceController extends Controller
         $retData=array();
         $retData["return_url"]="index.php?r=service/addition";
         $retStatus=air_add_packet_deal($user_name,$packet_id);
+        air_update_user_radgroup($user_name);
         if( $retStatus==true){
             $retData["status"]="Success";
-            $retData["message"]="开通成功";
+            $retData["message"]="恭喜你,开通成功!<br>提示:如果账号之前处于'访问受限'状态,请重新登录(右上角,先退出,再登录即可).";
             //$this->render('//site/warning', $retData);
         }else{
             $retData["message"]="开通失败.message:".Yii::app()->session["msg"];

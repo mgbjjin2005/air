@@ -11,14 +11,15 @@
 
 <body>
 <div class="top_menu">
-	欢迎你,<a href="index.php?r=site/userinfo"><?php echo CHTML::encode(Yii::app()->session['username']);  ?></a>
-    &nbsp;|&nbsp;<a href="site/message">8条未读消息</a>
+	欢迎你,&nbsp;<a href="index.php?r=site/userinfo"><strong><?php echo CHTML::encode(Yii::app()->session['username']);?></strong></a>
+    |&nbsp;<?php echo CHTML::encode(Yii::app()->session['group']);?> &nbsp;|&nbsp;
+    <a href="http://www.state.com/logout">退出</a>&nbsp;&nbsp;
 </div>
 <div class="logo">
 	<div class="h1_class" >
 		<a  href="index.php?r=site/index"><span class="a_class" ><?php echo Yii::app()->name;?></span></a>
 		<span class="nav">&gt</span>
-		<a  href="index.php?r=site/<?php echo Yii::app()->session['nav']; ?>"><span class="a_class" ><?php echo CHTML::encode(Yii::app()->session['nav_msg']); ?></span></a>
+		<a  href="index.php?r=<?php echo Yii::app()->session['nav']; ?>"><span class="a_class" ><?php echo CHTML::encode(Yii::app()->session['nav_msg']); ?></span></a>
 	</div>
 </div>
 <div class="body_split"></div>

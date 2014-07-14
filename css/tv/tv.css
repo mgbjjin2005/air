@@ -120,7 +120,8 @@ a:visited {
 }
 /*airwifi*/
 .a_class{
-    color:#0975a2;
+    /*color:#0975a2;*/
+    color:#11B9F5;
 }
 a:hover {
   color: #cc3311;

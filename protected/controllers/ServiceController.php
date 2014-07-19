@@ -209,39 +209,7 @@ class ServiceController extends Controller
         */
         $this->render("delete_packet", $params);
 	}
-    /*
-    public function actionConfirmDeleteAddition()
-	{
-        //get param
-        $req =  Yii::app()->request ;
-        $packet_id=$req->getParam("packet_id","");
-        $user_name=Yii::app()->session["username"];
-        $return_url="index.php?r=service/addition";
-        //get packet info
-        $dbDeal=new DbDeal();
-        $additions=$dbDeal->getPacketInfoById($packet_id);
-        $count = count($additions);
-        if ($count != 1) {
-            Yii::app()->session['msg'] = "没有查询到任何可用的流量加油包, 系统维护中...count=$count";
-            $this->render('//site/error_msg');
-            return;
-        }
-        //render
-        $params=array();
-        $params['addition']=$additions[0];
-        $params['return_url']=$return_url;
-        /*
-        $retData["return_url"]=$req->getParam("return_url","index.php") ;
-        if( empty($params["packet_id"])){
-            $retData["message"]="套餐为空";
-            $this->render('warning', $retData);
-        }else{
-	        $this->render("open_packet", $params);
-        }
-        */
-        //$this->render("delete_addition", $params);
-	//}
-   // */
+
     /*开通套餐*/
     public function actionOpenPacket(){
         $req =  Yii::app()->request ;
@@ -426,6 +394,5 @@ class ServiceController extends Controller
         echo CJSON::encode($retData);
 
     }
-
 
 }

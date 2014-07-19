@@ -40,6 +40,95 @@ class SiteController extends Controller
         $this->render('register');
     }
 
+    public function actionTransfer(){
+        if (airAutoLogin() == false) {
+            $this->render('error_msg');
+            return;
+        }
+
+        $ret = array();
+        $user_name = Yii::app()->session["username"];
+        $sql = " select balance as value from user_info where user_name = '$user_name'";
+        $user_balance = air_get_value_by_sql($sql);
+        $ret["user_balance"] = $user_balance;
+        $ret["user_name"] = $user_name;
+
+        $req =  Yii::app()->request ;
+        $category = $req->getParam("submit_category","");
+        $friend_name = $req->getParam("friend_name","");
+        $transfer_quota = $req->getParam("transfer_quota","");
+
+        if ($category == NULL) {
+            $ret["friend_name"] = "";
+            $ret["friend_email"] = "";
+            $ret["transfer_quota"] = 20;
+		    $this->render('transfer',$ret);
+            return;
+        }
+
+        $email = "";
+        $ret["friend_name"] = $friend_name;
+        $ret["transfer_quota"] = $transfer_quota;
+        if ($category == "query") {
+            if (strlen($friend_name) > 1) {
+                $sql = "select email as value from user_info where user_name = '$friend_name'";
+                $email = air_get_value_by_sql($sql);
+                if (strlen($email) < 3) {
+                    $email = "查无此人:$friend_name";
+                }
+            }
+            
+            $ret["friend_email"] = $email;
+		    $this->render('transfer',$ret);
+            return;
+        }
+
+        if ($category == "do_transfer") {
+            if ($transfer_quota == NULL or $transfer_quota > $user_balance) {
+                Yii::app()->session["msg"] = "交易失败,你的余额不足.";
+                Yii::app()->session["ret_url"] = "index.php?r=site/transfer";
+                Yii::app()->session["button_msg"] = "返回";
+                $this->render('info');
+                return;
+            }
+
+            $conn  = Yii::app()->getDbByName("db_air");
+            $transaction = $conn->beginTransaction();
+            try {
+                $t_sql = "update user_info set balance = balance - $transfer_quota where user_name = '$user_name'";
+                Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+                $t_sql = "update user_info set balance = balance + $transfer_quota where user_name = '$friend_name'";
+                Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+                $t_sql  = "insert into transaction_info (user_name,msg,category,change_quota,create_date) ";
+                $t_sql .= "values ('$user_name', '转账给好友$friend_name', 'money', -$transfer_quota, now())";
+                Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+                $t_sql  = "insert into transaction_info (user_name,msg,category,change_quota,create_date) ";
+                $t_sql .= "values ('$friend_name', '好友$user_name"."转入', 'money', $transfer_quota, now())";
+                Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
+
+                $transaction->commit();
+                Yii::app()->session['msg'] = "转账已经成功.";
+                Yii::app()->session["ret_url"] = "index.php?r=site/userinfo";
+                Yii::app()->session["button_msg"] = "我的账户信息";
+
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                Yii::app()->session['msg'] = "交易失败，请重试，如果再有问题请联系管理员".$e->getMessage();
+                Yii::app()->session["ret_url"] = "index.php?r=site/transfer";
+                Yii::app()->session["button_msg"] = "返回";
+            }
+
+            $this->render('info');
+        }
+
+        return;
+
+
+    }
+
     public function actionDoRegister() {
         $req =  Yii::app()->request ;
         $user_name=$req->getParam("user_name","");
@@ -182,7 +271,7 @@ class SiteController extends Controller
         $ret['user_name'] = $user_name;
         foreach ($set_t as $tuple) {
             $ret['traffic_idle']     = $tuple['traffic_idle'];
-             $ret['traffic_busy']     = $tuple['traffic_busy'];
+            $ret['traffic_busy']     = $tuple['traffic_busy'];
             $ret['traffic_internal'] = $tuple['traffic_internal'];
             $ret['traffic_bill']     = $tuple['traffic_bill'];
             $ret['traffic_remain']   = $tuple['traffic_remain'];

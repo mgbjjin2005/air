@@ -36,12 +36,31 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		// uncomment the following to enable URLs in path-format
-		/*
-		'urlManager'=>array(
-			'urlFormat'=>'path',
-			'rules'=>array(
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
+
+
+        'cache'=>array(
+            'class'=>'CMemCache',
+            'servers'=>array(
+                array(
+                    'host'=>'127.0.0.1',
+                    'port'=>11211,
+                    ),
+                ),
+            ),
+
+        'session' => array (
+            'class'=> 'CCacheHttpSession',
+            'cookieMode' => 'only',
+            'timeout' => 1200,
+            ),
+
+
+        // uncomment the following to enable URLs in path-format
+        /*
+           'urlManager'=>array(
+           'urlFormat'=>'path',
+           'rules'=>array(
+           '<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),

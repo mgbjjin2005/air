@@ -28,7 +28,7 @@ function openLogin() {
 	
 function Login() {
 	/*清除自动登录的cookie*/
-	document.cookie  = '';
+	//document.cookie  = '';
 	window.location.href= "$(link-login)";
 }
 //-->
@@ -39,8 +39,10 @@ function Login() {
 </div>
 <div class="logo">
     <div class="h1_class" >
-        <span class="a_class" >Air-WIFI &gt 退出</span>
-    </div>
+		<a href="http://10.0.0.1/index.php"><span class="a_class" >Air-WIFI</span></a>
+		<span class="nav">&gt</span>
+		<span class="a_class" >成功退出</span>
+	</div>
 </div>
 <div class="body_split"></div>
 
@@ -84,7 +86,8 @@ $(endif)
         </tr>
         <tr>
             <td colspan="2">
-            	<a onclick="javascript:Login()">重新登录</a>
+            	<!--<a onclick="javascript:Login()">重新登录</a>-->
+                <a href="$(link-login)">重新登录</a>
             </td>
         </tr>
     </tbody>

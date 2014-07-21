@@ -5,7 +5,7 @@
 package AirMgr;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(air_connect_db_tranc air_msg_user air_get_date_type air_connect_db air_get_normalized_time air_write_log);
+@EXPORT = qw(air_update_action air_add_user_action air_change_user_net_state air_get_global_info air_connect_db_tranc air_msg_user air_get_date_type air_connect_db air_get_normalized_time air_write_log);
 use strict;
 use warnings;
 use DBI;
@@ -34,6 +34,65 @@ sub air_connect_db_tranc(){
     $DB_DBH->do("SET NAMES 'utf8'");
     return $DB_DBH;
 }
+
+sub air_add_user_action()
+{
+    my ($db,$user_name,$node,$action,$msg)= @_;
+    my $sql  = "insert into user_action ";
+    $sql .= "(user_name,node,action,msg,create_date) values ";
+    $sql .= "('$user_name','$node','$action','$msg', now())";
+    my $sth = $db->prepare($sql);
+    print("Air_mgr:$sql\n");
+    $sth->execute();
+}
+
+sub air_update_action()
+{
+    my ($db, $auto_id, $state, $state_msg)= @_;
+    my $sql  = "update user_action  set state='$state', state_msg='$state_msg' ";
+    $sql .= "where auto_id = $auto_id";
+    my $sth = $db->prepare($sql);
+    print("Air_mgr air_update_action:$sql\n");
+    $sth->execute();
+}
+
+sub air_change_user_net_state()
+{
+    my ($db,$user_name,$net_state) = @_;
+    my $sql  = "update user_info set net_state='$net_state' where user_name = '$user_name'";
+    my $sth = $db->prepare($sql);
+    print("Air_mgr:$sql\n");
+    $sth->execute();
+}
+
+sub air_get_global_info()
+{
+    my ($db) = @_;
+    my ($node,$idle_bw_ratio,$max_over_traffic,$traffic_free_price) = ("",1,1,0.05);
+    my $sql  = "select g_key,g_value from global_info";
+    my $sth = $db->prepare($sql);
+
+    if ($sth->execute()) {
+        while (my $ref = $sth->fetchrow_hashref()) {
+            my ($key,$value) = ($ref->{'g_key'}, $ref->{'g_value'});
+            if ($key eq "node") {
+                $node = $value;
+
+            } elsif ($key eq "idle_bw_ratio") {
+                $idle_bw_ratio = $value;
+
+            } elsif ($key eq "max_over_traffic") {
+                $max_over_traffic = $value;
+
+            } elsif ($key eq "traffic_free_price") {
+                $traffic_free_price = $value;
+            }
+        }
+    }
+
+    return ($node,$idle_bw_ratio,$max_over_traffic,$traffic_free_price);
+}
+
 
 sub air_get_normalized_time
 {

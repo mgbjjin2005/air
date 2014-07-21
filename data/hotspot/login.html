@@ -60,7 +60,7 @@ $(endif)
       <tbody>
         <tr>
           <td>用户名：</td>
-          <td style="padding:1px 1px 1px 1px "><input type="text" name="username" value="$(username)" maxlength="16"></td>
+          <td style="padding:1px 1px 1px 1px "><input type="text"  name="username" value="$(username)" maxlength="16"></td>
         </tr>
         <tr>
           <td>密码：</td>
@@ -100,15 +100,40 @@ $(endif)
   }
 //-->
 
-	function ros_submit() {
-		$(if chap-id) 
-			if (!doLogin()) {
-				return false;
-			}
-		$(endif)
+function ros_submit()
+{
+	$(if chap-id) 
+		if (!doLogin()) 
+		{
+			return false;
+		}
+	$(endif)
 
-		document.login.submit();
-	}
+	prepare_login();
+	//document.login.submit();
+}
+
+function prepare_login()
+{
+
+	var url="http://www.wifi.com/index.php?r=site/PrepareLogin";
+	var user_name = document.login.username.value;
+	$.ajax({type: "post",
+			url: url,
+			async:true,
+			dataType: "jsonp",
+			jsonp: "callback",
+			data:{user_name:user_name},
+			success: function(resData)
+						{
+							document.login.submit();
+        				},
+			error:function(XMLHttpRequest, textStatus, errorThrown)
+						{
+					    	alert("网络连接出错，请重试");
+						}
+		});
+}
 
 </script>
 </html>

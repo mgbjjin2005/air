@@ -387,4 +387,24 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+    public function actionPrepareLogin()
+    {
+        $req =  Yii::app()->request ;
+        $user_name=$req->getParam("user_name","");
+        $callback=$req->getParam("callback","");
+        $retData=array();
+
+        $sql = "select net_state as value from user_info where user_name = '$user_name'";
+        $group = air_get_value_by_sql($sql);
+        $retData['message']="$sql,group=$group";
+        if (strlen($group) > 1) {
+             $sql = "update radusergroup set groupname = '$group' where username='$user_name'";
+             Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+             $retData['message2']="$sql";
+        }
+
+        $result=CJSON::encode($retData);
+        echo $callback."($result)";
+    }
 }

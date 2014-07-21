@@ -10,18 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 
-<script language="JavaScript">
-function air_sleep(sleepTime) {
-       for(var start = Date.now(); Date.now() - start <= sleepTime; ) { } 
-}
-
-function startClock() {
-		document.cookie  = 'air_user_name=$(username)';
-    	location.href = '$(link-redirect)';
-}
-
-</script>
-
 <!--<body  onLoad="startClock()">-->
 <body>
 <div class="logo">
@@ -53,10 +41,12 @@ function startClock() {
 </html>
 
 <script language="JavaScript">
-	document.cookie  = 'air_user_name=$(username)';
+	var e_date=new Date();
+	e_date.setDate(e_date.getDate()+7);
+	e_str = "air_user_name=$(username);expires="+e_date.toGMTString();
+	document.cookie  = e_str;
 	var i =5;
-	var i =5;
-document.all["span_time"].innerHTML = "<strong>"+i+"</strong>";
+	document.all["span_time"].innerHTML = "<strong>"+i+"</strong>";
 function air_count_down()
 {
 	if (i > 0) {

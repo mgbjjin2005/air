@@ -30,10 +30,9 @@ use DBI;
 use Data::Dumper;
 
 use constant ONE_DAY => 86400;
-use constant IDLE_RATIO => 2; #闲时流量的折算比
 use constant STAT_INTERVAL => 300;
 
-my ($db_air, $db_radius, $db_air_tranc);
+my ($db_air, $db_radius);
 my ($v_day, $v_date, $sql, $sql_update, $sql_sub, $count );
 my ($year, $mon, $day, $hour, $min);
 my ($sth, $sth_insert);
@@ -42,9 +41,7 @@ my %old_rt_hash = ();
 my %new_rt_hash = ();
 my %origin_hash = ();
 my %delete_hash = (); #记录已经完成的记录的t_id，后面会删除
-my %packet_hash = ();
-my %quota_total_hash = ();
-my %quota_hash = ();
+my %bw_hash = ();
 
 $count = 0;
 ($year, $mon, $day, $hour, $min) = &air_get_normalized_time();
@@ -54,18 +51,12 @@ $v_date="$year-$mon-$day $hour:$min:00";
 my ($prev_year, $prev_mon, $prev_day, $prev_hour, $prev_min) =
     &air_get_normalized_time(time() - STAT_INTERVAL);
 
-my $v_prev_day = "$prev_year-$prev_mon-$prev_day";
-my $v_prev_date = "$v_prev_day $prev_hour:$prev_min:00";
 my $cur_date_type = &air_get_date_type($v_date);
 
 $db_air    = &air_connect_db("air", "localhost", "air", "***King1985***", "3306");
-$db_air_tranc = &air_connect_db_tranc("air", "localhost", "air", "***King1985***", "3306");
 $db_radius = &air_connect_db("radius", "localhost", "air", "***King1985***", "3306");
 
-
-
-#----------------提前一个小时开始检查是否有固定套餐需要处理-------------------
-&process_packet_auto();
+my ($g_node,$g_idle_bw_ratio,$g_max_over_traffic,$g_traffic_free_price) = &air_get_global_info($db_air);
 
 #-------------------实时计费------------------------
 #1、汇总radacct的数据，填充origin_hash,$delete_hash.
@@ -76,17 +67,45 @@ $db_radius = &air_connect_db("radius", "localhost", "air", "***King1985***", "33
 #2、取traffic_realtime表,填充old_rt_hash
 &get_realtime_items();
 
-
 #3、统计实时带宽(更新radacct表和realtime表)
 &update_rt_bw();
 
 #4、更新用户带宽数据表-------------------
 
-&update_user_bw();
+&get_user_traffic();
+
+#5、ftp提交带宽数据
+&submit_bw();
 
 exit 0;
 
 #----------------------------------------------function---------------------------------------------------
+
+sub submit_bw()
+{
+    my $path = "/home/air_data";
+    my $file_name = "$prev_year$prev_mon$prev_day$prev_hour$prev_min".".$g_node.bw";
+    my $bw = 0;
+    my $file_path = "$path/$file_name";
+    if (not open(FIN, ">$file_path")){
+        print("打开文件错误\n");
+        return;
+    }
+
+    foreach my $user_name (keys %bw_hash) {
+        my $bw = $bw_hash{$user_name}{"bw"};
+        my $busy_flag = $bw_hash{$user_name}{"busy_flag"};
+        print FIN "bw\t$user_name\t$bw\t$busy_flag\n";
+    }
+
+    close(FIN);
+
+    #ftp
+    `sh /root/mgr/transfer.sh $file_name >>/tmp/bw_transfer.log`;
+    `rm -f $file_name` if (-e $file_name);
+}
+
+
 sub reject_user()
 {
     my ($user_name,$client_ip,$ros_ip,$session_id) = @_;
@@ -111,28 +130,8 @@ sub reject_user()
 }
 
 
-sub update_user_bw()
+sub get_user_traffic()
 {
-    $sql  = "select auto_id,user_name,remain, unix_timestamp(stop_date) as stop_stp from user_quota where ";
-    $sql .= "category = 'traffic' and  state='enable' and start_date < '$v_date'";
-    print("$sql\n");
-    $sth = $db_air->prepare($sql);
-
-    if ($sth->execute()) {
-        while (my $ref = $sth->fetchrow_hashref()) {
-            my ($auto_id,$stop_stp) = ($ref->{'auto_id'}, $ref->{'stop_stp'});
-            my ($user_name,$remain) = ($ref->{'user_name'}, $ref->{'remain'});
-            print("~~~~~stop_stp=$stop_stp\n");
-            $quota_hash{$user_name}{$auto_id}{"remain"} = $remain;
-            $quota_hash{$user_name}{$auto_id}{"stop_stp"} = $stop_stp;
-            $quota_hash{$user_name}{$auto_id}{"state"} = "enable";
-            $quota_hash{$user_name}{$auto_id}{"state_desc"} = "null";
-            $quota_hash{$user_name}{$auto_id}{"change"} = "no";
-            $quota_total_hash{$user_name}{"remain"} += $remain;
-            print("---------------------quota $user_name, remain=$remain\n");
-        }
-    }
-
     foreach my $username (keys %origin_hash) {
         my $traffic = 0;
         my $old_date_type = "busy";
@@ -164,246 +163,17 @@ sub update_user_bw()
 
         } else {
             $t_idle = $traffic;
-            $t_bill = sprintf("%.2f", $traffic/IDLE_RATIO);
+            $t_bill = sprintf("%.2f", $traffic/$g_idle_bw_ratio);
         }
 
         if ($t_bill <= 0.01) {
             next;
         }
 
-        my $offset = $t_bill;
-        foreach my $id (sort {$quota_hash{$username}{$a}{"stop_stp"} <=> $quota_hash{$username}{$b}{"stop_stp"}} keys %{$quota_hash{$username}}) {
-            if ($offset > 0) {
-                my $remain = $quota_hash{$username}{$id}{"remain"};
-                if ($offset > $remain) {
-                    #此流量包流量不够了，
-                    $offset -= $remain;
-                    $quota_hash{$username}{$id}{"state"} = 'disable';
-                    $quota_hash{$username}{$id}{"state_desc"} = '流量已用完';
-                    $quota_hash{$username}{$id}{"change"} = 'yes';
-                    $quota_hash{$username}{$id}{"remain"} = 0;
-                    next;
-
-                } else {
-                    print("----user_quota: username=$username, offset=$offset remain=$remain\n");
-                    $quota_hash{$username}{$id}{"state_desc"} = '当前正使用';
-                    $quota_hash{$username}{$id}{"change"} = 'yes';
-                    $quota_hash{$username}{$id}{"remain"} = $remain - $offset;
-                    $offset = 0;
-                    last;
-                }
-
-            } else {
-                last;
-            }
-        }
-
-        #有可能此时用户流量全部用完了，而且超出了一部分，此时需要把超出的部分减掉.
-        $t_bill = $t_bill - $offset;
-
-        #更新$t_busy 和 $t_idle
-        if ($busy_flag eq 1) {
-            $t_busy = $t_bill;
-
-        } else {
-            $t_idle = $t_bill * IDLE_RATIO;
-        }
-
-        my $user_remain = 0;
-        if (exists($quota_total_hash{$username})) {
-            $user_remain = $quota_total_hash{$username}{"remain"};
-        }
-
-        $user_remain = $user_remain - $t_bill;
-
-        print("quota user_name=$username,user_remain=$user_remain bill=$t_bill traffic=$traffic\n");
-        if ($user_remain <= 0) {
-            #此用户流量全部使用完，踢掉此用户。
-            my $session_id = $origin_hash{$username}{"session_id"};
-            my $client_ip = $origin_hash{$username}{"client_ip"};
-            my $ros_ip = $origin_hash{$username}{"ros_ip"};
-
-            &reject_user($username,$client_ip,$ros_ip,$session_id);
-            print("用户$username"."流量耗尽，自动下线.\n");
-            #my $msg = "亲,你的账户$username"."流量已经全部用完，系统已经阻止你登陆, ";
-            #$msg .= "请及时去www.air-wifi.cn购买新的加油包后再来登陆。";
-            #$msg .= "给亲带来的不便，我们深表歉意。";
-            #&air_msg_user($username, "流量用尽", $msg, "emerge");
-            $user_remain = 0;
-        }
-
-        if ($user_remain <= 50) {
-            #流量过少，需要给用户消息了.
-            my $msg = "亲，你的账户$username"."流量已经低于50MB了，为了不影响你的正常使用, ";
-            $msg .= "建议你及时办理加油包。如果你的账户已经无法登陆Air-WIFI，说明流量已经全部用完，";
-            $msg .= "系统已经拒绝你的登陆,请及时去www.air-wifi.cn购买新的加油包后再来登陆。";
-            $msg .= "给亲带来的不便，我们深表歉意。";
-            &air_msg_user($username, "流量低于$user_remain"."MB告警", $msg, "emerge");
-        }
-
-        $sql_update = "";
-        foreach my $id (keys %{$quota_hash{$username}}) {
-            if ($quota_hash{$username}{$id}{'change'} eq "yes") {
-                my $state = $quota_hash{$username}{$id}{"state"};
-                my $state_desc = $quota_hash{$username}{$id}{"state_desc"};
-                my $remain = $quota_hash{$username}{$id}{"remain"};
-                $sql_update  = "update user_quota set state = '$state', state_desc = '$state_desc',";
-                $sql_update .= "remain = $remain where auto_id = $id;";
-                $sth = $db_air->prepare($sql_update);
-                print("$sql_update\n");
-                $sth->execute();
-            }
-        }
-
-        $sql =  "select traffic_idle from ";
-        $sql .= "user_mon where user_name = '$username' and date_mon = '$year$mon'";
-        $sth = $db_air->prepare($sql);
-        print("user_mon_sql:$sql\n");
-        if ($sth->execute()) {
-            if (my $ref = $sth->fetchrow_hashref()) {
-                $sql_update = "update user_mon set traffic_idle = traffic_idle + $t_idle,";
-                $sql_update .= "traffic_busy = traffic_busy + $t_busy, traffic_bill = traffic_bill + $t_bill,";
-                $sql_update .= "traffic_remain = $user_remain where ";
-                $sql_update .= "user_name = '$username' and date_mon = '$year$mon';";
-
-            } else {
-                $sql_update = "insert into user_mon (user_name, traffic_idle, traffic_busy, ";
-                $sql_update .= "traffic_bill, traffic_remain, date_mon) values ";
-                $sql_update .= "('$username', $t_idle, $t_busy, $t_bill, $user_remain, '$year$mon');";
-            }
-        }
-        print("$sql_update\n");
-        $sth = $db_air->prepare($sql_update);
-        $sth->execute();
+        $bw_hash{$username}{"bw"} += $t_bill;
+        $bw_hash{$username}{"busy_flag"} = $busy_flag;
     }
-
-    #----------------检查过期的资源----------------
-    $sql  = "update user_quota set state = 'disable', state_desc = '资源已过期' where ";
-    $sql .= "stop_date <= now()";
-
-    $sth = $db_air->prepare($sql);
-    $sth->execute();
-
 }
-
-sub air_transaction()
-{
-    my ($db, $auto_id, $packet_id, $user_name, $check_date)  = @_;
-    my $start_date = $check_date;
-    if ($check_date =~ /^(\d+)-(\d+)/) {
-        $start_date = "$1-$2-01 00:00:00";
-    }
-
-    print("======check_date=$check_date\n");
-    my ($sth, $sql, $stop_date, $ref) = ();
-    if (not exists ($packet_hash{$packet_id})) {
-        print("packetid=$packet_id is not exists\n");
-        $sql = "update packet_auto set enable_state = 'disable' where auto_id = $auto_id";
-        $sth = $db->prepare($sql);
-        $sth->execute();
-        return ;
-    }
-
-    my ($desc, $price, $period, $beans,$traffic) = ($packet_hash{$packet_id}{"desc"},
-            $packet_hash{$packet_id}{"price"}, $packet_hash{$packet_id}{"period_month"},
-            $packet_hash{$packet_id}{"beans"}, $packet_hash{$packet_id}{"traffic"});
-
-    $sql = "select balance from user_info where user_name = '$user_name'";
-    $sth = $db->prepare($sql);
-    if (not $sth->execute()) {
-        return;
-    }
-
-    my $balance = 0;
-    if ($ref = $sth->fetchrow_hashref()) {
-        $balance = $ref->{"balance"};
-    }
-
-    if ($balance < $price) {
-        print("账户余额不足，disable此套餐.");
-        $sql = "update packet_auto set enable_state = 'disable' where auto_id = $auto_id";
-        $sth = $db->prepare($sql);
-        $sth->execute();
-        return;
-    }
-
-    $stop_date = &air_get_date_by_month_offset($start_date, $period);
-    $sql = "insert into packet_deal (user_name, packet_id, start_date, stop_date,";
-    $sql .= "price, state, create_date) values ";
-    $sql .= "('$user_name', $packet_id, '$start_date', '$stop_date', $price, 'init', ";
-    $sql .= "now())";
-    print("$sql\n");
-    $sth = $db->prepare($sql);
-    if (not $sth->execute()) {
-        return;
-    }
-
-    $sql = "select last_insert_id() as id";
-    $sth = $db->prepare($sql);
-    if (not $sth->execute()) {
-        return;
-    }
-
-    my $deal_id = 0;
-    if ($ref = $sth->fetchrow_hashref()) {
-        $deal_id = $ref->{"id"};
-    }
-
-    if ($deal_id <= 0) {
-        print("deal_id error. deal_id=$deal_id\n");
-        return;
-    }
-
-    $sql  = "insert into user_quota (user_name, category, quota, remain, deal_id, ";
-    $sql .= "state, state_desc, packet_desc, packet_category, start_date, ";
-    $sql .= "stop_date, create_date ) values ";
-    $sql .= "('$user_name', 'traffic', $traffic, $traffic, $deal_id,'enable', ";
-    $sql .= "'未使用', '$desc', 'packet', '$start_date', '$stop_date', now())";
-
-    if ($beans > 0) {
-        $sql .= ",('$user_name', 'beans', $beans, $beans, $deal_id,'enable', '未使用', ";
-        $sql .= "'$desc', 'packet', '$start_date', '$stop_date', now())";
-    }
-
-    
-    eval {
-        $db_air_tranc->do($sql);
-
-        $sql = "update packet_deal set state = 'done' where auto_id = $deal_id";
-        $db_air_tranc->do($sql);
-
-        $sql = "update packet_auto set check_date = '$stop_date' where auto_id = $auto_id";
-        $db_air_tranc->do($sql);
-
-        $sql  = "update user_info set balance = balance - $price, total_cost = total_cost + $price ";
-        $sql .= "where user_name = '$user_name'";
-        $db_air_tranc->do($sql);
-
-        $db_air_tranc->commit();
-    };
-
-    if ($@) { 
-        print("Transaction aborted: $@"); 
-        $db_air_tranc->rollback();
-    } 
-}
-
-sub air_get_date_by_month_offset()
-{
-    my ($date, $month)  = @_;
-    my ($year, $mon, $day, $hour, $min, $sec) = ();
-    if (not $date =~ /(\d+)-(\d+)-(\d+)\s+(\d+):(\d+):(\d+)/) {
-        return "";
-    }
-    
-    ($year, $mon, $day, $hour, $min, $sec) = ($1, $2, $3, $4, $5, $6);
-    $year = $year + floor(($mon + $month) / 12);
-    $mon = ($mon + $month) % 12;
-    $mon = "0$mon" if ($mon < 10);
-    
-    return "$year-$mon-$day $hour:$min:$sec";
-}
-
 
 sub process_radacct_items()
 {
@@ -522,7 +292,6 @@ sub update_rt_bw
 
     if ($count > 0) {
         chop($sql_update);
-        print("$sql_update\n");
         $sth_insert = $db_air->prepare($sql_update);
         $sth_insert -> execute() or &air_write_log("ERROR ".$sth_insert->errstr);
     }
@@ -533,39 +302,5 @@ sub update_rt_bw
     $sql = "delete from traffic_realtime where update_date < '$v_date'";
     $sth = $db_air->prepare($sql);
     $sth -> execute() or &air_write_log("ERROR ".$sth->errstr);
-}
-
-sub process_packet_auto
-{
-    $sql  = "select packet_id, p_desc, traffic, period_month, movie_tickets, price ";
-    $sql .= "from packet_info where category='packet' and enable_state = 'enable'";
-    $sth = $db_air->prepare($sql);
-    if ($sth->execute()) {
-        while (my $ref = $sth->fetchrow_hashref()) {
-            my ($id, $desc, $traffic) = ($ref->{'packet_id'}, $ref->{'p_desc'}, $ref->{'traffic'});
-            my ($period, $beans, $price) = ($ref->{'period_month'}, $ref->{'movie_tickets'}, $ref->{'price'});
-            $packet_hash{$id}{"desc"} = "$desc";
-            $packet_hash{$id}{"traffic"} = "$traffic";
-            $packet_hash{$id}{"period_month"} = $period;
-            $packet_hash{$id}{"beans"} = $beans;
-            $packet_hash{$id}{"price"} = $price;
-        }
-    } else {
-        &air_write_log("sql execute failed\n");
-        exit 0;
-    }
-
-    my ($xyear, $xmon, $xday, $xhour, $xmin) = &air_get_normalized_time(time() + 3600);
-    $sql  = "select auto_id, packet_id, user_name, check_date from packet_auto ";
-    $sql .= "where check_date < '$xyear-$xmon-$xday $xhour:$xmin:00' and enable_state = 'enable'";
-    $sth = $db_air->prepare($sql);
-    if ($sth->execute()) {
-        while (my $ref = $sth->fetchrow_hashref()) {
-            my ($auto_id, $packet_id) = ($ref->{'auto_id'}, $ref->{'packet_id'});
-            my ($user_name, $check_date) = ($ref->{'user_name'}, $ref->{'check_date'});
-            print("====check_date=$check_date\n");
-            &air_transaction($db_air, $auto_id, $packet_id, $user_name, $check_date);
-        }
-    }
 }
 

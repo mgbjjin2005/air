@@ -251,6 +251,8 @@ CREATE TABLE IF NOT EXISTS `air`.`user_quota` (
 /*用户月信息汇总表*/
 CREATE TABLE IF NOT EXISTS `air`.`user_mon` (
    `user_name`         varchar(64)     NOT NULL,                  /*用户名*/
+   `traffic_free`      DECIMAL(14,2)   DEFAULT  '0.0',            /*自由流量,但各种流量包全部用完后，用户被踢掉前使用的流量属于自由流量*/
+   `traffic_free_cost` DECIMAL(14,2)   DEFAULT  '0.0',            /*本月因为自由流量所产生的费用*/
    `traffic_idle`      DECIMAL(14,2)   DEFAULT  '0.0',            /*已使用的空闲流量*/
    `traffic_busy`      DECIMAL(14,2)   DEFAULT  '0.0',            /*已使用的忙时流量*/
    `traffic_internal`  DECIMAL(14,2)   DEFAULT  '0.0',            /*已使用的内网流量*/
@@ -325,18 +327,36 @@ CREATE TABLE IF NOT EXISTS `air`.`global_info` (
 
 /*用户信息表*/
 CREATE TABLE IF NOT EXISTS `air`.`user_info` (
-   `user_name`    varchar(64)     NOT NULL,        /*用户名*/
-   `password`     varchar(64)     NOT NULL,        /*明文密码*/
-   `password_md5` varchar(64)     NOT NULL,        /*密文密码*/
-   `email`        varchar(64)     NOT NULL,        /*邮箱*/
-   `balance`      DECIMAL(14,2)   DEFAULT '0.0',   /*账户余额*/
-   `total_cost`   DECIMAL(14,2)   DEFAULT '0.0',   /*累积消费额*/
-   `create_date`  DATETIME,                        /*用户创建时间*/
+   `user_name`    varchar(64)     NOT NULL,          /*用户名*/
+   `password`     varchar(64)     NOT NULL,          /*明文密码*/
+   `password_md5` varchar(64)     NOT NULL,          /*密文密码*/
+   `email`        varchar(64)     NOT NULL,          /*邮箱*/
+   `balance`      DECIMAL(14,2)   DEFAULT '0.0',     /*账户余额*/
+   `net_state`    varchar(32)     DEFAULT 'limited', /*用户当前访问外网的状态(vip,low,limited)*/
+   `total_cost`   DECIMAL(14,2)   DEFAULT '0.0',     /*累积消费额*/
+   `create_date`  DATETIME,                          /*用户创建时间*/
 
    PRIMARY KEY (`user_name`),
    INDEX(`user_name`,`password`),
    INDEX(`user_name`,`password_md5`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*对用户的动作（下线，通知，等）*/
+CREATE TABLE IF NOT EXISTS `air`.`user_action` (
+   `auto_id`      bigint(20)      NOT NULL   AUTO_INCREMENT,
+   `user_name`    varchar(64)     NOT NULL,        /*用户名*/
+   `node`         varchar(32)     NOT NULL,        /*节点(cn1,cn2,cn3,cn4)*/
+   `action`       varchar(32)     NOT NULL,        /*动作(tick:踢下线, msg:信息)*/
+   `msg`          varchar(128),                    /*附加信息*/
+   `state`        varchar(32)     DEFAULT 'init',  /*执行状态(init:还没有执行，success:执行成功，failed执行失败)*/
+   `state_msg`    varchar(64)     DEFAULT '',      /*执行结果附加信息*/
+   `create_date`  DATETIME,                        /*创建时间*/
+
+   PRIMARY KEY (`auto_id`),
+   INDEX(`user_name`,`state`),
+   INDEX(`node`,`state`)
+ ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 /*用户使用详情*/

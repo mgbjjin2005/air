@@ -73,6 +73,7 @@ class TvController extends Controller
         $ret['detail'] =$dbDeal->getMediaDetail($m_id);
 		$this->render('tv_detail',$ret);  
 	}
+
 	public function actionToWatch()
 	{
         if (airAutoLogin() == false) {
@@ -81,23 +82,23 @@ class TvController extends Controller
         }
 		$user_name=Yii::app()->session["username"];
 		$req =  Yii::app()->request ;
-        $id=$req->getParam("id","-1");//影片的id media_detail
+        $m_alias=$req->getParam("m_alias","-1");//影片的id media_detail
 		$media_path=$req->getParam("media_path","");
-		if ($id =='-1') {
+		if (isset($m_alias) == false) {
             Yii::app()->session['msg'] = "该影片详情为空.";
             $this->render('//site/error_msg');
             return;
         }
 		$dbDeal=new DbDeal();
 		//先通过函数判断 用户是否 可以看这个电影
-		$tmp_ret=air_check_user_buy($user_name,$id);
+		$tmp_ret=air_check_user_buy($user_name,$m_alias);
 		$flag=$tmp_ret['flag'];
 		if($flag=='error'){
 			$this->render('//site/error_msg');
             return;
 		}else if($flag=='already_buy'){
 			//获取media_detail表里面的数据
-			$media_info = $dbDeal->getMediaDetail("",$id);
+			$media_info = $dbDeal->getMediaDetail("",$m_alias);
 			if ($media_info ==null || count($media_info)<1)   {
 				Yii::app()->session['msg'] = "该影片详情为null.";
 				$this->render('//site/error_msg');
@@ -111,10 +112,11 @@ class TvController extends Controller
 				return;
 			}
 
-            air_update_pv_by_detail_id($id);
+            air_update_pv_by_detail_id($m_alias);
 			$ret['media_info']=$media_info[0];
             $ret['media']=$media[0];
 			$this->render('tv_watch',$ret);
+
 		}else if($flag=='need_buy'){
 			$ret['media_info']=$tmp_ret;
 			$user_info=$dbDeal->getUserInfo($user_name);
@@ -166,16 +168,17 @@ class TvController extends Controller
         }
 		$user_name=Yii::app()->session["username"];
 		$req =  Yii::app()->request ;
-        $id=$req->getParam("mv_id","-1");//影片的id media_detail
-		if ($id =='-1') {
+        $m_alias=$req->getParam("m_alias","-1");
+		if (isset($m_alias) == false) {
             Yii::app()->session['msg'] = "该影片的详情为空.";
             $this->render('//site/error_msg');
             return;
         }
-		$ret=air_video_buy($user_name,$id);
+
+		$ret=air_video_buy($user_name,$m_alias);
         //获取media_detail表里面的数据
         $dbDeal=new DbDeal();
-        $media_info = $dbDeal->getMediaDetail("",$id);
+        $media_info = $dbDeal->getMediaDetail("",$m_alias);
         if ($media_info ==null || count($media_info)<1)   {
             Yii::app()->session['msg'] = "该影片详情为null.";
             $this->render('//site/error_msg');
@@ -184,13 +187,13 @@ class TvController extends Controller
 		$retData=array();
         
 		if($ret==false){
-            $retData["message"]="ERROR:".Yii::app()->session['msg'];
+            $retData["message"]="ERROR: m_alias=$m_alias".Yii::app()->session['msg'];
             $retData["status"]="Failed";
             $retData["return_url"]="index.php?r=tv/detail&id=".$media_info[0]['m_id'];
 		}else{
 			$retData["message"]="成功付费";
             $retData["status"]="Success";
-            $retData["return_url"]="index.php?r=tv/ToWatch&id=".$id;
+            $retData["return_url"]="index.php?r=tv/ToWatch&m_alias=".$m_alias;
 		}
 		echo CJSON::encode($retData);
 	}

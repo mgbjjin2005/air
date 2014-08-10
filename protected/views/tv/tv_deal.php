@@ -58,8 +58,8 @@ Yii::app()->session['board_msg'] .= "2、电影是跟移动设备绑定的，即
     });
         function doCharge(){
             var url="index.php?r=tv/charge";
-            var mv_id='<?php echo $media_info['mv_id']?>';
-            $.ajax({type: "post", url: url,async:false,data:{mv_id:mv_id}
+            var m_alias='<?php echo $media_info['m_alias']?>';
+            $.ajax({type: "post", url: url,async:false,data:{m_alias:m_alias}
             ,success: function(resData)
             {
                     var resData = eval("(" + resData + ")"); 

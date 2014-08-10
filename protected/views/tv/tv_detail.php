@@ -91,7 +91,7 @@ Yii::app()->session['board_msg'] .= "3、不同的浏览器对视频的播放能
                         <li>
                     <?php endif; ?>
 
-                        <a class="A" href="index.php?r=tv/toWatch&id=<?php echo $row['auto_id']?>">
+                        <a class="A" href="index.php?r=tv/toWatch&m_alias=<?php echo $row['m_alias']?>">
                             <div class="headline"><?php print(air_format_str($row['m_chs_desc'], 10) . " / ".$row['m_price']."豆")?></div></a>
                     </li>
                 <?php endforeach; ?>

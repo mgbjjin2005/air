@@ -13,7 +13,7 @@
 <div class="top_menu">
 	欢迎你,&nbsp;<a href="index.php?r=site/userinfo"><strong><?php echo CHTML::encode(Yii::app()->session['username']);?></strong></a>
     |&nbsp;<?php echo CHTML::encode(Yii::app()->session['group']);?> &nbsp;|&nbsp;
-    <a href="http://www.state.com/logout">退出</a>&nbsp;&nbsp;
+    <a href="http://10.0.222.222/logout">退出</a>&nbsp;&nbsp;
 </div>
 <div class="logo">
 	<div class="h1_class" >

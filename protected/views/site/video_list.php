@@ -17,7 +17,7 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
     <thead>
         <tr>
             <th colspan="2"> 
-                <a href="index.php?r=tv/toWatch&id=<?php echo $row['mv_id']?>"><?php print(air_format_str($row['name'], 15)); ?></a>
+                <a href="index.php?r=tv/toWatch&m_alias=<?php echo $row['m_alias']?>"><?php print(air_format_str($row['name'], 15)); ?></a>
             </th>
             
         </tr>
@@ -55,7 +55,7 @@ Yii::app()->session['board_msg'] = $name."致力于为大家提供高速的WIFI�
     <?php foreach($ret_history as $row): ?>
         <tr>
             <td colspan = 2">
-                <a href="index.php?r=tv/toWatch&id=<?php echo $row['mv_id']?>"><?php print(air_format_str($row['name'], 15)); ?></a>
+                <a href="index.php?r=tv/toWatch&m_alias=<?php echo $row['m_alias']?>"><?php print(air_format_str($row['name'], 15)); ?></a>
             </td>
         </tr>
 

@@ -100,12 +100,13 @@ class DbDeal
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
 		return $set_t;
 	 }
-	 public function getMediaDetail($media_id="",$media_detail_id=""){
+	 public function getMediaDetail($media_id="",$m_alias=""){
 		$con="1";
-		if($media_detail_id!=""){
-			$con=$con." and auto_id=$media_detail_id";
+		if($m_alias != ""){
+			$con=$con." and m_alias='$m_alias'";
 		}
-		if($media_id!=""){
+
+		if($media_id != ""){
 			$con=$con." and m_id=$media_id";
 		}
 		$sql = "select auto_id,m_id,m_alias,m_chs_desc,m_price

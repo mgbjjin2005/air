@@ -145,23 +145,23 @@ sub update_user_bw()
 
     $user_remain = $user_remain - $t_bill;
 
+    print("quota user_name=$user_name,user_remain=$user_remain bill=$t_bill\n");
+    
     if ($user_remain <= 0) {
         #流量已经用超了，下线.
         foreach my $node (keys %{$login_user_hash{$user_name}}) {
-            &air_add_user_action($db_air,$user_name, $node, "reject","traffic over.");
+            &air_add_user_action($db_air,$user_name, $node, "reject","traffic over.", 10);
         }
 
         &air_change_user_net_state($db_air,$user_name,"limited");
 
         print("用户$user_name"."流量耗尽，下线并访问受限.\n");
         $user_remain = 0;
-    }
-    print("quota user_name=$user_name,user_remain=$user_remain bill=$t_bill\n");
 
-    if ($user_remain <= 20) {
+    } elsif ($user_remain <= 20) {
         #剩余流量不足20MB，降速.
         foreach my $node (keys %{$login_user_hash{$user_name}}) {
-            &air_add_user_action($db_air,$user_name, $node, "reject","traffic low.");
+            &air_add_user_action($db_air,$user_name, $node, "reject","traffic low.",30);
         }
 
         &air_change_user_net_state($db_air,$user_name,"low");

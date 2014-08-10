@@ -209,7 +209,7 @@ class SiteController extends Controller
         $user_name = Yii::app()->session["username"];
         $mac = Yii::app()->session["mac"];
         
-        $sql  = "select auto_id,m_id,mv_id,price,m_chs_desc, ";
+        $sql  = "select auto_id,m_alias,price,m_chs_desc, ";
         $sql .= "(timestamp(expire_date) - timestamp(now())) as expire, ";
         $sql .= "expire_date ,create_date from  media_deal_info where ";
         $sql .= "user_name = '$user_name' and mac ='$mac' and ";
@@ -225,7 +225,7 @@ class SiteController extends Controller
             $expire = $tuple['expire'];
             $obj = array();
 
-            $obj["mv_id"] = $tuple["mv_id"];
+            $obj["m_alias"] = $tuple["m_alias"];
             $obj["price"] = $tuple["price"];
             $obj["name"] = $tuple["m_chs_desc"];
             $obj["expire_date"] = $tuple["expire_date"];
@@ -390,6 +390,7 @@ class SiteController extends Controller
 
     public function actionPrepareLogin()
     {
+        Yii::log("actionPrepareLogin", 'info', 'PrepareLogin');
         $req =  Yii::app()->request ;
         $user_name=$req->getParam("user_name","");
         $callback=$req->getParam("callback","");
@@ -398,9 +399,11 @@ class SiteController extends Controller
         $sql = "select net_state as value from user_info where user_name = '$user_name'";
         $group = air_get_value_by_sql($sql);
         $retData['message']="$sql,group=$group";
+        Yii::log($sql, 'info', 'PrepareLogin');
         if (strlen($group) > 1) {
              $sql = "update radusergroup set groupname = '$group' where username='$user_name'";
              Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+             Yii::log($sql, 'info', 'PrepareLogin');
              $retData['message2']="$sql";
         }
 

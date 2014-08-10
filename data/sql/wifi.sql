@@ -20,6 +20,26 @@ CREATE TABLE IF NOT EXISTS `air`.`media_category` (
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+
+/*电影购买记录(目前只能支持单集购买，不支持打包购买)*/
+CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
+   `auto_id`      bigint(20)      NOT NULL AUTO_INCREMENT,
+   `m_alias`      varchar(64)     NOT NULL,         /*每段视频的内部名称*/
+   `user_name`    varchar(64)     NOT NULL,         /*用户名*/
+   `mac`          varchar(64)     NOT NULL,         /*设备mac*/
+   `price`        DECIMAL(14,2)   DEFAULT '0.0',    /*购买价格*/
+   `m_chs_desc`   varchar(64),                      /*视频文字描述.(功夫熊猫 720p, 功夫熊猫 1080p)*/
+   `create_date`  DATETIME,                         /*用户创建时间*/
+   `expire_date`  DATETIME,                         /*资源有效期截止时间*/
+
+   PRIMARY KEY (`auto_id`),
+   INDEX(`user_name`,`mac`),
+   INDEX(`user_name`,`mac`,`m_alias`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+
 /*一条记录对应一部电视剧的一集或一部电影的一个视频*/
 CREATE TABLE IF NOT EXISTS `air`.`media_detail` (
    `auto_id`         bigint(20)     NOT NULL AUTO_INCREMENT,
@@ -35,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `air`.`media_detail` (
    `m_path_is_ln`    int            DEFAULT 0,                      /*播放路径是不是软连接,1为是，0为不是*/
    `m_pv`            int            DEFAULT 0,                      /*视频被浏览的次数*/
    `m_buy_pv`        int            DEFAULT 0,                      /*视频被购买的次数*/
+   `m_day_pv`        int            DEFAULT 0,                      /*今天的PV*/
+   `m_version`       int            DEFAULT 1,                      /*视频的版本号，有可能第一版视频有问题，后续需要不断替换更新*/
     
    `m_create_date`   DATETIME,                                      /*记录创建时间*/
    `m_modify_date`   DATETIME,                                      /*记录修改时间*/
@@ -44,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media_detail` (
    INDEX (`m_id`),
    INDEX (`m_create_date`)
  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE IF NOT EXISTS `air`.`media` (
    `auto_id`         bigint(20)     NOT NULL AUTO_INCREMENT,
@@ -66,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media` (
    `m_imdb_num`      DECIMAL(14,2)  DEFAULT '0.0',                  /*IMDB分数*/
    `m_douban_num`    DECIMAL(14,2)  DEFAULT '0.0',                  /*豆瓣分数*/
    `m_total_pv`      int            DEFAULT 0,                      /*影片访问pv*/
+   `m_version`       int            DEFAULT 1,                      /*版本号，用于内容更新*/
    `m_pic_path`      varchar(512)   DEFAULT NULL,                   /*视频的展示图片的路径(media/201403/pic/md5(id).jpg)*/
    `m_des`           varchar(4096)  DEFAULT NULL,                   /*剧情简介*/
    `m_create_date`   DATETIME,                                      /*记录创建时间*/
@@ -147,25 +171,6 @@ CREATE TABLE IF NOT EXISTS `air`.`user_binding` (
     PRIMARY KEY (`auto_id`),
     INDEX(`user_name`, `mac`, `bind_state`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-
-/*电影购买记录(目前只能支持单集购买，不支持打包购买)*/
-CREATE TABLE IF NOT EXISTS `air`.`media_deal_info` (
-   `auto_id`      bigint(20)      NOT NULL AUTO_INCREMENT,
-   `m_id`         bigint(20)      NOT NULL,         /*视频ID*/
-   `mv_id`        bigint(20)      NOT NULL,         /*视频所属的电影或电视剧的media_id*/
-   `user_name`    varchar(64)     NOT NULL,         /*用户名*/
-   `mac`          varchar(64)     NOT NULL,         /*设备mac*/
-   `price`        DECIMAL(14,2)   DEFAULT '0.0',    /*购买价格*/
-   `m_chs_desc`   varchar(64),                      /*视频文字描述.(功夫熊猫 720p, 功夫熊猫 1080p)*/
-   `create_date`  DATETIME,                        /*用户创建时间*/
-   `expire_date`  DATETIME,                        /*资源有效期截止时间*/
-
-   PRIMARY KEY (`auto_id`),
-   INDEX(`user_name`,`mac`),
-   INDEX(`user_name`,`mac`,`m_id`),
-   INDEX(`user_name`,`mac`,`mv_id`)
- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 /*套餐信息*/
@@ -339,6 +344,22 @@ CREATE TABLE IF NOT EXISTS `air`.`user_info` (
    PRIMARY KEY (`user_name`),
    INDEX(`user_name`,`password`),
    INDEX(`user_name`,`password_md5`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*各节点数据目录量*/
+CREATE TABLE IF NOT EXISTS `air`.`disk_quota` (
+   `auto_id`      bigint(20)      NOT NULL   AUTO_INCREMENT,
+   `node`         varchar(32)      NOT NULL,           /*节点(cn1,cn2,cn3,cn4)*/
+   `dir`          varchar(256)     NOT NULL,           /*目录*/
+   `total`        DECIMAL(14,2)    DEFAULT  '0.0',     /*最大可用空间(MB)*/
+   `remain`       DECIMAL(14,2)    DEFAULT  '0.0',     /*剩余空间(MB)*/
+   `ssd`          varchar(8)       DEFAULT  'no',      /*是否是SSD*/
+   `state`        varchar(32)      DEFAULT  'enable',  /*可用状态*/
+   `create_date`  DATETIME,                          /*用户创建时间*/
+
+   PRIMARY KEY (`auto_id`),
+   INDEX(`node`,`state`) 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

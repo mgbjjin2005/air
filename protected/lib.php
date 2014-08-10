@@ -51,20 +51,19 @@ function airAutoLogin()
         setcookie ("username", $username, $expire); 
     }
 
-    air_update_user_radgroup(Yii::app()->session['username']);
+    air_get_user_radgroup(Yii::app()->session['username']);
     return true;
 }
 
-function air_video_buy($user_name, $video_id) {
+function air_video_buy($user_name, $m_alias) {
     $ret = array();
     $m_id = 0;
-    $mv_id = 0;
     $beans = 0;
     $traffic = 0;
     $balance = 0;
 
     $check_ret = array();
-    $check_ret = air_check_user_buy($user_name, $video_id);
+    $check_ret = air_check_user_buy($user_name, $m_alias);
     if ($check_ret["flag"] == "already_buy") {
         return true;
     }
@@ -74,7 +73,7 @@ function air_video_buy($user_name, $video_id) {
     }
 
     $m_id = $check_ret["m_id"];
-    $mv_id = $check_ret["mv_id"];
+    $m_alias = $check_ret["m_alias"];
     $mv_name = $check_ret["mv_name"];
     $beans = $check_ret["beans"];
     $balance = $check_ret["balance"];
@@ -166,8 +165,8 @@ function air_video_buy($user_name, $video_id) {
         $stop_date = date("Y-m-d H:i:s", $stop_stamp - 1);
 
         $t_sql  = "insert into media_deal_info ";
-        $t_sql .= "(m_id, mv_id, user_name, mac, price,m_chs_desc,create_date,expire_date) values ";
-        $t_sql .= "($m_id,$mv_id,'$user_name','$mac',$price,'$mv_name','$start_date','$stop_date')";
+        $t_sql .= "(m_alias, user_name, mac, price,m_chs_desc,create_date,expire_date) values ";
+        $t_sql .= "('$m_alias','$user_name','$mac',$price,'$mv_name','$start_date','$stop_date')";
         Yii::app()->getDbByName("db_air")->createCommand($t_sql)->execute();
 
         $transaction->commit();
@@ -178,12 +177,12 @@ function air_video_buy($user_name, $video_id) {
         return false;
     }
 
-    air_update_user_radgroup($user_name);
+    air_set_user_radgroup($user_name);
     return true;
 }
 
 
-function air_check_user_buy($user_name, $video_id) {
+function air_check_user_buy($user_name, $m_alias) {
     $ret = array();
     $price = 0;
     $space = 0;
@@ -191,7 +190,7 @@ function air_check_user_buy($user_name, $video_id) {
     $m_id = 0;
     $mac = Yii::app()->session['mac'];
 
-    $sql = "select m_id, m_space, m_price,m_chs_desc from media_detail where auto_id = $video_id";
+    $sql = "select m_id, m_space, m_price,m_chs_desc from media_detail where m_alias = '$m_alias'";
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
     $count = count($set_t);
 
@@ -203,7 +202,7 @@ function air_check_user_buy($user_name, $video_id) {
 
     } else {
         $ret["flag"] = "error";
-        Yii::app()->session['msg'] = "没有查到该视频的信息，请选择其他视频观看。";
+        Yii::app()->session['msg'] = "没有查到该视频的信息，请选择其他视频观看。". $sql;
         return;
     }
 
@@ -213,7 +212,7 @@ function air_check_user_buy($user_name, $video_id) {
     }
 
     $sql  = "select auto_id from media_deal_info where user_name = '$user_name' ";
-    $sql .= "and mac = '$mac' and mv_id = $video_id and expire_date > now()"; 
+    $sql .= "and mac = '$mac' and m_alias = '$m_alias' and expire_date > now()"; 
     $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
     $count = count($set_t);
     if($count > 0){
@@ -226,7 +225,7 @@ function air_check_user_buy($user_name, $video_id) {
     $sql .= "and  category = 'beans' and state = 'enable' and stop_date > now()";
     $beans = air_get_value_by_sql($sql);
     $ret["m_id"] = $m_id;
-    $ret["mv_id"] = $video_id;
+    $ret["m_alias"] = $m_alias;
     $ret["flag"] = "need_buy";
     $ret["mv_name"] = $mv_name;
     $ret["price"] = $price;
@@ -480,35 +479,58 @@ function air_get_media_list($id_kind,$id_area,$id_type,$page,$keys)
 }
 
 
-function air_update_user_radgroup($user_name)
+function air_set_user_radgroup($user_name)
 {
-    
-    $sql  = "select sum(remain) as value from user_quota where user_name = '$user_name' ";
-    $sql .= " and category = 'traffic' and  state='enable' and start_date <= now()";
-    $user_remain = air_get_value_by_sql($sql); 
+    $date_mon = Date("Ym");
+    $sql =  "select traffic_remain as value from user_mon ";
+    $sql .= "where user_name = '$user_name' and date_mon = '$date_mon'";
 
-    $group = "limited";
-    Yii::app()->session['group'] = "状态: 访问受限";
-    if ($user_remain > 0) {
-        $group = "vip";
-        Yii::app()->session['group'] = "状态: 正常使用"; 
+    $user_remain = air_get_value_by_sql($sql); 
+    
+    $group_name = "limited";
+    if ($user_remain > 0 and $user_remain < 15) {
+        $group_name = "low";
+
+    } else if ($user_remain >= 15) {
+        $group_name = "vip";
     }
 
-    $sql = "update radusergroup set groupname = '$group' where username='$user_name'";
+    $sql = "update user_info set net_state = '$group_name' where user_name = '$user_name'";
+    Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+    $sql = "update radusergroup set groupname = '$group_name' where username='$user_name'";
     Yii::app()->getDbByName("db_radius")->createCommand($sql)->execute();
+    
+    air_get_user_radgroup($user_name);
 }
 
 
-function air_update_pv_by_detail_id($id)
+function air_get_user_radgroup($user_name)
+{
+    $sql = "select net_state as value from user_info where user_name='$user_name'";
+    $group_name = air_get_value_by_sql($sql);
+    if ($group_name == "limited") {
+        Yii::app()->session['group'] = "状态: 访问受限";
+
+    } else if ($group_name == "low") {
+        Yii::app()->session['group'] = "状态: 流量告警";
+    
+    } else if ($group_name == "vip") {
+        Yii::app()->session['group'] = "状态: 流量正常";
+    }
+
+    return;
+}
+
+function air_update_pv_by_detail_id($m_alias)
 {
     
-    if ($id <= 0) {
+    if (isset($m_alias) == false) {
         return;
     }
 
-    $sql = "select m_id as value from media_detail where auto_id = $id";
+    $sql = "select m_id as value from media_detail where m_alias = '$m_alias'";
     $m_id = air_get_value_by_sql($sql);
-    $sql = "update media_detail set m_pv = m_pv + 1 where auto_id = $id";
+    $sql = "update media_detail set m_pv = m_pv + 1 where m_alias = '$m_alias'";
     Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
     $sql = "update media set m_total_pv = m_total_pv + 1 where auto_id = $m_id";
     Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
@@ -548,6 +570,8 @@ function air_update_user_mon($user_name,$flag = false)
         $sql .= "('$user_name', 0, 0, 0, $user_remain, '$date_mon');";
     }
     Yii::app()->getDbByName("db_air")->createCommand($sql)->execute();
+
+    air_set_user_radgroup($user_name);
 }
 /*
    添加套餐交易。

@@ -1,0 +1,6 @@
+MAILTO=""
+
+*/5 * * * * root  perl /root/air/protected/air_mgr/bw_mgr.pl  >> /tmp/air_mgr.log 2>&1
+*/5 * * * * root  perl /root/air/protected/air_mgr/collect_all_bw.pl  >> /tmp/collect_all_bw.log 2>&1
+* * * * * root  perl /root/air/protected/air_mgr/action_detector.pl  >> /tmp/action_detector.log 2>&1
+0 23 * * * /usr/sbin/ntpdate asia.pool.ntp.org >> /tmp/ntpdate.log

@@ -37,11 +37,29 @@ sub air_connect_db_tranc(){
 
 sub air_add_user_action()
 {
-    my ($db,$user_name,$node,$action,$msg)= @_;
-    my $sql  = "insert into user_action ";
+    my ($db,$user_name,$node,$action,$msg,$interval)= @_;
+    if ($interval <= 0) {
+        $interval = 5;
+    }
+
+    my ($year, $mon, $day, $hour, $min) = &air_get_normalized_time(time() - ($interval * 60));
+    my $date = "$year-$mon-$day $hour:$min:00";
+    my $sql = "select user_name from user_action where user_name ='$user_name' ";
+    $sql .= "and node='$node' and action='$action' and state = 'success' and  ";
+    $sql .= "create_date >= '$date' order by create_date desc limit 1";
+   
+    print("Air_mgr:$sql\n");
+    my $sth = $db->prepare($sql);
+    if ($sth->execute()) {
+        if (my $ref = $sth->fetchrow_hashref()) {
+            return;
+        }
+    }
+    
+    $sql  = "insert into user_action ";
     $sql .= "(user_name,node,action,msg,create_date) values ";
     $sql .= "('$user_name','$node','$action','$msg', now())";
-    my $sth = $db->prepare($sql);
+    $sth = $db->prepare($sql);
     print("Air_mgr:$sql\n");
     $sth->execute();
 }

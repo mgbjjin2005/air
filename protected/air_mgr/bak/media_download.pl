@@ -10,34 +10,15 @@ use Data::Dumper;
 
 use constant ONE_DAY => 86400;
 
-my ($db_air,$v_day, $sth,$v_date, $sql);
+my ($db_air);
+my ($v_day, $sth,$v_date, $sql);
 my ($year, $mon, $day, $hour, $min);
 
 ($year, $mon, $day, $hour, $min) = &air_get_normalized_time();
-
-while (my $arg = shift()) {
-    if ($arg =~ /--year=(\d+)$/) {
-        $year = $1;
-        next;
-    } elsif ($arg =~ /--mon=(\d*)$/) {
-        $mon = $1;
-        next;
-    } elsif ($arg =~ /--day=(\d*)$/) {
-        $day = $1;
-        next;
-    }
-}
-
-
 $v_day="$year-$mon-$day";
 $v_date="$year-$mon-$day $hour:$min:00";
 
-my %dir_hash = ();
-$db_air = &air_connect_db("air", "localhost", "air", "***King1985***", "3306");
-my ($g_node,$g_ratio,$g_a,$g_b) = &air_get_global_info($db_air);
-
-&fill_dir_hash();
-
+my $media_root = "/data/media";
 my $media_root_ln = "/home/media";
 
 my $root_url = "http://10.0.0.10/mp4";
@@ -104,7 +85,7 @@ my ($m_chs_name,$m_original_name, $m_alias, $m_director) = ("","","","");
 my ($m_actor, $m_time_length, $m_show_date, $m_kind) = ("",0,"",0);
 my ($m_type, $m_area, $m_revenue, $m_imdb_num) = (0, 0, 0,0);
 my ($m_douban_num, $m_desc, $m_path, $m_price,$m_chs_desc) = (0,"","",0,""); 
-my ($m_episode, $m_version) = (0,1); 
+my ($m_episode) = (0); 
 my ($id_kind, $id_area, $id_type);
 
 for my $key (@index_content) {
@@ -134,7 +115,6 @@ for my $key (@index_content) {
         }
         $state = "";
         $des_flag = 0;
-        $m_version = 1;
         next;
     }
 
@@ -302,14 +282,6 @@ for my $key (@index_content) {
         next;
     }
 
-    if ($key =~ /\(version\)\s*:\s*(.*)$/) {
-        $m_version = $1;
-        while ($m_version =~ /\s+$/) {
-            chop($m_version);
-        }
-        next;
-    }
-
     if ($key =~ /\(chs_desc\)\s*:\s*(.*)$/) {
         $m_chs_desc = $1;
         while ($m_chs_desc =~ /\s+$/) {
@@ -320,96 +292,10 @@ for my $key (@index_content) {
 
 }
 
-&update_dir(0);
 exit 0;
 
 
 #------------------------------------------------
-sub fill_dir_hash(){
-    my $sql = "select auto_id, node, dir, total, remain, ssd, state from disk_quota where node = '$g_node'";
-
-    $sth = $db_air->prepare($sql);
-    if ($sth->execute()) {
-        while (my $ref = $sth->fetchrow_hashref()) {
-            my ($id,$dir,$total) = ($ref->{"auto_id"}, $ref->{"dir"}, $ref->{"total"});
-            my ($remain,$ssd,$state) = ($ref->{"remain"}, $ref->{"ssd"}, $ref->{"state"});
-         
-            print("$dir, total=$total remain=$remain\n");
-            $dir_hash{$id}{"dir"} = $dir;
-            $dir_hash{$id}{"total"} = $total;
-            $dir_hash{$id}{"remain"} = $remain;
-            $dir_hash{$id}{"ssd"} = $ssd;
-            $dir_hash{$id}{"state"} = $state;
-        }
-    }
-}
-
-
-sub choose_dir()
-{
-    my $id = 0;
-    my $cur_remain = 0;
-    foreach my $key (keys %dir_hash) {
-        my ($dir,$total) = ($dir_hash{$key}{"dir"}, $dir_hash{$key}{"total"});
-        my ($remain) = ($dir_hash{$key}{"remain"});
-
-        if ($remain < 15) {
-            next;
-        }
-
-        if ($dir_hash{$key}{"ssd"} eq "yes") {
-            next;
-        }
-
-        if ($dir_hash{$key}{"state"} eq "disable") {
-            next;
-        }
-
-        my $used = `du -sm $dir | awk '{print \$1}'`;
-        chomp($used);
-        $used = int($used/1024);
-
-        $remain = $dir_hash{$key}{"total"} - $used;
-        print("$dir used=$used remain=$remain\n");
-
-        if ($cur_remain < $remain) {
-            $id = $key;
-            $cur_remain = $remain;
-            next;
-        }
-
-    }
-
-    print("id $id is selected\n");
-    return $id;
-}
-
-
-sub update_dir()
-{
-    my ($id) = @_;
-    foreach my $key (keys %dir_hash) {
-        if ($id > 0 and ($id ne $key)) {
-            next;
-        }
-
-        my $dir = $dir_hash{$key}{"dir"};
-        my $used = `du -sm $dir | awk '{print \$1}'`;
-        chomp($used);
-        $used = int($used/1024);
-
-        $dir_hash{$key}{"remain"} = $dir_hash{$key}{"total"} - $used;
-        my $remain = $dir_hash{$key}{"remain"};
-        $sql = "update disk_quota set remain = $remain where auto_id = $key";
-        
-        $sth = $db_air->prepare($sql);
-        if(not $sth -> execute()) {
-            print("sql execute error. ".$sth->errstr."\n");
-        }
-    }
-}
-
-
 sub get_class1_id()
 {
     my $name = shift;
@@ -501,28 +387,34 @@ sub do_state()
 sub down_load_poster()
 {
     my $url = "$root_url/$year$mon/$m_alias/$m_alias.jpg";
+    my $media_dir = "$media_root/$year$mon/$m_alias";
+    my $jpg_path = "$media_dir/$m_alias.jpg";
+
     my $media_dir_ssd = "$media_root_ln/$year$mon/poster";
     my $jpg_path_ssd = "$media_dir_ssd/$m_alias.jpg";
 
-    if (-e $jpg_path_ssd) {
-        `rm -f $jpg_path_ssd`;
+    if (-e $jpg_path_ssd and -e $jpg_path ) {
+        return;
     }
 
+    `mkdir -p $media_dir` if (not -e $media_dir);
     `mkdir -p $media_dir_ssd` if (not -e $media_dir_ssd);
 
-    `wget "$url" -q -O $jpg_path_ssd`;
+    `wget "$url" -q -O $jpg_path`;
+    `cp -f $jpg_path $jpg_path_ssd`;
+
 }
 
 sub down_load_detail()
 {
-    my ($m_alias, $alias,$file_name) = ("","","");;
+    my ($alias,$file_name) = ("","");;
     if(not $m_path =~ /\/?([^\/]+)\/([^\/]+)\.mp4/) {
         print("文件名错误 $m_path\n");
         return;
     }
 
-    ($m_alias, $alias, $file_name) = ($1, $2, $2);
-    $sql = "select auto_id from media where m_alias = '$m_alias'";
+    ($alias, $file_name) = ($2, $2);
+    $sql = "select auto_id from media where m_alias = '$1'";
     $sth = $db_air->prepare($sql);
     if(not $sth->execute()) {
         print("没有查询到对应的电影信息，忽略本次下载$m_path sql execute error. ".$sth->errstr."\n");
@@ -535,49 +427,22 @@ sub down_load_detail()
     } else {
         print("没有查询到任何数据\n");
     }
-   
-    my $id = &choose_dir();
-
-    if ($id == 0) {
-        print("磁盘空间不足\n");
-    }
-
-    my $dir = $dir_hash{$id}{"dir"};
-
+    
     my $url = "$root_url/$year$mon/$m_path";
-    my $media_parent_dir = "$dir/$year$mon/$m_alias";
-    my $media_dir = "$dir/$year$mon/$m_alias/$alias";
+    my $media_dir = "$media_root/$year$mon/$alias";
     my $video_path   = "$media_dir/$alias.mp4";
     my $video_path_ts   = "$media_dir/$alias.ts";
     my $video_path_m3u8 = "$media_dir/$alias.m3u8";
-    my $url_m3u8 = "media/$year$mon/$m_alias/$alias/$alias.m3u8";
-    my $media_parent = "$media_root_ln/$year$mon/$m_alias";
-    my $video_dir_ssd = "$media_root_ln/$year$mon/$m_alias/$alias";
+    my $url_m3u8 = "media/$year$mon/$alias/$alias.m3u8";
 
+    my $video_dir_ssd = "$media_root_ln/$year$mon/$alias";
 
-    my ($auto_id, $m_real_path, $version) = (0, "", 1);
-    $sql = "select auto_id, m_real_path, m_version from media_detail where m_alias = '$alias'";
-    $sth = $db_air->prepare($sql);
-    if($sth->execute()) {
-        my $ref = $sth->fetchrow_hashref();
-        if ($ref) {
-            ($auto_id, $m_real_path, $version) = ($ref->{"auto_id"}, $ref->{"m_real_path"},$ref->{"m_version"});
-
-            if ($version >= $m_version) {
-                print("$m_alias 已经添加过了，忽略...\n");
-                return;
-            
-            } else {
-                print("$m_alias 发现新的版本$m_version,替换...\n");
-                #原来的直接删除
-                `rm -rf $m_real_path`;
-            }
-        }
+    if (-e $video_path_m3u8) {
+        print("$url 已经下载过了，直接忽略...\n");
+        return;
     }
 
     `mkdir -p $media_dir` if (not -e $media_dir);
-    `mkdir -p $media_parent` if (not -e $media_parent);
-    `rm -f $video_dir_ssd`;
     `ln -s $media_dir $video_dir_ssd` if (not -e $video_dir_ssd);
 
     print("download $url...\n");
@@ -604,21 +469,11 @@ sub down_load_detail()
     }
 
     print("-----m_chs_desc=$m_chs_desc\n");
-    if ($auto_id > 0 ) {
-        $sql  = "update media_detail set m_id = $m_id, m_alias = '$alias', ";
-        $sql .= "m_space = $space, m_price = $m_price, m_chs_desc = '$m_chs_desc', ";
-        $sql .= "m_episode = $m_episode, m_video_path = '$url_m3u8', m_real_path = '$media_dir', ";
-        $sql .= "m_version=$m_version where auto_id = $auto_id";
-         
+    $sql  = "replace into media_detail (m_id,m_alias,m_space,m_price,m_chs_desc,";
+    $sql .= "m_episode,m_video_path,m_real_path) values (";
+    $sql .= "$m_id,'$alias',$space,$m_price,'$m_chs_desc',$m_episode,";
+    $sql .= "'$url_m3u8','$media_dir')";
 
-    } else {
-        $sql  = "insert into media_detail (m_id,m_alias,m_space,m_price,m_chs_desc,";
-        $sql .= "m_episode,m_video_path,m_real_path, m_version, m_create_date) values (";
-        $sql .= "$m_id,'$alias',$space,$m_price,'$m_chs_desc',$m_episode,";
-        $sql .= "'$url_m3u8','$media_dir',$m_version, now())";
-    }
-
-    print("sql=$sql\n");
     $sth = $db_air->prepare($sql);
     if(not $sth -> execute()) {
         print("sql execute error. ".$sth->errstr."\n");
@@ -631,7 +486,6 @@ sub down_load_detail()
         print("sql execute error. ".$sth->errstr."\n");
     }
 
-    &update_dir($id);
     return;
 }
 
@@ -641,50 +495,19 @@ sub update_media()
     $m_original_name = $db_air->quote($m_original_name);
     $m_chs_name = $db_air->quote($m_chs_name);
     $m_desc = $db_air->quote($m_desc);
-    
-    #先检查有没有，如果有的话检查版本号，如果版本号一致则不更新，其它情况都要做更新
-    my ($version,$id) = (1,0);
-    $sql = "select auto_id, m_version from media where m_alias = '$m_alias'";
-    $sth = $db_air->prepare($sql);
-    if($sth->execute()) {
-        my $version = 1;
-        my $ref = $sth->fetchrow_hashref();
-        if ($ref) {
-            ($id, $version) = ($ref->{"auto_id"},$ref->{"m_version"});
-            if ($version >= $m_version) {
-                print("$m_chs_name 已经添加过了，忽略...\n");
-                return;
-            
-            } else {
-                print("$m_chs_name 发现新的版本 $m_version,更新...\n");
-            }
-        }
-    }
-
     my $poster_url = "media/$year$mon/poster/$m_alias.jpg";
-    if ($id > 0) {
-        $sql  = "update media set m_chs_name = $m_chs_name, m_original_name =$m_original_name, ";
-        $sql .= "m_director = '$m_director', m_main_actors='$m_actor', m_time_length = $m_time_length, ";
-        $sql .= "m_show_date= '$m_show_date', m_kind_flag = $id_kind, m_area_flag=$id_area, ";
-        $sql .= "m_type_flag= $id_type, m_kind_desc = '$m_kind', m_area_desc='$m_area',";
-        $sql .= "m_type_desc= '$m_type', m_revenue = $m_revenue, m_imdb_num = $m_imdb_num,";
-        $sql .= "m_douban_num = $m_douban_num, m_pic_path = '$poster_url', m_des= $m_desc,";
-        $sql .= "m_version = $m_version where auto_id = $id";
-
-    } else {
-        $sql = "insert into media (m_chs_name,m_original_name,m_alias,m_director,";
-        $sql .= "m_main_actors,m_time_length,m_show_date,m_kind_flag,m_area_flag,";
-        $sql .= "m_type_flag,m_kind_desc,m_area_desc,m_type_desc,m_revenue,m_imdb_num,";
-        $sql .= "m_douban_num,m_pic_path,m_des, m_version, m_create_date) values (";
-        $sql .= "$m_chs_name,$m_original_name,'$m_alias','$m_director',";
-        $sql .= "'$m_actor', $m_time_length,'$m_show_date', $id_kind, $id_area,";
-        $sql .= "$id_type,'$m_kind','$m_area','$m_type',$m_revenue,";
-        $sql .= "$m_imdb_num, $m_douban_num,'$poster_url',$m_desc,$m_version,now())";
-    }
+    $sql = "insert into media (m_chs_name,m_original_name,m_alias,m_director,";
+    $sql .= "m_main_actors,m_time_length,m_show_date,m_kind_flag,m_area_flag,";
+    $sql .= "m_type_flag,m_kind_desc,m_area_desc,m_type_desc,m_revenue,m_imdb_num,";
+    $sql .= "m_douban_num,m_pic_path,m_des,m_create_date) values (";
+    $sql .= "$m_chs_name,$m_original_name,'$m_alias','$m_director',";
+    $sql .= "'$m_actor', $m_time_length,'$m_show_date', $id_kind, $id_area,";
+    $sql .= "$id_type,'$m_kind','$m_area','$m_type',$m_revenue,";
+    $sql .= "$m_imdb_num, $m_douban_num,'$poster_url',$m_desc,now())";
 
     $sth = $db_air->prepare($sql);
     if(not $sth -> execute()) {
-        print("$m_chs_name 更新或插入新数据出现错误，请查看. ".$sth->errstr."\n");
+        print("$m_chs_name 已经添加过了，忽略... ".$sth->errstr."\n");
         #&air_write_log("ERROR ".$sth->errstr);
     }
     &down_load_poster();

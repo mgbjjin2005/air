@@ -51,274 +51,17 @@ my %class_hash = ();
 my %class2_hash = ();
 
 $db_air = &air_connect_db("air", "localhost", "air", "***King1985***", "3306");
-$sql  = "select auto_id, class, m_kind, m_name, value,parent_class_id from media_category";
-$sth = $db_air->prepare($sql);
-if ($sth->execute()) {
-    while (my $ref = $sth->fetchrow_hashref()) {
-        my ($id, $class, $kind) = ($ref->{"auto_id"}, $ref->{"class"}, $ref->{"m_kind"});
-        my ($name, $value, $parent_id) = ($ref->{"m_name"}, $ref->{"value"}, $ref->{"parent_class_id"});
-        if ($class == 1) {
-            $class_hash{$id}{"name"} = $name;
-            $class_hash{$id}{"value"} = $value;
-        } else {
-            $class2_hash{$parent_id}{$id}{"name"} = $name;
-            $class2_hash{$parent_id}{$id}{"value"} = $value;
-        }
-    }
-}
-
-=pod
-BEGIN SUMMARY
-
-中文名  (cha_name)  : X战警:第一战 
-                      母语名  (original_name) : X-Men: First Class
-内部名称(alias)         : x.men.first.class
-导演    (director)      : 马修·沃恩
-主要演员(actors)        :  詹姆斯·麦卡沃伊 / 迈克尔·法斯宾德 / 詹纽瑞·琼斯
-影片时长(time_length)   : 132
-上映时间(show_date)     : 2011-06-03
-视频类目(kind)          : 电影
-类型    (type)      : 剧情/动作/科幻
-区域    (area)      : 欧美
-票房    (revenue)   : 677,000,000
-imdb分数(imdb_num)  :
-豆瓣分数(douban_num)    : 8.0
-剧情简介(desc)      :
-    年轻的X教授查尔斯（詹姆斯·麦卡沃伊 James McAvoy 饰）和万磁王埃里克（迈克尔·法斯宾德 Michael Fassbender 饰）是一对志向相投的好朋友。他们最早发现了自己的超能力，并与其他几个变种人一起在CIA工作。引发埃里克超能力的纳粹战争贩子肖（凯文·贝肯 Kevin Bacon 饰）一直试图挑起核战争，而想方设法挑起美苏两国的矛盾。埃里克和查尔斯一直与肖手下的变种人战斗，努力阻止肖的阴谋。肖怂恿苏联引发古巴导弹危机，查尔斯和埃里克获知消息后，在海湾与肖手下的变种人拉开了对决的一战。最终，肖被查尔斯和埃里克合力消灭。可是，在这个过程中，埃里克逐渐被肖的政治观点影响，与查尔斯产生裂痕。通过海湾的这一战，埃里克和查尔斯最终决裂，一方变成支持人类与变种人和平共存的X教授；另一方坚持通过消灭人类换来变种人兴起的观点，自称万磁王.........
-
-    END
-
-
-    BEGIN DETAIL
-
-    路径   (path)    : x.men.first.class/x.men.first.class.720p.mp4
-    价格   (price)   : 2.0
-    描述   (chs_desc): X战警:第一战 720P
-
-    END
-=cut
+&get_class();
 
 my ($state,$des_flag) = ("",0);
- 
 my ($m_chs_name,$m_original_name, $m_alias, $m_director) = ("","","","");
 my ($m_actor, $m_time_length, $m_show_date, $m_kind) = ("",0,"",0);
 my ($m_type, $m_area, $m_revenue, $m_imdb_num) = (0, 0, 0,0);
 my ($m_douban_num, $m_desc, $m_path, $m_price,$m_chs_desc) = (0,"","",0,""); 
-my ($m_episode, $m_version) = (0,1); 
+my ($m_episode, $m_version, $m_update_info) = (0,1); 
 my ($id_kind, $id_area, $id_type);
 
-for my $key (@index_content) {
-
-    $key =~ s/\n//g;
-    if (length($key) == 0 or $key =~ /^\s+#/ or $key =~ /^\s+$/) {
-        next;
-    }
-
-    if ($state eq "" ) {
-        if ($key =~ /BEGIN\s+SUMMARY/) {
-            $state = "summary";
-            print("$state start\n");
-            next;
-
-        } elsif ($key =~ /BEGIN\s+DETAIL/) {
-            $state = "detail";
-            print("$state start\n");
-            next;
-        }
-    }
-
-    if ($key =~ /\s*END/) {
-        print("$state finish $key\n");
-        if(not &do_state($state)) {
-            print("有错误发生\n");
-        }
-        $state = "";
-        $des_flag = 0;
-        $m_version = 1;
-        next;
-    }
-
-    if ($des_flag) {
-        if ($key =~ /^\s+(.*)/) {
-            $m_desc .= "$1\n";
-            next;
-        }
-    }
-
-    if ($key =~ /\(chs_name\)\s*:\s*(.*)$/) {
-        $m_chs_name = $1;
-        while ($m_chs_name =~ /\s+$/) {
-            chop($m_chs_name);
-        }
-        next;
-    }
-
-    if ($key =~ /\(original_name\)\s*:\s*(.*)$/) {
-        $m_original_name = $1;
-        while ($m_original_name =~ /\s+$/) {
-            chop($m_original_name);
-        }
-        next;
-    }
-
-    if ($key =~ /\(alias\)\s*:\s*(.*)$/) {
-        $m_alias = $1;
-        while ($m_alias =~ /\s+$/) {
-            chop($m_alias);
-        }
-        next;
-    }
-
-    if ($key =~ /\(director\)\s*:\s*(.*)$/) {
-        $m_director = $1;
-        while ($m_director =~ /\s+$/) {
-            chop($m_director);
-        }
-        next;
-    }
-
-    if ($key =~ /\(actors\)\s*:\s*(.*)$/) {
-        $m_actor = $1;
-        while ($m_actor =~ /\s+$/) {
-            chop($m_actor);
-        }
-        next;
-    }
-
-    if ($key =~ /\(time_length\)\s*:\s*(\d+)/) {
-        $m_time_length = $1;
-        next;
-    }
-
-    if ($key =~ /\(show_date\)\s*:\s*(.*)$/) {
-        $m_show_date = $1;
-        while ($m_show_date =~ /\s+$/) {
-            chop($m_show_date);
-        }
-        next;
-    }
-
-    if ($key =~ /\(kind\)\s*:\s*(.*)$/) {
-        $m_kind = $1;
-        while ($m_kind =~ /\s+$/) {
-            chop($m_kind);
-        }
-        next;
-    }
-
-    if ($key =~ /\(type\)\s*:\s*(.*)$/) {
-        $m_type = $1;
-        while ($m_type =~ /\s+$/) {
-            chop($m_type);
-        }
-        next;
-    }
-
-    if ($key =~ /\(area\)\s*:\s*(.*)$/) {
-        $m_area = $1;
-        while ($m_area =~ /\s+$/) {
-            chop($m_area);
-        }
-        next;
-    }
-
-    if ($key =~ /\(revenue\)\s*:\s*(.*)$/) {
-        $m_revenue = $1;
-        while ($m_revenue =~ /\s+$/) {
-            chop($m_revenue);
-        }
-        if (not defined($m_revenue)) {
-            $m_revenue = 0;
-        }
-
-        $m_revenue =~ s/,//g;
-        next;
-    }
-
-    if ($key =~ /\(imdb_num\)\s*:\s*(.*)$/) {
-        $m_imdb_num = $1;
-        while ($m_imdb_num =~ /\s+$/) {
-            chop($m_imdb_num);
-        }
-        if (not defined($m_imdb_num) or length($m_imdb_num) < 1) {
-            $m_imdb_num = 0.0;
-        }
-
-        $m_imdb_num *= 1.0;
-        if ($m_imdb_num <= 0) {
-            $m_imdb_num = 0;
-        }
-
-        next;
-    }
-
-    if ($key =~ /\(douban_num\)\s*:\s*(.*)$/) {
-        $m_douban_num = $1;
-        while ($m_douban_num =~ /\s+$/) {
-            chop($m_douban_num);
-        }
-        if (not defined($m_douban_num) or length($m_douban_num) < 1) {
-            $m_douban_num = 0.0;
-        }
-
-        $m_douban_num *= 1.0;
-        if ($m_douban_num <= 0) {
-            $m_douban_num = 0;
-        }
-
-        next;
-    }
-
-    if ($key =~ /\(desc\)\s*:\s*(.*)$/) {
-        $m_desc = "";
-        if (defined($1) and length($1) > 1) {
-            $m_desc = "$1\n";
-        }
-        $des_flag = 1;
-        next;
-    }
-
-    if ($key =~ /\(path\)\s*:\s*(.*)$/) {
-        $m_path = $1;
-        while ($m_path =~ /\s+$/) {
-            chop($m_path);
-        }
-        next;
-    }
-
-    if ($key =~ /\(episode\)\s*:\s*(.*)$/) {
-        $m_episode = $1;
-        while ($m_episode =~ /\s+$/) {
-            chop($m_episode);
-        }
-        next;
-    }
-
-    if ($key =~ /\(price\)\s*:\s*(.*)$/) {
-        $m_price = $1;
-        while ($m_price =~ /\s+$/) {
-            chop($m_price);
-        }
-        next;
-    }
-
-    if ($key =~ /\(version\)\s*:\s*(.*)$/) {
-        $m_version = $1;
-        while ($m_version =~ /\s+$/) {
-            chop($m_version);
-        }
-        next;
-    }
-
-    if ($key =~ /\(chs_desc\)\s*:\s*(.*)$/) {
-        $m_chs_desc = $1;
-        while ($m_chs_desc =~ /\s+$/) {
-            chop($m_chs_desc);
-        }
-        next;
-    }
-
-}
+&do_cycle();
 
 &update_dir(0);
 exit 0;
@@ -370,7 +113,7 @@ sub choose_dir()
         $used = int($used/1024);
 
         $remain = $dir_hash{$key}{"total"} - $used;
-        print("$dir used=$used remain=$remain\n");
+        #print("$dir used=$used remain=$remain\n");
 
         if ($cur_remain < $remain) {
             $id = $key;
@@ -380,7 +123,7 @@ sub choose_dir()
 
     }
 
-    print("id $id is selected\n");
+    #print("id $id is selected\n");
     return $id;
 }
 
@@ -410,31 +153,29 @@ sub update_dir()
 }
 
 
-sub get_class1_id()
+sub get_class_id()
 {
-    my $name = shift;
-    my $flag = 0;
-    foreach my $id (keys %class_hash) {
-        if ($name =~ /$class_hash{$id}{"name"}/) {
-            $flag += $class_hash{$id}{"value"};
-        }   
+    my ($hash, $name, $kind) = @_;
+    my ($flag, $other_value) = (0, 0);
+    foreach my $id (keys %{$$hash{$kind}}) {
+        my $pattern = $$hash{$kind}{$id}{"pattern"};
+        if ($pattern =~ /其它/) {
+            $other_value = $$hash{$kind}{$id}{"value"};
+        }
+
+        my @items = split(/\//, $name);
+        for my $item (@items) {
+            $item =~ s/\s//g;
+            $item = ",$item,";
+            if ($pattern =~ /$item/) {
+                $flag |= $$hash{$kind}{$id}{"value"};
+            }
+        }
+
     }
 
-    return $flag;
-}
-
-sub get_class2_id()
-{
-    my ($class1_id, $name) = @_;
-    my $flag = 0;
-    foreach my $id (keys %{$class2_hash{$class1_id}}) {
-        my $value = $class2_hash{$class1_id}{$id}{"value"};
-        my $s_name = $class2_hash{$class1_id}{$id}{"name"};
-        #print("class2 name=$s_name, id=$id, value=$value, name=$name\n");
-        if ($name =~ /$s_name/) {
-            $flag += $value;
-           # print("match\n");
-        }
+    if ($flag == 0) {
+        $flag = $other_value;
     }
 
     return $flag;
@@ -444,34 +185,32 @@ sub get_class2_id()
 sub do_state()
 {
     if ($state eq "summary") {
-        print("desc:$m_desc");
         if (length($m_chs_name) < 1 or
-            length($m_original_name) < 1 or
-            length($m_alias) < 1 or
-            length($m_director) < 1 or
-            length($m_actor) < 1 or
-            $m_time_length < 1 or
-            length($m_show_date) < 1)
-         {
-             print("$m_chs_name,$m_original_name,$m_alias,$m_director,$m_actor,$m_time_length,$m_show_date\n");
-             print("...1\n");
+                length($m_original_name) < 1 or
+                length($m_alias) < 1 or
+                length($m_director) < 1 or
+                length($m_actor) < 1 or
+                $m_time_length < 1 or
+                length($m_show_date) < 1)
+        {
+            print("$m_chs_name,$m_original_name,$m_alias,$m_director,$m_actor,$m_time_length,$m_show_date\n");
+            print("...1\n");
             return 0;
-         }
+        }
 
-        if (($id_kind = &get_class1_id($m_kind)) < 1) {
+
+        if (($id_kind = &get_class_id(\%class_hash, $m_kind, "video_kind")) < 1) {
             $id_kind = 0;
         }
-        
-        if (($id_area = &get_class1_id($m_area)) < 1) {
+
+        if (($id_area = &get_class_id(\%class_hash, $m_area, "area")) < 1) {
             $id_area = 0;
         }
-       
-        print("id_kind=$id_kind m_type=$m_type\n");
-        if (($id_type = &get_class2_id($id_kind, $m_type)) < 1) {
+
+        if (($id_type = &get_class_id(\%class2_hash, $m_type, $id_kind)) < 1) {
             $id_type = 0;
         }
 
-        print("$id_kind, $id_area, $id_type\n");
         if (not $m_show_date=~ /\d+-\d+-\d+/) {
             return 0;
         }
@@ -586,7 +325,7 @@ sub down_load_detail()
     $space = sprintf("%.2f", $space / 1024 /1024);
     if ($space < 2) {
         `rm -rf $media_dir`;
-        print("文件貌似有点问题，不保存\n");
+        print("$video_path 文件貌似有点问题，不保存\n");
         return;
     }
 
@@ -625,7 +364,7 @@ sub down_load_detail()
         #&air_write_log("ERROR ".$sth->errstr);
     }
 
-    $sql = "update media set enable_state = 'enable' where auto_id = $m_id";
+    $sql = "update media set enable_state = 'enable', m_update_info = '$m_update_info' where auto_id = $m_id";
     $sth = $db_air->prepare($sql);
     if(not $sth -> execute()) {
         print("sql execute error. ".$sth->errstr."\n");
@@ -694,7 +433,270 @@ sub update_media()
 sub update_media_detail()
 {
     &down_load_detail();
-    print("do update_media_detail\n\n");    
 }
 
 
+sub get_class()
+{
+    $sql  = "select auto_id, class, m_kind, m_name, value,parent_class_id from media_category";
+    $sth = $db_air->prepare($sql);
+    if ($sth->execute()) {
+        while (my $ref = $sth->fetchrow_hashref()) {
+            my ($id, $class, $m_kind) = ($ref->{"auto_id"}, $ref->{"class"}, $ref->{"m_kind"});
+            my ($name, $value) = ($ref->{"m_name"}, $ref->{"value"});
+            my ($desc, $parent_id) = ($ref->{"m_desc"},$ref->{"parent_class_id"});
+
+            if ($class == 1) {
+                $class_hash{$m_kind}{$id}{"name"} = $name;
+                $class_hash{$m_kind}{$id}{"value"} = $value;
+
+                if ( defined($desc) and length($desc) > length($name)) {
+                    $class_hash{$m_kind}{$id}{"pattern"} = $desc;
+
+                } else {
+                    $class_hash{$m_kind}{$id}{"pattern"} = ",$name,";
+                }
+                print("pattern:".$class_hash{$m_kind}{$id}{"pattern"}."\n");
+
+            } else {
+                $class2_hash{$parent_id}{$id}{"name"} = $name;
+                $class2_hash{$parent_id}{$id}{"value"} = $value;
+                if (defined($desc) and length($desc) > length($name)) {
+                    $class2_hash{$parent_id}{$id}{"pattern"} = $desc;
+
+                } else {
+                    $class2_hash{$parent_id}{$id}{"pattern"} = ",$name,";
+
+                }
+            }
+        }
+    }
+}
+
+
+
+sub do_cycle()
+{
+    for my $key (@index_content) {
+
+        $key =~ s/\n//g;
+        if (length($key) == 0 or $key =~ /^\s+#/ or $key =~ /^\s+$/) {
+            next;
+        }
+
+        if ($state eq "" ) {
+            if ($key =~ /BEGIN\s+SUMMARY/) {
+                $state = "summary";
+                #print("$state start\n");
+                next;
+
+            } elsif ($key =~ /BEGIN\s+DETAIL/) {
+                $state = "detail";
+                #print("$state start\n");
+                next;
+            }
+        }
+
+        if ($key =~ /\s*END/) {
+            #print("$state finish $key\n");
+            if(not &do_state($state)) {
+                print("有错误发生\n");
+            }
+            $state = "";
+            $des_flag = 0;
+            $m_version = 1;
+            $m_update_info = "";
+            next;
+        }
+
+        if ($des_flag) {
+            if ($key =~ /^\s+(.*)/) {
+                $m_desc .= "$1\n";
+                next;
+            }
+        }
+
+        if ($key =~ /\(chs_name\)\s*:\s*(.*)$/) {
+            $m_chs_name = $1;
+            while ($m_chs_name =~ /\s+$/) {
+                chop($m_chs_name);
+            }
+            next;
+        }
+
+        if ($key =~ /\(original_name\)\s*:\s*(.*)$/) {
+            $m_original_name = $1;
+            while ($m_original_name =~ /\s+$/) {
+                chop($m_original_name);
+            }
+            next;
+        }
+
+        if ($key =~ /\(alias\)\s*:\s*(.*)$/) {
+            $m_alias = $1;
+            while ($m_alias =~ /\s+$/) {
+                chop($m_alias);
+            }
+            next;
+        }
+
+        if ($key =~ /\(director\)\s*:\s*(.*)$/) {
+            $m_director = $1;
+            while ($m_director =~ /\s+$/) {
+                chop($m_director);
+            }
+            next;
+        }
+
+        if ($key =~ /\(actors\)\s*:\s*(.*)$/) {
+            $m_actor = $1;
+            while ($m_actor =~ /\s+$/) {
+                chop($m_actor);
+            }
+            next;
+        }
+
+        if ($key =~ /\(time_length\)\s*:\s*(\d+)/) {
+            $m_time_length = $1;
+            next;
+        }
+
+        if ($key =~ /\(show_date\)\s*:\s*(.*)$/) {
+            $m_show_date = $1;
+            while ($m_show_date =~ /\s+$/) {
+                chop($m_show_date);
+            }
+            next;
+        }
+
+        if ($key =~ /\(kind\)\s*:\s*(.*)$/) {
+            $m_kind = $1;
+            while ($m_kind =~ /\s+$/) {
+                chop($m_kind);
+            }
+            next;
+        }
+
+        if ($key =~ /\(type\)\s*:\s*(.*)$/) {
+            $m_type = $1;
+            while ($m_type =~ /\s+$/) {
+                chop($m_type);
+            }
+            next;
+        }
+
+        if ($key =~ /\(area\)\s*:\s*(.*)$/) {
+            $m_area = $1;
+            while ($m_area =~ /\s+$/) {
+                chop($m_area);
+            }
+            next;
+        }
+
+        if ($key =~ /\(revenue\)\s*:\s*(.*)$/) {
+            $m_revenue = $1;
+            while ($m_revenue =~ /\s+$/) {
+                chop($m_revenue);
+            }
+            if (not defined($m_revenue)) {
+                $m_revenue = 0;
+            }
+
+            $m_revenue =~ s/,//g;
+                next;
+        }
+
+        if ($key =~ /\(imdb_num\)\s*:\s*(.*)$/) {
+            $m_imdb_num = $1;
+            while ($m_imdb_num =~ /\s+$/) {
+                chop($m_imdb_num);
+            }
+            if (not defined($m_imdb_num) or length($m_imdb_num) < 1) {
+                $m_imdb_num = 0.0;
+            }
+
+            $m_imdb_num *= 1.0;
+            if ($m_imdb_num <= 0) {
+                $m_imdb_num = 0;
+            }
+
+            next;
+        }
+
+        if ($key =~ /\(douban_num\)\s*:\s*(.*)$/) {
+            $m_douban_num = $1;
+            while ($m_douban_num =~ /\s+$/) {
+                chop($m_douban_num);
+            }
+            if (not defined($m_douban_num) or length($m_douban_num) < 1) {
+                $m_douban_num = 0.0;
+            }
+
+            $m_douban_num *= 1.0;
+            if ($m_douban_num <= 0) {
+                $m_douban_num = 0;
+            }
+
+            next;
+        }
+
+        if ($key =~ /\(desc\)\s*:\s*(.*)$/) {
+            $m_desc = "";
+            if (defined($1) and length($1) > 1) {
+                $m_desc = "$1\n";
+            }
+            $des_flag = 1;
+            next;
+        }
+
+        if ($key =~ /\(path\)\s*:\s*(.*)$/) {
+            $m_path = $1;
+            while ($m_path =~ /\s+$/) {
+                chop($m_path);
+            }
+            next;
+        }
+
+        if ($key =~ /\(episode\)\s*:\s*(.*)$/) {
+            $m_episode = $1;
+            while ($m_episode =~ /\s+$/) {
+                chop($m_episode);
+            }
+            next;
+        }
+
+        if ($key =~ /\(price\)\s*:\s*(.*)$/) {
+            $m_price = $1;
+            while ($m_price =~ /\s+$/) {
+                chop($m_price);
+            }
+            next;
+        }
+
+        if ($key =~ /\(version\)\s*:\s*(.*)$/) {
+            $m_version = $1;
+            while ($m_version =~ /\s+$/) {
+                chop($m_version);
+            }
+            next;
+        }
+
+        if ($key =~ /\(chs_desc\)\s*:\s*(.*)$/) {
+            $m_chs_desc = $1;
+            while ($m_chs_desc =~ /\s+$/) {
+                chop($m_chs_desc);
+            }
+            next;
+        }
+
+        if ($key =~ /\(update\)\s*:\s*(.*)$/) {
+            $m_update_info = $1;
+            while ($m_update_info =~ /\s+$/) {
+                chop($m_update_info);
+            }
+            next;
+        }
+
+    }
+
+}

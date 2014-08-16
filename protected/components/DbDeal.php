@@ -100,6 +100,7 @@ class DbDeal
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
 		return $set_t;
 	 }
+
 	 public function getMediaDetail($media_id="",$m_alias=""){
 		$con="1";
 		if($m_alias != ""){
@@ -111,7 +112,7 @@ class DbDeal
 		}
 		$sql = "select auto_id,m_id,m_alias,m_chs_desc,m_price
 				,m_pv,m_video_path,m_real_path from media_detail as m
-                where  ".$con;
+                where  $con order by m_episode desc";
         Yii::log($sql, 'info', 'haodan');
         $set_t = Yii::app()->getDbByName("db_air")->createCommand($sql)->queryAll();
         return $set_t;

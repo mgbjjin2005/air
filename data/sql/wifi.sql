@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media_category` (
    `class`           int            DEFAULT 1,                      /*属于几级类目*/
    `m_kind`          varchar(32),                                   /*对于一级目录，要填上类目(视频分类/区域信息)*/
    `m_name`          varchar(32),                                   /*类目名*/
+   `m_desc`          varchar(128),                                   /*匹配串*/
    `value`           int            DEFAULT 1,                      /*标志位*/
    `parent_class_id` bigint(20)     DEFAULT 0,                      /*如果不是顶级类目，此处是上一层级类目的auto_id*/
    `m_create_date`   DATETIME,                                      /*记录创建时间*/
@@ -92,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `air`.`media` (
    `m_version`       int            DEFAULT 1,                      /*版本号，用于内容更新*/
    `m_pic_path`      varchar(512)   DEFAULT NULL,                   /*视频的展示图片的路径(media/201403/pic/md5(id).jpg)*/
    `m_des`           varchar(4096)  DEFAULT NULL,                   /*剧情简介*/
+   `m_update_info`   varchar(64)    DEFAULT NULL,                   /*更新信息,比如"更新至第12集/更新至2014-06-20"*/
    `m_create_date`   DATETIME,                                      /*记录创建时间*/
    `m_modify_date`   DATETIME,                                      /*记录修改时间*/
 

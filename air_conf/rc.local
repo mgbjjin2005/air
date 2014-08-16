@@ -9,6 +9,7 @@ touch /var/lock/subsys/local
 /etc/init.d/mysqld start
 /etc/init.d/radiusd start
 /etc/init.d/php-fpm start
+/etc/init.d/vsftpd start
 
 modprobe bonding &> /dev/null
 

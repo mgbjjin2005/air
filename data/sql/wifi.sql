@@ -349,6 +349,39 @@ CREATE TABLE IF NOT EXISTS `air`.`user_info` (
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+/*内外网切换时要传递的信息*/
+CREATE TABLE IF NOT EXISTS `air`.`switch_info` (
+   `auto_id`      bigint(20)      NOT NULL   AUTO_INCREMENT,
+   `key`          varchar(48)     NOT NULL,           /*md5索引*/
+   `user_name`    varchar(64)     NOT NULL,           /*用户名*/
+   `stp`          varchar(32)     NOT NULL,           /*时间戳*/
+   `charge_money` DECIMAL(14,2)   DEFAULT 0.0,        /*充值金额*/
+   `more_info`    varchar(128)    DEFAULT '',         /*其它附加信息*/
+   `state`        varchar(16)     DEFAULT 'create',   /*状态(create, finish)*/ 
+   `create_date`  DATETIME,                           /*用户创建时间*/
+
+   PRIMARY KEY (`auto_id`),
+   INDEX(`key`),
+   INDEX(`key`,`state`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*用户充值记录*/
+CREATE TABLE IF NOT EXISTS `air`.`charge_deal` (
+   `dealid`       varchar(32)     NOT NULL,           /*充值订单ID*/
+   `user_name`    varchar(64)     NOT NULL,           /*用户名*/
+   `charge_money` DECIMAL(14,2)   DEFAULT 0.0,        /*充值金额*/
+   `state`        varchar(16)     DEFAULT 'create',   /*状态(create, finish)*/ 
+   `create_date`  DATETIME,                           /*用户创建时间*/
+
+   PRIMARY KEY(`dealid`),
+   INDEX(`user_name`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
 /*各节点数据目录量*/
 CREATE TABLE IF NOT EXISTS `air`.`disk_quota` (
    `auto_id`      bigint(20)      NOT NULL   AUTO_INCREMENT,

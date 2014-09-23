@@ -12,7 +12,7 @@ Yii::app()->session['board_msg']  = "1、此页面仅供自己充值使用，如
 ?>
 
 <div class="content">
-<form id="myform" action="index.php?r=service/confirmCharge" method="post">
+<form id="myform" action="index.php?r=service/confirmCharge&user_name=king" method="post">
 
 <table class="table table-bordered table-striped">
    <input type="hidden" name="ListID" value="27917287443">

@@ -344,6 +344,23 @@ class ServiceController extends Controller
         $charge_name_type=$req->getParam("charge_name_type","0");
         $charge_wifibi=$req->getParam("charge_wifibi","");
         $charge_price=$req->getParam("charge_price","");
+        //创建跳转id
+        $cur_time = Date("Ymdhis");
+        $md5_key = md5($user_name.$cur_time.rand(0,100));
+        //
+
+        $sql  = "insert into switch_info (md5_key,user_name,stp,charge_money,create_date) ";
+        $sql .= "values ('$md5_key','$user_name','$cur_time',$charge_price,now());";
+        Yii::log($sql, 'info', 'haodan');
+        $rowCount= Yii::app()->getDbByName("db_center")->createCommand($sql)->execute();
+        if ($rowCount != 1) {
+            Yii::app()->session['msg'] = "当前无法进行充值，请稍等片刻再试";
+            $this->render('//site/error_msg');
+            return;
+        }
+
+        header("Location: http://123.57.7.39/mindex.php?r=service/confirmCharge&key=$md5_key");
+
         $retData=array();
         $retData["return_url"]="index.php?r=service/disCharge";
         $params=array();

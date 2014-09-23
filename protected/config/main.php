@@ -92,6 +92,15 @@ return array(
             'class' => 'CDbConnection'
 		),
 
+		'db_center'=>array(
+			'connectionString' => 'mysql:host=123.57.7.39;dbname=air',
+			'emulatePrepare' => true,
+			'username' => 'air',
+			'password' => '***King1985***',
+			'charset' => 'utf8',
+            'class' => 'CDbConnection'
+		),
+
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
